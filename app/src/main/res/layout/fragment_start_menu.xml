@@ -98,6 +98,7 @@
             app:layout_constraintGuide_percent=".70" />
 
         <Button
+            android:id="@+id/leaderboardButton"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -111,6 +112,7 @@
         </Button>
 
         <Button
+            android:id="@+id/settingButton"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1"

@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    private  StartMenuFragment startMenuFragment = new StartMenuFragment();
     private GameFunction3x3 gameFunction3x3 = new GameFunction3x3();
     private GameFunction4x4 gameFunction4x4 = new GameFunction4x4();
     private GameFunction5x5 gameFunction5x5 = new GameFunction5x5();
@@ -26,12 +27,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        loadSettingsFragment();
+        loadMenuFragment();
 
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(this).get(MainActivityData.class);
         mainActivityDataViewModel.clickedValue.observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
+                if (mainActivityDataViewModel.getClickedValue() == 0)
+                {
+                    loadMenuFragment();
+                }
                 if (mainActivityDataViewModel.getClickedValue() == 1)
                 {
                     loadGame3x3Fragment();
@@ -52,6 +57,18 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void loadMenuFragment()
+    {
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment frag = fm.findFragmentById(R.id.fragment_game);
+        if (frag==null)
+        {
+            fm.beginTransaction().add(R.id.fragment_game, startMenuFragment).commit();
+        }
+        else {
+            fm.beginTransaction().replace(R.id.fragment_game,startMenuFragment).commit();
+        }
+    }
     private void loadGame3x3Fragment()
     {
         FragmentManager fm = getSupportFragmentManager();

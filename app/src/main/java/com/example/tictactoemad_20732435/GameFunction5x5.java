@@ -39,6 +39,8 @@ public class GameFunction5x5 extends Fragment {
 
     private TextView textViewPlayer1;
     private TextView textViewPlayer2;
+    private TextView textMovesMade;
+    private TextView textMovesLeft;
 
     public GameFunction5x5() {
         // Required empty public constructor
@@ -78,6 +80,8 @@ public class GameFunction5x5 extends Fragment {
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
         textViewPlayer1 = rootView.findViewById(R.id.player1_score);
         textViewPlayer2 = rootView.findViewById(R.id.player2_score);
+        textMovesMade = rootView.findViewById(R.id.movesMade);
+        textMovesLeft = rootView.findViewById(R.id.movesLeft);
 
         for (int i = 0; i < row; i++)
         {
@@ -90,6 +94,21 @@ public class GameFunction5x5 extends Fragment {
             }
         }
         Button resetButton = rootView.findViewById(R.id.reset_button);
+        Button settingsButton = rootView.findViewById(R.id.settings_button);
+        Button menuButton = rootView.findViewById(R.id.menu_button);
+
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivityDataViewModel.setClickedValue(0);
+            }
+        });
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivityDataViewModel.setClickedValue(4);
+            }
+        });
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -98,14 +117,6 @@ public class GameFunction5x5 extends Fragment {
             }
         });
 
-        Button backButton = rootView.findViewById(R.id.back_button);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mainActivityDataViewModel.setClickedValue(4);
-            }
-        });
-        // Inflate the layout for this fragment
         return rootView;
     }
 
@@ -123,19 +134,23 @@ public class GameFunction5x5 extends Fragment {
             ((Button) view).setText("O");
         }
         roundCount++;
+        updateMovesText();
 
         if (checkForWin()) {
             if (player1Turn) {
                 player1Wins();
+                updateMovesText();
             }
             else
             {
                 player2Wins();
+                updateMovesText();
             }
         }
         else if (roundCount == 25)
         {
             draw();
+            updateMovesText();
         }
         else
         {
@@ -215,7 +230,11 @@ public class GameFunction5x5 extends Fragment {
         textViewPlayer1.setText("Player 1: " + player1Points);
         textViewPlayer2.setText("Player 2: " + player2Points);
     }
-
+    private void updateMovesText()
+    {
+        textMovesMade.setText("Moves Made: " + roundCount);
+        textMovesLeft.setText("Moves Left " + (25 - roundCount));
+    }
     private void resetBoard()
     {
         for (int i = 0; i < row; i++) {

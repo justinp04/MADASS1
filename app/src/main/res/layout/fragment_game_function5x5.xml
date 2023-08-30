@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/fragment_game5x5"
     android:orientation="vertical"
-    tools:context=".GameActivity5x5"
+    tools:context=".GameFunction5x5"
     android:background="@color/white">
 
     <RelativeLayout
@@ -20,13 +20,37 @@
             android:text="Welcome to Tic Tac Toe - MAD"
             android:textSize="30dp" />
 
+        <Button
+            android:id="@+id/reset_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title_game"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/square_button"
+            android:textSize="24dp"
+            android:text="Reset" />
+
+        <Button
+            android:id="@+id/settings_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title_game"
+            android:layout_toStartOf="@+id/reset_button"
+            android:layout_toEndOf="@id/menu_button"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/square_button"
+            android:text="Settings"
+            android:textSize="24dp" />
+
         <TextView
             android:id="@+id/player1_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/title_game"
+            android:layout_below="@+id/reset_button"
             android:text="Player 1: 0"
             android:textSize="30sp"/>
+
         <TextView
             android:id="@+id/player2_score"
             android:layout_width="wrap_content"
@@ -35,31 +59,54 @@
             android:text="Player 2: 0"
             android:textSize="30sp"/>
 
-        <Button
-            android:id="@+id/reset_button"
+        <TextView
+            android:id="@+id/movesMade"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/title_game"
+            android:layout_below="@+id/movesLeft"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/square_button"
-            android:layout_marginEnd="5dp"
-            android:textSize="24dp"
-            android:text="Reset" />
+            android:text="Moves Made: 0"
+            android:textSize="30sp"/>
+
+        <TextView
+            android:id="@+id/movesLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/reset_button"
+            android:layout_alignParentEnd="true"
+            android:text="Moves Left: 0"
+            android:textSize="30sp"/>
 
         <Button
-            android:id="@+id/back_button"
+            android:id="@+id/undo_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/title_game"
-            android:layout_toStartOf="@+id/reset_button"
-            android:layout_marginEnd="5dp"
-            android:layout_centerVertical="true"
+            android:layout_below="@id/player2_score"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp"
             android:background="@drawable/square_button"
-            android:text="Back"
+            android:text="Undo"
             android:textSize="24dp" />
 
+        <TextView
+            android:id="@+id/timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/player2_score"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="00:00"
+            android:textSize="24sp" />
 
+        <Button
+            android:id="@+id/menu_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title_game"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/square_button"
+            android:text="Menu"
+            android:textSize="24dp"/>
     </RelativeLayout>
 
     <LinearLayout

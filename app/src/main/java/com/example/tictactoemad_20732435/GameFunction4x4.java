@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link GameFunction4x4#newInstance} factory method to
@@ -40,6 +42,8 @@ public class GameFunction4x4 extends Fragment {
 
     private TextView textViewPlayer1;
     private TextView textViewPlayer2;
+    private TextView textMovesMade;
+    private TextView textMovesLeft;
 
     public GameFunction4x4() {
         // Required empty public constructor
@@ -79,6 +83,8 @@ public class GameFunction4x4 extends Fragment {
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
         textViewPlayer1 = rootView.findViewById(R.id.player1_score);
         textViewPlayer2 = rootView.findViewById(R.id.player2_score);
+        textMovesLeft = rootView.findViewById(R.id.movesLeft);
+        textMovesMade = rootView.findViewById(R.id.movesMade);
 
         for (int i = 0; i < row; i++)
         {
@@ -91,6 +97,21 @@ public class GameFunction4x4 extends Fragment {
             }
         }
         Button resetButton = rootView.findViewById(R.id.reset_button);
+        Button settingsButton = rootView.findViewById(R.id.settings_button);
+        Button menuButton = rootView.findViewById(R.id.menu_button);
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivityDataViewModel.setClickedValue(0);
+            }
+        });
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivityDataViewModel.setClickedValue(4);
+            }
+        });
+
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -98,13 +119,7 @@ public class GameFunction4x4 extends Fragment {
                 resetGame();
             }
         });
-        Button backButton = rootView.findViewById(R.id.back_button);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mainActivityDataViewModel.setClickedValue(4);
-            }
-        });
+
         // Inflate the layout for this fragment
         return rootView;
     }
@@ -123,19 +138,23 @@ public class GameFunction4x4 extends Fragment {
             ((Button) view).setText("O");
         }
         roundCount++;
+        updateMovesText();
 
         if (checkForWin()) {
             if (player1Turn) {
                 player1Wins();
+                updateMovesText();
             }
             else
             {
                 player2Wins();
+                updateMovesText();
             }
         }
         else if (roundCount == 16)
         {
             draw();
+            updateMovesText();
         }
         else
         {
@@ -214,6 +233,11 @@ public class GameFunction4x4 extends Fragment {
     {
         textViewPlayer1.setText("Player 1: " + player1Points);
         textViewPlayer2.setText("Player 2: " + player2Points);
+    }
+    private void updateMovesText()
+    {
+        textMovesMade.setText("Moves Made: " + roundCount);
+        textMovesLeft.setText("Moves Left " + (9 - roundCount));
     }
 
     private void resetBoard()

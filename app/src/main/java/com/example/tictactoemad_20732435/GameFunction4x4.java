@@ -237,7 +237,7 @@ public class GameFunction4x4 extends Fragment {
     private void updateMovesText()
     {
         textMovesMade.setText("Moves Made: " + roundCount);
-        textMovesLeft.setText("Moves Left " + (9 - roundCount));
+        textMovesLeft.setText("Moves Left " + (16 - roundCount));
     }
 
     private void resetBoard()

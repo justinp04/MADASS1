@@ -72,6 +72,8 @@ public class Settings extends Fragment {
         Button winCondition3 = rootView.findViewById(R.id.inARow3);
         Button winCondition4 = rootView.findViewById(R.id.inARow4);
         Button winCondition5 = rootView.findViewById(R.id.inARow5);
+        Button iconCrosses = rootView.findViewById(R.id.icon_crosses);
+        Button iconCircles = rootView.findViewById(R.id.icon_circles);
         ViewGroup constraintLayout = rootView.findViewById(R.id.fragment_settings);
 
         gameMode3x3.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +112,20 @@ public class Settings extends Fragment {
                 Toast.makeText(requireContext(), "5 In A Row", Toast.LENGTH_SHORT).show();
             }
         });
+        iconCrosses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(requireContext(), "You are now Crosses", Toast.LENGTH_SHORT).show();
+            }
+        });
+        iconCircles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(requireContext(), "You are now Circles", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
 
         // Inflate the layout for this fragment
         return rootView;

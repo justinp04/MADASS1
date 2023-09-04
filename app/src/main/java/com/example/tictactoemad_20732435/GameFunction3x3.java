@@ -14,9 +14,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link GameFunction3x3#newInstance} factory method to
@@ -99,7 +96,6 @@ public class GameFunction3x3 extends Fragment {
         Button resetButton = rootView.findViewById(R.id.reset_button);
         Button settingsButton = rootView.findViewById(R.id.settings_button);
         Button menuButton = rootView.findViewById(R.id.menu_button);
-        Button undoButton = rootView.findViewById(R.id.undo_button);
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -38,7 +38,6 @@ public class GameFunction4x4 extends Fragment {
     private int roundCount;
     private int player1Points;
     private int player2Points;
-    private int winCondition = 4;
 
     private TextView textViewPlayer1;
     private TextView textViewPlayer2;
@@ -97,7 +96,7 @@ public class GameFunction4x4 extends Fragment {
                 gameButtons[i][j].setOnClickListener(this::onClick);
             }
         }
-        gameDataViewModel.setBoardSize(3);
+        gameDataViewModel.setBoardSize(4);
         gameDataViewModel.setGameButtons(gameButtons);
 
         Button resetButton = rootView.findViewById(R.id.reset_button);
@@ -137,54 +136,4 @@ public class GameFunction4x4 extends Fragment {
             Toast.makeText(requireContext(), returnString, Toast.LENGTH_SHORT).show();
         }
     }
-    /*
-
-    private boolean checkForWin() {
-        String[][] fields = new String[row][col];
-
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
-                fields[i][j] = gameButtons[i][j].getText().toString();
-            }
-        }
-
-        for (int i = 0; i < row; i++) {
-            if (checkLine(fields[i][0], fields[i][1], fields[i][2], fields[i][3])) {
-                return true;
-            }
-        }
-
-        for (int j = 0; j < col; j++) {
-            if (checkLine(fields[0][j], fields[1][j], fields[2][j], fields[3][j])) {
-                return true;
-            }
-        }
-
-        if (checkLine(fields[0][0], fields[1][1], fields[2][2], fields[3][3])) {
-            return true;
-        }
-
-        if (checkLine(fields[0][3], fields[1][2], fields[2][1], fields[3][0])) {
-            return true;
-        }
-
-        return false;
-    }
-
-    private boolean checkLine(String... symbols) {
-        String firstSymbol = symbols[0];
-        if (firstSymbol.isEmpty()) {
-            return false;
-        }
-
-        for (String symbol : symbols) {
-            if (!symbol.equals(firstSymbol)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-     */
 }

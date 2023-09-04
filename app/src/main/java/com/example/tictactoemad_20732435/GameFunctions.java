@@ -73,59 +73,62 @@ public class GameFunctions {
             gameDataViewModel.incrementRound();
 
             //Fix logic
-            if (checkForWin(gameDataViewModel)) {
+            if (checkForWin(gameDataViewModel, 3, "X")) {
                 if (gameDataViewModel.playerTurn.getValue() == 2) {
                     returnString = player1Wins(gameDataViewModel);
+                    player1Wins(gameDataViewModel);
                 } else {
                     returnString = player2Wins(gameDataViewModel);
+                    player2Wins(gameDataViewModel);
                 }
-            } else if (gameDataViewModel.getRoundCount() == 9) {
+            } else if (gameDataViewModel.getRoundCount() == (gameDataViewModel.getBoardSize() * gameDataViewModel.getBoardSize())) {
                 returnString = draw(gameDataViewModel);
             }
         }
         return returnString;
     }
 
-    private static boolean checkForWin(GameData gameDataViewModel) {
+    private static boolean checkForWin(GameData gameDataViewModel, int winCondition, String playerSymbol) {
         int row = gameDataViewModel.getBoardSize();
         int col = gameDataViewModel.getBoardSize();
         Button gameButtons[][] = gameDataViewModel.getGameButtons();
 
         String[][] fields = new String[row][col];
+        String winCompare = "XXX";
+        StringBuffer rowBuffer = new StringBuffer();
+        StringBuffer colBuffer = new StringBuffer();
 
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
                 fields[i][j] = gameButtons[i][j].getText().toString();
             }
         }
+        //good ^^
 
-        for (int i = 0; i < row; i++) {
-            if (fields[i][0].equals(fields[i][1])
-                    && fields[i][0].equals(fields[i][2])
-                    && !fields[i][0].isEmpty()) {
-                return true;
+        //check row and columns
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < col; j++)
+            {
+                rowBuffer.append(fields[i][j]);
+                colBuffer.append(fields[j][i]);
             }
-        }
+            String rowCheck = rowBuffer.toString();
+            String colCheck = colBuffer.toString();
 
-        for (int j = 0; j < col; j++) {
-            if (fields[0][j].equals(fields[1][j])
-                    && fields[0][j].equals(fields[2][j])
-                    && !fields[0][j].isEmpty()) {
+            if (rowCheck.contains(winCompare))
                 return true;
-            }
+            if (colCheck.contains(winCompare))
+                return true;
+
+            rowBuffer.delete(0, rowBuffer.length());
+            colBuffer.delete(0, colBuffer.length());
         }
 
-        if (fields[0][0].equals(fields[1][1])
-                && fields[0][0].equals(fields[2][2])
-                && !fields[0][0].isEmpty()) {
-            return true;
-        }
+        //check diagonals
 
-        if (fields[0][2].equals(fields[1][1])
-                && fields[0][2].equals(fields[2][0])
-                && !fields[0][2].isEmpty()) {
-            return true;
-        }
         return false;
     }
+
+
 }

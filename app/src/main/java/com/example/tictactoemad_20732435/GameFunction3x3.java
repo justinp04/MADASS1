@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.*;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link GameFunction3x3#newInstance} factory method to
@@ -33,6 +35,8 @@ public class GameFunction3x3 extends Fragment {
     int row = 3, col = 3;
     private Button[][] gameButtons = new Button[row][col];
     private boolean player1Turn = true;
+
+    // Round count tracks how many moves have been made by both players
     private int roundCount;
     private int player1Points;
     private int player2Points;
@@ -42,6 +46,10 @@ public class GameFunction3x3 extends Fragment {
     private TextView textViewPlayer2;
     private TextView textMovesMade;
     private TextView textMovesLeft;
+
+    private Button undoButton;
+
+    private LinkedList<Button> undoList = new LinkedList<>();
     public GameFunction3x3() {
         // Required empty public constructor
     }
@@ -83,6 +91,8 @@ public class GameFunction3x3 extends Fragment {
         textMovesMade = rootView.findViewById(R.id.movesMade);
         textMovesLeft = rootView.findViewById(R.id.movesLeft);
 
+        roundCount = 0;
+
         for (int i = 0; i < row; i++)
         {
             for (int j = 0; j < col; j++)
@@ -93,46 +103,107 @@ public class GameFunction3x3 extends Fragment {
                 gameButtons[i][j].setOnClickListener(this::onClick);
             }
         }
+
         Button resetButton = rootView.findViewById(R.id.reset_button);
         Button settingsButton = rootView.findViewById(R.id.settings_button);
         Button menuButton = rootView.findViewById(R.id.menu_button);
-        menuButton.setOnClickListener(new View.OnClickListener() {
+        undoButton = rootView.findViewById(R.id.undo_button);
+        undoButton.setEnabled(false);
+
+        menuButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View view) {
                 mainActivityDataViewModel.setClickedValue(0);
             }
         });
-        settingsButton.setOnClickListener(new View.OnClickListener() {
+
+        settingsButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 mainActivityDataViewModel.setClickedValue(4);
             }
         });
-        resetButton.setOnClickListener(new View.OnClickListener() {
+
+        resetButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View view)
             {
                 resetGame();
             }
         });
-        // Inflate the layout for this fragment
+
+        undoButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                int movesMade, movesLeft;
+
+                if(roundCount > 0)
+                {
+                    // Get the button to be updated.
+                    // Remove the last index to make sure the next undo will get a different button
+                    Button buttonToUpdate = undoList.removeLast();
+
+                    // Set the text to null
+                    buttonToUpdate.setText("");
+
+                    // Update roundCount value
+                    roundCount--;
+
+                    Toast.makeText(requireContext(), "Undo move", Toast.LENGTH_SHORT).show();
+
+                    // Update the turn count textViews
+                    textMovesMade.setText("Moves made: " + roundCount);
+                    textMovesLeft.setText("Moves left: " + (9 - roundCount));
+
+                    // Update whose turn it is
+                    player1Turn = !player1Turn;
+                }
+                else
+                {
+                    undoButton.setEnabled(false);
+                }
+            }
+        });
+
         return rootView;
     }
 
     public void onClick(View view)
     {
-        if (!((Button) view).getText().toString().equals("")) {
+        Button currentButton = (Button)view;
+        // If the there is the button already has a value
+
+        if(!undoButton.isEnabled())
+        {
+            undoButton.setEnabled(true);
+        }
+
+        if (!(currentButton).getText().toString().equals(""))
+        {
+            Toast.makeText(requireContext(), "Invalid Move!", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (player1Turn) {
-            ((Button) view).setText("X");
+        if (player1Turn)
+        {
+            currentButton.setText("X");
         }
         else
         {
             //change in here for AI view
-            ((Button) view).setText("O");
+            currentButton.setText("O");
         }
+
+        // Add the most recently added button to the undo list.
+        undoList.addLast(currentButton);
+
+        // Update the round count by one to keep track of the number of turns
         roundCount++;
         updateMovesText();
 
@@ -246,6 +317,8 @@ public class GameFunction3x3 extends Fragment {
     {
         player1Points = 0;
         player2Points = 0;
+        roundCount = 0;
+        undoList.clear();
         updatePointsText();
         resetBoard();
     }

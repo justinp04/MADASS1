@@ -106,10 +106,8 @@ public class GameFunctions {
         //good ^^
 
         //check row and columns
-        for (int i = 0; i < row; i++)
-        {
-            for (int j = 0; j < col; j++)
-            {
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
                 rowBuffer.append(fields[i][j]);
                 colBuffer.append(fields[j][i]);
             }
@@ -125,10 +123,62 @@ public class GameFunctions {
             colBuffer.delete(0, colBuffer.length());
         }
 
-        //check diagonals
+        //check back diagonals
+        int length = fields.length;
+        int diagonalLines = (length * 2) - 1;
+        int midLine = (diagonalLines / 2) + 1;
+        int buttonsInDiagonal = 0;
 
+        for (int i = 1; i <= diagonalLines; i++) {
+            StringBuffer diagBuffer = new StringBuffer();
+            int rowIndex, colIndex;
+            if (i <= midLine) {
+                buttonsInDiagonal++;
+                for (int j = 0; j < buttonsInDiagonal; j++) {
+                    rowIndex = (i - j) - 1;
+                    colIndex = j;
+                    diagBuffer.append(fields[rowIndex][colIndex]);
+                }
+            } else {
+                buttonsInDiagonal--;
+                for (int j = 0; j < buttonsInDiagonal; j++) {
+                    rowIndex = (length - 1) - j;
+                    colIndex = (i - length) + j;
+                    diagBuffer.append(fields[rowIndex][colIndex]);
+                }
+            }
+            String diagCheck = diagBuffer.toString();
+            if (diagCheck.contains(winCompare)) {
+                return true;
+            }
+            diagBuffer.delete(0, rowBuffer.length());
+        }
+        //check forward diag
+        buttonsInDiagonal = 0;
+        for (int i = 1; i <= diagonalLines; i++) {
+            StringBuffer diagBuffer = new StringBuffer();
+            int rowIndex, colIndex;
+            if (i <= midLine) {
+                buttonsInDiagonal++;
+                for (int j = 0; j < buttonsInDiagonal; j++) {
+                    colIndex = (i - j) - 1;
+                    rowIndex = j;
+                    diagBuffer.append(fields[rowIndex][colIndex]);
+                }
+            } else {
+                buttonsInDiagonal--;
+                for (int j = 0; j < buttonsInDiagonal; j++) {
+                    colIndex = (length - 1) - j;
+                    rowIndex = (i - length) + j;
+                    diagBuffer.append(fields[rowIndex][colIndex]);
+                }
+            }
+            String diagCheck = diagBuffer.toString();
+            if (diagCheck.contains(winCompare)) {
+                return true;
+            }
+            diagBuffer.delete(0, rowBuffer.length());
+        }
         return false;
     }
-
-
 }

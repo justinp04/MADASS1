@@ -2,90 +2,100 @@ package com.example.tictactoemad_20732435;
 
 import android.widget.Button;
 
+import androidx.lifecycle.MutableLiveData;
+
 public class GameData {
-    private Button[][] gameButtons;
-    private int boardSize;
-    private int playerTurn;
-    private int roundCount;
-    private int player1Points;
-    private int player2Points;
-    private PlayerState playerState;
+    public MutableLiveData<Button[][]> gameButtons;
+    public MutableLiveData<Integer> boardSize;
+    public MutableLiveData<Integer>playerTurn;
+    public MutableLiveData<Integer>roundCount;
+    public MutableLiveData<Integer>player1Points;
+    public MutableLiveData<Integer>player2Points;
+    public MutableLiveData<PlayerState> playerState;
     //winState
 
     //Mutators
     private void setGameButtons(Button[][] inButtons) {
-        gameButtons = inButtons;
+        gameButtons.setValue(inButtons);
     }
 
     public void setBoardSize(int size) {
-        boardSize = size;
+        boardSize.setValue(size);
     }
 
     public void setPlayer1Turn() {
-        playerTurn = 1;
+        playerTurn.setValue(1);
     }
 
     public void setPlayer2Turn() {
-        playerTurn = 2;
+        playerTurn.setValue(2);
     }
 
     public void incrementRound() {
-        roundCount++;
+        int roundIncrease = roundCount.getValue() + 1;
+
+        roundCount.setValue(roundIncrease);
     }
 
     public void decreaseRound() {
-        roundCount--;
+        int roundDecrease = roundCount.getValue() - 1;
+
+        roundCount.setValue(roundDecrease);
     }
 
     public void incrementPlayer1() {
-        player1Points++;
+        int player1Point = player1Points.getValue() + 1;
+
+        player1Points.setValue(player1Point);
     }
 
     public void incrementPlayer2() {
-        player2Points++;
+        int player2Point = player2Points.getValue() + 1;
+
+        player2Points.setValue(player2Point);
     }
 
     public void setPlayerState(PlayerState inState) {
-        playerState = inState;
+        playerState.setValue(inState);
     }
 
     public void setDefaultValues() {
-        playerTurn = 1;
-        roundCount = 0;
-        player1Points = 0;
-        player2Points = 0;
-        boardSize = 3;
-        playerState = new AIPlayerState();
+        playerTurn.setValue(1);
+        roundCount.setValue(0);
+        player1Points.setValue(0);
+        player2Points.setValue(0);
+        boardSize.setValue(3);
+        playerState.setValue(new AIPlayerState());
     }
 
     //public void setPlayerState(playerState newState) {
 
     //Accessors
     public Button[][] getGameButtons() {
-        return gameButtons;
+        return gameButtons.getValue();
     }
 
     public int getBoardSize() {
-        return boardSize;
+        return boardSize.getValue();
     }
 
     public int getPlayer1Points() {
-        return player1Points;
+        return player1Points.getValue();
     }
 
     public int getPlayer2Points() {
-        return player2Points;
+        return player2Points.getValue();
     }
 
     public int getPlayerTurn() {
-        return playerTurn;
+        return playerTurn.getValue();
     }
 
     public int getRoundCount() {
-        return roundCount;
+        return roundCount.getValue();
     }
 
     public PlayerState getPlayerState() {
-        return playerState;
+        return playerState.getValue();
     }
 }

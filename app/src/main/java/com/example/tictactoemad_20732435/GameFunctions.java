@@ -4,27 +4,34 @@ import android.view.View;
 import android.widget.Button;
 
 public class GameFunctions {
-    private static GameData gameDataViewModel;
+    //private static GameData gameDataViewModel;
 
+    /*
     public GameFunctions(GameData gameDataViewModel) {
         this.gameDataViewModel = gameDataViewModel;
     }
 
-    public static void player1Wins() {
+     */
+
+    public static String player1Wins(GameData gameDataViewModel) {
         gameDataViewModel.incrementPlayer1();
-        resetBoard();
+        resetBoard(gameDataViewModel);
+        return "Player 1 wins!";
     }
 
-    public static void player2Wins() {
+    public static String player2Wins(GameData gameDataViewModel) {
         gameDataViewModel.incrementPlayer2();
-        resetBoard();
+        resetBoard(gameDataViewModel);
+        return "Player 2 wins!";
     }
 
-    public static void draw() {
-        resetBoard();
+    public static String draw(GameData gameDataViewModel) {
+        gameDataViewModel.incrementDraws();
+        resetBoard(gameDataViewModel);
+        return "It's a draw!";
     }
 
-    public static void resetBoard() {
+    public static void resetBoard(GameData gameDataViewModel) {
         int row = gameDataViewModel.getBoardSize();
         int col = gameDataViewModel.getBoardSize();
         Button gameButtons[][] = gameDataViewModel.getGameButtons();
@@ -40,44 +47,46 @@ public class GameFunctions {
         gameDataViewModel.setPlayer1Turn();
     }
 
-    public static void resetGame() {
+    public static void resetGame(GameData gameDataViewModel) {
         gameDataViewModel.player1Points.setValue(0);
         gameDataViewModel.player2Points.setValue(0);
-        resetBoard();
+        resetBoard(gameDataViewModel);
     }
 
-    public static void onClick(View view) {
-        if (!((Button) view).getText().toString().equals("")) {
-            return;
-        }
+    public static String onClick(View view, GameData gameDataViewModel) {
+        String returnString = null;
+        if (((Button) view).getText().toString().equals("")) {
 
-        if (gameDataViewModel.playerTurn.getValue() == 1) {
-            ((Button) view).setText("X");
-            gameDataViewModel.incrementRound();
-
-            int playerTurn = gameDataViewModel.getPlayerState().playerTwoMove(gameDataViewModel.getGameButtons());
-
-            gameDataViewModel.playerTurn.setValue(playerTurn);
-        } else {
-            //change in here for AI view
-            ((Button) view).setText("O");
-            gameDataViewModel.setPlayer1Turn();
-            gameDataViewModel.incrementRound();
-        }
-        gameDataViewModel.incrementRound();
-
-        if (checkForWin()) {
             if (gameDataViewModel.playerTurn.getValue() == 1) {
-                player1Wins();
+                ((Button) view).setText("X");
+                gameDataViewModel.incrementRound();
+
+                int playerTurn = gameDataViewModel.getPlayerState().playerTwoMove(gameDataViewModel.getGameButtons());
+
+                gameDataViewModel.playerTurn.setValue(playerTurn);
             } else {
-                player2Wins();
+                //change in here for AI view
+                ((Button) view).setText("O");
+                gameDataViewModel.setPlayer1Turn();
+                gameDataViewModel.incrementRound();
             }
-        } else if (gameDataViewModel.getRoundCount() == 9) {
-            draw();
+            gameDataViewModel.incrementRound();
+
+            //Fix logic
+            if (checkForWin(gameDataViewModel)) {
+                if (gameDataViewModel.playerTurn.getValue() == 2) {
+                    returnString = player1Wins(gameDataViewModel);
+                } else {
+                    returnString = player2Wins(gameDataViewModel);
+                }
+            } else if (gameDataViewModel.getRoundCount() == 9) {
+                returnString = draw(gameDataViewModel);
+            }
         }
+        return returnString;
     }
 
-    private static boolean checkForWin() {
+    private static boolean checkForWin(GameData gameDataViewModel) {
         int row = gameDataViewModel.getBoardSize();
         int col = gameDataViewModel.getBoardSize();
         Button gameButtons[][] = gameDataViewModel.getGameButtons();

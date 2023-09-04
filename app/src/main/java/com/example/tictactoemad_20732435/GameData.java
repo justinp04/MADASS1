@@ -8,21 +8,22 @@ import androidx.lifecycle.ViewModel;
 public class GameData extends ViewModel {
     public MutableLiveData<Button[][]> gameButtons;
     public MutableLiveData<Integer> boardSize;
-    public MutableLiveData<Integer>playerTurn;
-    public MutableLiveData<Integer>roundCount;
-    public MutableLiveData<Integer>player1Points;
-    public MutableLiveData<Integer>player2Points;
+    public MutableLiveData<Integer> playerTurn;
+    public MutableLiveData<Integer> roundCount;
+    public MutableLiveData<Integer> player1Points;
+    public MutableLiveData<Integer> player2Points;
+    public MutableLiveData<Integer> drawCount;
     public MutableLiveData<PlayerState> playerState;
     //winState
 
-    public GameData()
-    {
+    public GameData() {
         gameButtons = new MutableLiveData<Button[][]>();
         boardSize = new MutableLiveData<Integer>();
         playerTurn = new MutableLiveData<Integer>();
         roundCount = new MutableLiveData<Integer>();
         player1Points = new MutableLiveData<Integer>();
         player2Points = new MutableLiveData<Integer>();
+        drawCount = new MutableLiveData<Integer>();
         playerState = new MutableLiveData<PlayerState>();
         setDefaultValues();
     }
@@ -34,9 +35,11 @@ public class GameData extends ViewModel {
         roundCount.setValue(0);
         player1Points.setValue(0);
         player2Points.setValue(0);
+        drawCount.setValue(0);
         boardSize.setValue(3);
         playerState.setValue(new AIPlayerState());
     }
+
     public void setGameButtons(Button[][] inButtons) {
         gameButtons.setValue(inButtons);
     }
@@ -77,6 +80,11 @@ public class GameData extends ViewModel {
         player2Points.setValue(player2Point);
     }
 
+    public void incrementDraws() {
+        int draws = drawCount.getValue() + 1;
+        drawCount.setValue(draws);
+    }
+
     public void setPlayerState(PlayerState inState) {
         playerState.setValue(inState);
     }
@@ -106,6 +114,10 @@ public class GameData extends ViewModel {
 
     public int getRoundCount() {
         return roundCount.getValue();
+    }
+
+    public int getDrawCount() {
+        return drawCount.getValue();
     }
 
     public PlayerState getPlayerState() {

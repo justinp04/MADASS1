@@ -79,6 +79,7 @@ public class GameFunction3x3 extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_game_function3x3, container, false);
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
         GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
+
         textViewPlayer1 = rootView.findViewById(R.id.player1_score);
         textViewPlayer2 = rootView.findViewById(R.id.player2_score);
         textMovesMade = rootView.findViewById(R.id.movesMade);
@@ -116,7 +117,7 @@ public class GameFunction3x3 extends Fragment {
             @Override
             public void onClick(View view)
             {
-                GameFunctions.resetGame();
+                GameFunctions.resetGame(gameDataViewModel);
             }
         });
         // Inflate the layout for this fragment
@@ -125,6 +126,11 @@ public class GameFunction3x3 extends Fragment {
 
     public void onClick(View view)
     {
-        GameFunctions.onClick(view);
+        GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
+        String returnString = GameFunctions.onClick(view, gameDataViewModel);
+        if (returnString != null)
+        {
+            Toast.makeText(requireContext(), returnString, Toast.LENGTH_SHORT).show();
+        }
     }
 }

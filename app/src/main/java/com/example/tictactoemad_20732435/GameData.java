@@ -3,8 +3,9 @@ package com.example.tictactoemad_20732435;
 import android.widget.Button;
 
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
-public class GameData {
+public class GameData extends ViewModel {
     public MutableLiveData<Button[][]> gameButtons;
     public MutableLiveData<Integer> boardSize;
     public MutableLiveData<Integer>playerTurn;
@@ -14,8 +15,29 @@ public class GameData {
     public MutableLiveData<PlayerState> playerState;
     //winState
 
+    public GameData()
+    {
+        gameButtons = new MutableLiveData<Button[][]>();
+        boardSize = new MutableLiveData<Integer>();
+        playerTurn = new MutableLiveData<Integer>();
+        roundCount = new MutableLiveData<Integer>();
+        player1Points = new MutableLiveData<Integer>();
+        player2Points = new MutableLiveData<Integer>();
+        playerState = new MutableLiveData<PlayerState>();
+        setDefaultValues();
+    }
+
     //Mutators
-    private void setGameButtons(Button[][] inButtons) {
+    public void setDefaultValues() {
+        gameButtons.setValue(new Button[3][3]);
+        playerTurn.setValue(1);
+        roundCount.setValue(0);
+        player1Points.setValue(0);
+        player2Points.setValue(0);
+        boardSize.setValue(3);
+        playerState.setValue(new AIPlayerState());
+    }
+    public void setGameButtons(Button[][] inButtons) {
         gameButtons.setValue(inButtons);
     }
 
@@ -57,15 +79,6 @@ public class GameData {
 
     public void setPlayerState(PlayerState inState) {
         playerState.setValue(inState);
-    }
-
-    public void setDefaultValues() {
-        playerTurn.setValue(1);
-        roundCount.setValue(0);
-        player1Points.setValue(0);
-        player2Points.setValue(0);
-        boardSize.setValue(3);
-        playerState.setValue(new AIPlayerState());
     }
 
     //public void setPlayerState(playerState newState) {

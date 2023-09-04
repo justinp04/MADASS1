@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         loadMenuFragment();
 
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(this).get(MainActivityData.class);
+        GameData gameDataViewModel = new ViewModelProvider(this).get(GameData.class);
         mainActivityDataViewModel.clickedValue.observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {

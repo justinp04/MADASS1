@@ -78,21 +78,26 @@ public class GameFunction5x5 extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_game_function5x5, container, false);
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
+        GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
+
         textViewPlayer1 = rootView.findViewById(R.id.player1_score);
         textViewPlayer2 = rootView.findViewById(R.id.player2_score);
         textMovesMade = rootView.findViewById(R.id.movesMade);
         textMovesLeft = rootView.findViewById(R.id.movesLeft);
 
-        for (int i = 0; i < row; i++)
-        {
-            for (int j = 0; j < col; j++)
-            {
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
                 String buttonID = "button_" + i + j;
                 int resID = getResources().getIdentifier(buttonID, "id", requireContext().getPackageName());
                 gameButtons[i][j] = rootView.findViewById(resID);
                 gameButtons[i][j].setOnClickListener(this::onClick);
+
             }
         }
+
+        gameDataViewModel.setBoardSize(5);
+        gameDataViewModel.setGameButtons(gameButtons);
+
         Button resetButton = rootView.findViewById(R.id.reset_button);
         Button settingsButton = rootView.findViewById(R.id.settings_button);
         Button menuButton = rootView.findViewById(R.id.menu_button);
@@ -111,53 +116,22 @@ public class GameFunction5x5 extends Fragment {
         });
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-                resetGame();
+            public void onClick(View view) {
+                GameFunctions.resetGame(gameDataViewModel);
             }
         });
 
         return rootView;
     }
 
-    public void onClick(View view)
-    {
-        if (!((Button) view).getText().toString().equals("")) {
-            return;
-        }
-
-        if (player1Turn) {
-            ((Button) view).setText("X");
-        }
-        else
-        {
-            ((Button) view).setText("O");
-        }
-        roundCount++;
-        updateMovesText();
-
-        if (checkForWin()) {
-            if (player1Turn) {
-                player1Wins();
-                updateMovesText();
-            }
-            else
-            {
-                player2Wins();
-                updateMovesText();
-            }
-        }
-        else if (roundCount == 25)
-        {
-            draw();
-            updateMovesText();
-        }
-        else
-        {
-            player1Turn = !player1Turn; //swaps turn each time
+    public void onClick(View view) {
+        GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
+        String returnString = GameFunctions.onClick(view, gameDataViewModel);
+        if (returnString != null) {
+            Toast.makeText(requireContext(), returnString, Toast.LENGTH_SHORT).show();
         }
     }
-
+/*
     private boolean checkForWin() {
         String[][] fields = new String[row][col];
 
@@ -202,56 +176,9 @@ public class GameFunction5x5 extends Fragment {
             }
         }
 
+
+
         return true;
-    }
-    private void player1Wins()
-    {
-        player1Points++;
-        Toast.makeText(requireContext(), "Player 1 Wins!", Toast.LENGTH_SHORT).show();
-        updatePointsText();
-        resetBoard();
-    }
-    private void player2Wins()
-    {
-        player2Points++;
-        Toast.makeText(requireContext(), "Player 2 Wins!", Toast.LENGTH_SHORT).show();
-        updatePointsText();
-        resetBoard();
-    }
-    private void draw()
-    {
-        Context MainActivity;
-        Toast.makeText(requireContext(), "Draw!", Toast.LENGTH_SHORT).show();
-        resetBoard();
-    }
 
-    private void updatePointsText()
-    {
-        textViewPlayer1.setText("Player 1: " + player1Points);
-        textViewPlayer2.setText("Player 2: " + player2Points);
-    }
-    private void updateMovesText()
-    {
-        textMovesMade.setText("Moves Made: " + roundCount);
-        textMovesLeft.setText("Moves Left " + (25 - roundCount));
-    }
-    private void resetBoard()
-    {
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
-                gameButtons[i][j].setText("");
-            }
-        }
-        roundCount = 0;
-        player1Turn = true;
-    }
-
-    private void resetGame()
-    {
-        player1Points = 0;
-        player2Points = 0;
-        updatePointsText();
-        resetBoard();
-    }
-
+ */
 }

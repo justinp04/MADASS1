@@ -4,16 +4,21 @@ import android.widget.Button;
 
 public class GameData {
     private Button[][] gameButtons;
+    private int boardSize;
     private int playerTurn;
     private int roundCount;
     private int player1Points;
     private int player2Points;
-    //PlayerState
+    private PlayerState playerState;
     //winState
 
     //Mutators
     private void setGameButtons(Button[][] inButtons) {
         gameButtons = inButtons;
+    }
+
+    public void setBoardSize(int size) {
+        boardSize = size;
     }
 
     public void setPlayer1Turn() {
@@ -40,12 +45,28 @@ public class GameData {
         player2Points++;
     }
 
-    //public void setPlayerState(playerState newState) {
+    public void setPlayerState(PlayerState inState) {
+        playerState = inState;
+    }
 
+    public void setDefaultValues() {
+        playerTurn = 1;
+        roundCount = 0;
+        player1Points = 0;
+        player2Points = 0;
+        boardSize = 3;
+        playerState = new AIPlayerState();
+    }
+
+    //public void setPlayerState(playerState newState) {
 
     //Accessors
     public Button[][] getGameButtons() {
         return gameButtons;
+    }
+
+    public int getBoardSize() {
+        return boardSize;
     }
 
     public int getPlayer1Points() {
@@ -62,5 +83,9 @@ public class GameData {
 
     public int getRoundCount() {
         return roundCount;
+    }
+
+    public PlayerState getPlayerState() {
+        return playerState;
     }
 }

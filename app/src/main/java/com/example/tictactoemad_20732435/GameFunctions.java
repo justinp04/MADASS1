@@ -73,7 +73,7 @@ public class GameFunctions {
             gameDataViewModel.incrementRound();
 
             //Fix logic
-            if (checkForWin(gameDataViewModel, 3, "X")) {
+            if (checkForWin(gameDataViewModel, gameDataViewModel.getWinCondition(), "X")) {
                 if (gameDataViewModel.playerTurn.getValue() == 2) {
                     returnString = player1Wins(gameDataViewModel);
                     player1Wins(gameDataViewModel);
@@ -92,9 +92,15 @@ public class GameFunctions {
         int row = gameDataViewModel.getBoardSize();
         int col = gameDataViewModel.getBoardSize();
         Button gameButtons[][] = gameDataViewModel.getGameButtons();
+        StringBuilder winBuilder = new StringBuilder();
+
+        for (int i = 0; i < winCondition; i++)
+        {
+            winBuilder.append(playerSymbol);
+        }
+        String winCompare = winBuilder.toString();
 
         String[][] fields = new String[row][col];
-        String winCompare = "XXX";
         StringBuffer rowBuffer = new StringBuffer();
         StringBuffer colBuffer = new StringBuffer();
 
@@ -153,7 +159,8 @@ public class GameFunctions {
             }
             diagBuffer.delete(0, rowBuffer.length());
         }
-        //check forward diag
+
+        //check forward diag - not working just yet
         buttonsInDiagonal = 0;
         for (int i = 1; i <= diagonalLines; i++) {
             StringBuffer diagBuffer = new StringBuffer();
@@ -161,8 +168,8 @@ public class GameFunctions {
             if (i <= midLine) {
                 buttonsInDiagonal++;
                 for (int j = 0; j < buttonsInDiagonal; j++) {
+                    rowIndex = (length - j) - 1;
                     colIndex = (i - j) - 1;
-                    rowIndex = j;
                     diagBuffer.append(fields[rowIndex][colIndex]);
                 }
             } else {

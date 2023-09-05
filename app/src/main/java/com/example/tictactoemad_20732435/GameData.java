@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 public class GameData extends ViewModel {
     public MutableLiveData<Button[][]> gameButtons;
+    public MutableLiveData<Integer> winCondition;
     public MutableLiveData<Integer> boardSize;
     public MutableLiveData<Integer> playerTurn;
     public MutableLiveData<Integer> roundCount;
@@ -25,6 +26,7 @@ public class GameData extends ViewModel {
         player2Points = new MutableLiveData<Integer>();
         drawCount = new MutableLiveData<Integer>();
         playerState = new MutableLiveData<PlayerState>();
+        winCondition = new MutableLiveData<Integer>();
         setDefaultValues();
     }
 
@@ -37,6 +39,7 @@ public class GameData extends ViewModel {
         player2Points.setValue(0);
         drawCount.setValue(0);
         boardSize.setValue(3);
+        winCondition.setValue(3);
         playerState.setValue(new AIPlayerState());
     }
 
@@ -51,7 +54,10 @@ public class GameData extends ViewModel {
     public void setPlayer1Turn() {
         playerTurn.setValue(1);
     }
-
+    public void setWinCondition(int win)
+    {
+        winCondition.setValue(win);
+    }
     public void setPlayer2Turn() {
         playerTurn.setValue(2);
     }
@@ -118,6 +124,11 @@ public class GameData extends ViewModel {
 
     public int getDrawCount() {
         return drawCount.getValue();
+    }
+
+    public int getWinCondition()
+    {
+        return winCondition.getValue();
     }
 
     public PlayerState getPlayerState() {

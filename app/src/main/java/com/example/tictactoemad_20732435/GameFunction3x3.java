@@ -132,5 +132,21 @@ public class GameFunction3x3 extends Fragment {
         {
             Toast.makeText(requireContext(), returnString, Toast.LENGTH_SHORT).show();
         }
+        updateText();
+    }
+
+    private void updateText()
+    {
+        GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
+        int player1Points = gameDataViewModel.getPlayer1Points();
+        int player2Points = gameDataViewModel.getPlayer2Points();
+        int roundCount = gameDataViewModel.getRoundCount();
+        int movesLeft = (gameDataViewModel.getBoardSize() * gameDataViewModel.getBoardSize()) - gameDataViewModel.getRoundCount();
+
+        textViewPlayer1.setText("Player 1: " + player1Points);
+        textViewPlayer2.setText("Player 2: " + player2Points);
+        textMovesMade.setText("Moves Made: " + roundCount);
+        textMovesLeft.setText("Moves Left: " + movesLeft);
+
     }
 }

@@ -59,27 +59,27 @@ public class GameFunctions {
 
             if (gameDataViewModel.playerTurn.getValue() == 1) {
                 ((Button) view).setText("X");
-                gameDataViewModel.incrementRound();
 
                 int playerTurn = gameDataViewModel.getPlayerState().playerTwoMove(gameDataViewModel.getGameButtons());
 
                 gameDataViewModel.playerTurn.setValue(playerTurn);
+                gameDataViewModel.incrementRound();
             } else {
                 //change in here for AI view
                 ((Button) view).setText("O");
                 gameDataViewModel.setPlayer1Turn();
                 gameDataViewModel.incrementRound();
             }
-            gameDataViewModel.incrementRound();
 
             //Fix logic
             if (checkForWin(gameDataViewModel, gameDataViewModel.getWinCondition(), "X")) {
+                if (gameDataViewModel.playerTurn.getValue() == 1) {
+                    returnString = player2Wins(gameDataViewModel);
+                }
+            }
+            if (checkForWin(gameDataViewModel, gameDataViewModel.getWinCondition(), "O")) {
                 if (gameDataViewModel.playerTurn.getValue() == 2) {
                     returnString = player1Wins(gameDataViewModel);
-                    player1Wins(gameDataViewModel);
-                } else {
-                    returnString = player2Wins(gameDataViewModel);
-                    player2Wins(gameDataViewModel);
                 }
             } else if (gameDataViewModel.getRoundCount() == (gameDataViewModel.getBoardSize() * gameDataViewModel.getBoardSize())) {
                 returnString = draw(gameDataViewModel);

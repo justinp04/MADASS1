@@ -55,6 +55,16 @@ public class GameFunctions {
 
     public static String onClick(View view, GameData gameDataViewModel) {
         String returnString = null;
+        String playerSymbol = "";
+        int playerGo = gameDataViewModel.getPlayerTurn();
+        if (playerGo == 1)
+        {
+            playerSymbol = "X";
+        }
+        else if (playerGo == 2)
+        {
+            playerSymbol = "O";
+        }
         if (((Button) view).getText().toString().equals("")) {
 
             if (gameDataViewModel.playerTurn.getValue() == 1) {
@@ -72,13 +82,12 @@ public class GameFunctions {
             }
 
             //Fix logic
-            if (checkForWin(gameDataViewModel, gameDataViewModel.getWinCondition(), "X")) {
+            if (checkForWin(gameDataViewModel, gameDataViewModel.getWinCondition(), playerSymbol)) {
                 if (gameDataViewModel.playerTurn.getValue() == 1) {
                     returnString = player2Wins(gameDataViewModel);
                 }
-            }
-            if (checkForWin(gameDataViewModel, gameDataViewModel.getWinCondition(), "O")) {
-                if (gameDataViewModel.playerTurn.getValue() == 2) {
+                else if (gameDataViewModel.playerTurn.getValue() == 2)
+                {
                     returnString = player1Wins(gameDataViewModel);
                 }
             } else if (gameDataViewModel.getRoundCount() == (gameDataViewModel.getBoardSize() * gameDataViewModel.getBoardSize())) {

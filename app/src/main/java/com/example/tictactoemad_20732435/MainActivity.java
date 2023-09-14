@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private GameFunction4x4 gameFunction4x4 = new GameFunction4x4();
     private GameFunction5x5 gameFunction5x5 = new GameFunction5x5();
     private Settings settings = new Settings();
+    private PauseMenuFragment pauseMenu = new PauseMenuFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         loadMenuFragment();
 
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(this).get(MainActivityData.class);
+        GameData gameDataViewModel = new ViewModelProvider(this).get(GameData.class);
         mainActivityDataViewModel.clickedValue.observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
@@ -52,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
                 if (mainActivityDataViewModel.getClickedValue() == 4)
                 {
                     loadSettingsFragment();
+                }
+                if (mainActivityDataViewModel.getClickedValue() == 5)
+                {
+                    loadPauseFragment();
                 }
             }
         });
@@ -118,6 +124,19 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             fm.beginTransaction().replace(R.id.fragment_game, settings).commit();
+        }
+    }
+
+    private void loadPauseFragment()
+    {
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment frag = fm.findFragmentById(R.id.fragment_game);
+        if (frag==null)
+        {
+            fm.beginTransaction().add(R.id.fragment_game, pauseMenu).commit();
+        }
+        else {
+            fm.beginTransaction().replace(R.id.fragment_game, pauseMenu).commit();
         }
     }
 

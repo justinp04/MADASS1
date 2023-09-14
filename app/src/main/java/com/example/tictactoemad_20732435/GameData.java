@@ -2,90 +2,136 @@ package com.example.tictactoemad_20732435;
 
 import android.widget.Button;
 
-public class GameData {
-    private Button[][] gameButtons;
-    private int boardSize;
-    private int playerTurn;
-    private int roundCount;
-    private int player1Points;
-    private int player2Points;
-    private PlayerState playerState;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
+
+public class GameData extends ViewModel {
+    public MutableLiveData<Button[][]> gameButtons;
+    public MutableLiveData<Integer> winCondition;
+    public MutableLiveData<Integer> boardSize;
+    public MutableLiveData<Integer> playerTurn;
+    public MutableLiveData<Integer> roundCount;
+    public MutableLiveData<Integer> player1Points;
+    public MutableLiveData<Integer> player2Points;
+    public MutableLiveData<Integer> drawCount;
+    public MutableLiveData<PlayerState> playerState;
     //winState
 
+    public GameData() {
+        gameButtons = new MutableLiveData<Button[][]>();
+        boardSize = new MutableLiveData<Integer>();
+        playerTurn = new MutableLiveData<Integer>();
+        roundCount = new MutableLiveData<Integer>();
+        player1Points = new MutableLiveData<Integer>();
+        player2Points = new MutableLiveData<Integer>();
+        drawCount = new MutableLiveData<Integer>();
+        playerState = new MutableLiveData<PlayerState>();
+        winCondition = new MutableLiveData<Integer>();
+        setDefaultValues();
+    }
+
     //Mutators
-    private void setGameButtons(Button[][] inButtons) {
-        gameButtons = inButtons;
+    public void setDefaultValues() {
+        gameButtons.setValue(new Button[3][3]);
+        playerTurn.setValue(1);
+        roundCount.setValue(0);
+        player1Points.setValue(0);
+        player2Points.setValue(0);
+        drawCount.setValue(0);
+        boardSize.setValue(3);
+        winCondition.setValue(3);
+        playerState.setValue(new AIPlayerState());
+    }
+
+    public void setGameButtons(Button[][] inButtons) {
+        gameButtons.setValue(inButtons);
     }
 
     public void setBoardSize(int size) {
-        boardSize = size;
+        boardSize.setValue(size);
     }
 
     public void setPlayer1Turn() {
-        playerTurn = 1;
+        playerTurn.setValue(1);
     }
-
+    public void setWinCondition(int win)
+    {
+        winCondition.setValue(win);
+    }
     public void setPlayer2Turn() {
-        playerTurn = 2;
+        playerTurn.setValue(2);
     }
 
     public void incrementRound() {
-        roundCount++;
+        int roundIncrease = roundCount.getValue() + 1;
+
+        roundCount.setValue(roundIncrease);
     }
 
     public void decreaseRound() {
-        roundCount--;
+        int roundDecrease = roundCount.getValue() - 1;
+
+        roundCount.setValue(roundDecrease);
     }
 
     public void incrementPlayer1() {
-        player1Points++;
+        int player1Point = player1Points.getValue() + 1;
+
+        player1Points.setValue(player1Point);
     }
 
     public void incrementPlayer2() {
-        player2Points++;
+        int player2Point = player2Points.getValue() + 1;
+
+        player2Points.setValue(player2Point);
+    }
+
+    public void incrementDraws() {
+        int draws = drawCount.getValue() + 1;
+        drawCount.setValue(draws);
     }
 
     public void setPlayerState(PlayerState inState) {
-        playerState = inState;
-    }
-
-    public void setDefaultValues() {
-        playerTurn = 1;
-        roundCount = 0;
-        player1Points = 0;
-        player2Points = 0;
-        boardSize = 3;
-        playerState = new AIPlayerState();
+        playerState.setValue(inState);
     }
 
     //public void setPlayerState(playerState newState) {
 
     //Accessors
     public Button[][] getGameButtons() {
-        return gameButtons;
+        return gameButtons.getValue();
     }
 
     public int getBoardSize() {
-        return boardSize;
+        return boardSize.getValue();
     }
 
     public int getPlayer1Points() {
-        return player1Points;
+        return player1Points.getValue();
     }
 
     public int getPlayer2Points() {
-        return player2Points;
+        return player2Points.getValue();
     }
 
     public int getPlayerTurn() {
-        return playerTurn;
+        return playerTurn.getValue();
     }
 
     public int getRoundCount() {
-        return roundCount;
+        return roundCount.getValue();
+    }
+
+    public int getDrawCount() {
+        return drawCount.getValue();
+    }
+
+    public int getWinCondition()
+    {
+        return winCondition.getValue();
     }
 
     public PlayerState getPlayerState() {
-        return playerState;
+        return playerState.getValue();
     }
 }

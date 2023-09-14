@@ -2,32 +2,34 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_startMenu"
+    android:id="@+id/fragment_pause"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StartMenuFragment">
+    android:background="@color/white"
+    tools:context=".PauseMenuFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizguideline1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent=".2" />
+        app:layout_constraintGuide_percent=".15" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizguideline2"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent=".7" />
+        app:layout_constraintGuide_percent=".85" />
 
     <TextView
         android:id="@+id/menuTitle"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_margin="5dp"
         android:autoSizeTextType="uniform"
         android:gravity="center"
-        android:text="WELCOME TO TIC-TAC-TOE X-TREME!"
+        android:text="PAUSED"
         app:layout_constraintBottom_toTopOf="@id/horizguideline1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,84 +53,28 @@
             app:layout_constraintGuide_percent=".5" />
 
         <Button
-            android:id="@+id/button2P"
+            android:id="@+id/resumeButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="5dp"
             android:background="@drawable/square_button"
-            android:text="2 PLAYER MODE"
+            android:text="Resume"
+            android:layout_margin="5dp"
             app:layout_constraintBottom_toTopOf="@id/horizguideline3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/buttonAI"
+            android:id="@+id/quitButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="5dp"
             android:background="@drawable/square_button"
-            android:text="BOT MODE"
+            android:text="Quit"
+            android:layout_margin="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/horizguideline3" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/bottomLayout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="5dp"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.2"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/imageGuide1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent=".30" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/imageGuide2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent=".70" />
-
-        <Button
-            android:id="@+id/leaderboardButton"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:scaleType="fitXY"
-            android:text="Leaderboard"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/imageGuide1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-        </Button>
-
-        <Button
-            android:id="@+id/settingButton"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:scaleType="fitXY"
-            android:text="Settings"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/imageGuide2"
-            app:layout_constraintTop_toTopOf="parent">
-
-        </Button>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

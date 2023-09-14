@@ -12,11 +12,10 @@ import android.widget.Button;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link StartMenuFragment#newInstance} factory method to
+ * Use the {@link PauseMenuFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-/*Date created: 28/08/2023*/
-public class StartMenuFragment extends Fragment {
+public class PauseMenuFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,7 +26,7 @@ public class StartMenuFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public StartMenuFragment() {
+    public PauseMenuFragment() {
         // Required empty public constructor
     }
 
@@ -37,11 +36,11 @@ public class StartMenuFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment StartMenuFragment.
+     * @return A new instance of fragment PauseMenuFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static StartMenuFragment newInstance(String param1, String param2) {
-        StartMenuFragment fragment = new StartMenuFragment();
+    public static PauseMenuFragment newInstance(String param1, String param2) {
+        PauseMenuFragment fragment = new PauseMenuFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -60,59 +59,32 @@ public class StartMenuFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState)
-    {
-        View rootView =inflater.inflate(R.layout.fragment_start_menu, container, false);
+                             Bundle savedInstanceState) {
+        View rootView =inflater.inflate(R.layout.fragment_pause_menu, container, false);
         // Inflate the layout for this fragment
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity())
                 .get(MainActivityData.class);
         GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
 
-        Button twoPlayerGame = rootView.findViewById(R.id.button2P);
-        Button AIGame = rootView.findViewById(R.id.buttonAI);
-        Button settings = rootView.findViewById(R.id.settingButton);
-        Button leaderboard = rootView.findViewById(R.id.leaderboardButton);
 
-        twoPlayerGame.setOnClickListener(new View.OnClickListener()
-        {
+        Button resumeButton = rootView.findViewById(R.id.resumeButton);
+        Button quitButton = rootView.findViewById(R.id.quitButton);
+
+        resumeButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-                gameDataViewModel.setPlayerState(new HumanPlayerState());
+            public void onClick(View view) {
                 mainActivityDataViewModel.setClickedValue(1);
             }
         });
 
-        AIGame.setOnClickListener(new View.OnClickListener()
-        {
+        quitButton.setOnClickListener((new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-                gameDataViewModel.setDefaultValues();
-                gameDataViewModel.setPlayerState(new AIPlayerState());
-                mainActivityDataViewModel.setClickedValue(1);
-                //set clicked value for ai game mode
+            public void onClick(View view) {
+                mainActivityDataViewModel.setClickedValue(0);
             }
-        });
+        }));
 
-        settings.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                mainActivityDataViewModel.setClickedValue(4);
-            }
-        });
-
-        leaderboard.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                //set clicked value for leaderboard
-            }
-        });
-
-        return rootView;
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_pause_menu, container, false);
     }
 }

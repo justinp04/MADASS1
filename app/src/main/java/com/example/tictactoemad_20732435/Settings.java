@@ -77,22 +77,45 @@ public class Settings extends Fragment {
         Button iconCircles = rootView.findViewById(R.id.icon_circles);
         ViewGroup constraintLayout = rootView.findViewById(R.id.fragment_settings);
 
+        int boardSize = gameDataViewModel.getBoardSize();
+
+        if (boardSize == 3)
+        {
+            setUpButtons3x3(winCondition4, winCondition5);
+        }
+        else if (boardSize == 4)
+        {
+            setUpButtons4x4(winCondition4, winCondition5);
+        }
+        else if (boardSize == 5)
+        {
+            setUpButtons5x5(winCondition4, winCondition5);
+        }
+
         gameMode3x3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainActivityDataViewModel.setClickedValue(1);
+                gameDataViewModel.setBoardSize(3);
+                gameDataViewModel.setWinCondition(3);
+                setUpButtons3x3(winCondition4, winCondition5);
             }
         });
         gameMode4x4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainActivityDataViewModel.setClickedValue(2);
+                gameDataViewModel.setBoardSize(4);
+                if (gameDataViewModel.getWinCondition() == 5)
+                {
+                    gameDataViewModel.setWinCondition(4);
+                }
+                setUpButtons4x4(winCondition4, winCondition5);
             }
         });
         gameMode5x5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainActivityDataViewModel.setClickedValue(3);
+                gameDataViewModel.setBoardSize(5);
+                setUpButtons5x5(winCondition4, winCondition5);
             }
         });
         winCondition3.setOnClickListener(new View.OnClickListener() {
@@ -129,14 +152,34 @@ public class Settings extends Fragment {
             }
         });
 
-
-
         // Inflate the layout for this fragment
         return rootView;
+    }
+
+    //Functions to disable/enable buttons based on board size
+
+    private void setUpButtons3x3(Button button4x4, Button button5x5)
+    {
+        button4x4.setEnabled(false);
+        button5x5.setEnabled(false);
+    }
+
+    private void setUpButtons4x4(Button button4x4, Button button5x5)
+    {
+        button4x4.setEnabled(true);
+        button5x5.setEnabled(false);
+    }
+
+    private void setUpButtons5x5(Button button4x4, Button button5x5)
+    {
+        button4x4.setEnabled(true);
+        button5x5.setEnabled(true);
     }
 
     public void updateWinCondition(int winCondition)
     {
         this.winCondition = winCondition;
     }
+
+
 }

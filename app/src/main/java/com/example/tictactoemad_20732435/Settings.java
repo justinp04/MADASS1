@@ -75,6 +75,7 @@ public class Settings extends Fragment {
         Button winCondition5 = rootView.findViewById(R.id.inARow5);
         Button iconCrosses = rootView.findViewById(R.id.icon_crosses);
         Button iconCircles = rootView.findViewById(R.id.icon_circles);
+        Button backButton = rootView.findViewById(R.id.backButton);
         ViewGroup constraintLayout = rootView.findViewById(R.id.fragment_settings);
 
         int boardSize = gameDataViewModel.getBoardSize();
@@ -149,6 +150,12 @@ public class Settings extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(requireContext(), "You are now Circles", Toast.LENGTH_SHORT).show();
+            }
+        });
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivityDataViewModel.setClickedValue(0);
             }
         });
 

@@ -151,5 +151,17 @@
 
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent=".2"
+        app:layout_constraintWidth_percent=".25"
+        android:text="Back"
+        android:background="@drawable/square_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 

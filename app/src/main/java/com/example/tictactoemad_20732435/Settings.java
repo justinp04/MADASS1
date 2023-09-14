@@ -77,17 +77,17 @@ public class Settings extends Fragment {
         Button iconCircles = rootView.findViewById(R.id.icon_circles);
         ViewGroup constraintLayout = rootView.findViewById(R.id.fragment_settings);
 
-        int boardsize = gameDataViewModel.getBoardSize(); 
+        int boardSize = gameDataViewModel.getBoardSize();
 
-        if (boardsize == 3)
+        if (boardSize == 3)
         {
             setUpButtons3x3(winCondition4, winCondition5);
         }
-        else if (boardsize == 4)
+        else if (boardSize == 4)
         {
             setUpButtons4x4(winCondition4, winCondition5);
         }
-        else if (boardsize == 5)
+        else if (boardSize == 5)
         {
             setUpButtons5x5(winCondition4, winCondition5);
         }

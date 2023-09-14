@@ -90,7 +90,6 @@ public class StartMenuFragment extends Fragment {
             @Override
             public void onClick(View view)
             {
-                gameDataViewModel.setDefaultValues();
                 gameDataViewModel.setPlayerState(new AIPlayerState());
                 mainActivityDataViewModel.setClickedValue(boardSizeFragment);
                 //set clicked value for ai game mode

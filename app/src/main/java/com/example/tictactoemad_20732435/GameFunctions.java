@@ -94,6 +94,7 @@ public class GameFunctions {
         int col = gameDataViewModel.getBoardSize();
         Button gameButtons[][] = gameDataViewModel.getGameButtons();
         StringBuilder winBuilder = new StringBuilder();
+        boolean win = false;
 
         for (int i = 0; i < winCondition; i++)
         {
@@ -122,9 +123,9 @@ public class GameFunctions {
             String colCheck = colBuffer.toString();
 
             if (rowCheck.contains(winCompare))
-                return true;
+                win = true;
             if (colCheck.contains(winCompare))
-                return true;
+                win = true;
 
             rowBuffer.delete(0, rowBuffer.length());
             colBuffer.delete(0, colBuffer.length());
@@ -156,7 +157,7 @@ public class GameFunctions {
             }
             String diagCheck = diagBuffer.toString();
             if (diagCheck.contains(winCompare)) {
-                return true;
+                win = true;
             }
             diagBuffer.delete(0, rowBuffer.length());
         }
@@ -183,10 +184,10 @@ public class GameFunctions {
             }
             String diagCheck = diagBuffer.toString();
             if (diagCheck.contains(winCompare)) {
-                return true;
+                win = true;
             }
             diagBuffer.delete(0, rowBuffer.length());
         }
-        return false;
+        return win;
     }
 }

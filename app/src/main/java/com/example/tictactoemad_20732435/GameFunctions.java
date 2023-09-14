@@ -49,12 +49,9 @@ public class GameFunctions {
         String returnString = null;
         String playerSymbol = "";
         int playerGo = gameDataViewModel.getPlayerTurn();
-        if (playerGo == 1)
-        {
+        if (playerGo == 1) {
             playerSymbol = "X";
-        }
-        else if (playerGo == 2)
-        {
+        } else if (playerGo == 2) {
             playerSymbol = "O";
         }
         if (((Button) view).getText().toString().equals("")) {
@@ -72,16 +69,13 @@ public class GameFunctions {
                 gameDataViewModel.setPlayer1Turn();
                 gameDataViewModel.incrementRound();
             }
-
-            //Fix logic
-            if (checkForWin(gameDataViewModel, gameDataViewModel.getWinCondition(), playerSymbol)) {
-                if (gameDataViewModel.playerTurn.getValue() == 1) {
-                    returnString = player2Wins(gameDataViewModel);
-                }
-                else if (gameDataViewModel.playerTurn.getValue() == 2)
-                {
-                    returnString = player1Wins(gameDataViewModel);
-                }
+            
+            boolean play1Wins = checkForWin(gameDataViewModel, gameDataViewModel.getWinCondition(), "X");
+            boolean play2Wins = checkForWin(gameDataViewModel, gameDataViewModel.getWinCondition(), "O");
+            if (play2Wins) {
+                returnString = player2Wins(gameDataViewModel);
+            } else if (play1Wins) {
+                returnString = player1Wins(gameDataViewModel);
             } else if (gameDataViewModel.getRoundCount() == (gameDataViewModel.getBoardSize() * gameDataViewModel.getBoardSize())) {
                 returnString = draw(gameDataViewModel);
             }
@@ -95,8 +89,7 @@ public class GameFunctions {
         Button gameButtons[][] = gameDataViewModel.getGameButtons();
         StringBuilder winBuilder = new StringBuilder();
 
-        for (int i = 0; i < winCondition; i++)
-        {
+        for (int i = 0; i < winCondition; i++) {
             winBuilder.append(playerSymbol);
         }
         String winCompare = winBuilder.toString();

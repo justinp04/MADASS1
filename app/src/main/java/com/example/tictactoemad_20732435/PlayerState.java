@@ -4,7 +4,7 @@ import android.widget.Button;
 
 public interface PlayerState
 {
-    public int playerTwoMove(Button[][] gameBoard);
+    public int playerTwoMove(GameData gameDataViewModel);
     @Override
     public String toString();
 }

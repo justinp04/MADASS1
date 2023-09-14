@@ -58,25 +58,36 @@ public class GameFunctions {
 
             if (gameDataViewModel.playerTurn.getValue() == 1) {
                 ((Button) view).setText("X");
-
-                int playerTurn = gameDataViewModel.getPlayerState().playerTwoMove(gameDataViewModel.getGameButtons());
-
-                gameDataViewModel.playerTurn.setValue(playerTurn);
                 gameDataViewModel.incrementRound();
+
+                //Get player turn from playerState.
+                // If 2player mode will return 2,
+                // If ai mode will perform ai move then return 1.
+                int playerTurn = gameDataViewModel.getPlayerState().playerTwoMove(gameDataViewModel);
+                gameDataViewModel.playerTurn.setValue(playerTurn);
+
             } else {
                 //change in here for AI view
                 ((Button) view).setText("O");
                 gameDataViewModel.setPlayer1Turn();
                 gameDataViewModel.incrementRound();
             }
-            
+
+            //Check for wins or draws.
             boolean play1Wins = checkForWin(gameDataViewModel, gameDataViewModel.getWinCondition(), "X");
             boolean play2Wins = checkForWin(gameDataViewModel, gameDataViewModel.getWinCondition(), "O");
+            boolean draw = false;
+            if (gameDataViewModel.getRoundCount() == (gameDataViewModel.getBoardSize() *
+                    gameDataViewModel.getBoardSize()))
+            {
+                draw = true;
+            }
+
             if (play2Wins) {
                 returnString = player2Wins(gameDataViewModel);
             } else if (play1Wins) {
                 returnString = player1Wins(gameDataViewModel);
-            } else if (gameDataViewModel.getRoundCount() == (gameDataViewModel.getBoardSize() * gameDataViewModel.getBoardSize())) {
+            } else if (draw) {
                 returnString = draw(gameDataViewModel);
             }
         }

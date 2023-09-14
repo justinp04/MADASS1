@@ -105,11 +105,8 @@ public class GameFunction3x3 extends Fragment {
                 gameButtons[i][j].setOnClickListener(this::onClick);
             }
         }
-<<<<<<< HEAD
         gameDataViewModel.setBoardSize(3);
         gameDataViewModel.setGameButtons(gameButtons);
-=======
->>>>>>> main
 
         Button resetButton = rootView.findViewById(R.id.reset_button);
         Button settingsButton = rootView.findViewById(R.id.settings_button);
@@ -183,14 +180,14 @@ public class GameFunction3x3 extends Fragment {
 
     public void onClick(View view)
     {
-<<<<<<< HEAD
         GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
         String returnString = GameFunctions.onClick(view, gameDataViewModel);
         if (returnString != null)
-=======
-        Button currentButton = (Button)view;
-        // If the there is the button already has a value
+        {
+            Button currentButton = (Button)view;
+        }
 
+        // If the there is the button already has a value
         if(!undoButton.isEnabled())
         {
             undoButton.setEnabled(true);
@@ -231,7 +228,6 @@ public class GameFunction3x3 extends Fragment {
             }
         }
         else if (roundCount == 9)
->>>>>>> main
         {
             Toast.makeText(requireContext(), returnString, Toast.LENGTH_SHORT).show();
         }
@@ -250,9 +246,8 @@ public class GameFunction3x3 extends Fragment {
         textViewPlayer2.setText("Player 2: " + player2Points);
         textMovesMade.setText("Moves Made: " + roundCount);
         textMovesLeft.setText("Moves Left: " + movesLeft);
+    }
 
-<<<<<<< HEAD
-=======
     private void resetBoard()
     {
         for (int i = 0; i < row; i++) {
@@ -271,6 +266,5 @@ public class GameFunction3x3 extends Fragment {
         undoList.clear();
         updatePointsText();
         resetBoard();
->>>>>>> main
     }
 }

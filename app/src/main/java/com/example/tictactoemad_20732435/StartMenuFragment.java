@@ -66,6 +66,7 @@ public class StartMenuFragment extends Fragment {
         // Inflate the layout for this fragment
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity())
                 .get(MainActivityData.class);
+        GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
 
         Button twoPlayerGame = rootView.findViewById(R.id.button2P);
         Button AIGame = rootView.findViewById(R.id.buttonAI);
@@ -77,6 +78,7 @@ public class StartMenuFragment extends Fragment {
             @Override
             public void onClick(View view)
             {
+                gameDataViewModel.setPlayerState(new HumanPlayerState());
                 mainActivityDataViewModel.setClickedValue(1);
             }
         });
@@ -86,6 +88,9 @@ public class StartMenuFragment extends Fragment {
             @Override
             public void onClick(View view)
             {
+                gameDataViewModel.setDefaultValues();
+                gameDataViewModel.setPlayerState(new AIPlayerState());
+                mainActivityDataViewModel.setClickedValue(1);
                 //set clicked value for ai game mode
             }
         });

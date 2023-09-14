@@ -65,6 +65,7 @@ public class Settings extends Fragment {
                              Bundle savedInstanceStatse) {
         View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
+        GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
 
         Button gameMode3x3 = rootView.findViewById(R.id.gamemode3x3);
         Button gameMode4x4 = rootView.findViewById(R.id.gamemode4x4);
@@ -97,18 +98,21 @@ public class Settings extends Fragment {
         winCondition3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                gameDataViewModel.setWinCondition(3);
                 Toast.makeText(requireContext(), "3 In A Row", Toast.LENGTH_SHORT).show();
             }
         });
         winCondition4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                gameDataViewModel.setWinCondition(4);
                 Toast.makeText(requireContext(), "4 In A Row", Toast.LENGTH_SHORT).show();
             }
         });
         winCondition5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                gameDataViewModel.setWinCondition(5);
                 Toast.makeText(requireContext(), "5 In A Row", Toast.LENGTH_SHORT).show();
             }
         });

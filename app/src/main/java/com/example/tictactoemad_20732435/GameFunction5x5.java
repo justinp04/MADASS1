@@ -101,6 +101,7 @@ public class GameFunction5x5 extends Fragment {
         Button resetButton = rootView.findViewById(R.id.reset_button);
         Button settingsButton = rootView.findViewById(R.id.settings_button);
         Button menuButton = rootView.findViewById(R.id.menu_button);
+        Button pauseButton = rootView.findViewById(R.id.pause_button);
 
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,6 +119,13 @@ public class GameFunction5x5 extends Fragment {
             @Override
             public void onClick(View view) {
                 GameFunctions.resetGame(gameDataViewModel);
+                updatePlayerText();
+            }
+        });
+        pauseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivityDataViewModel.setClickedValue(5);
             }
         });
 
@@ -130,55 +138,16 @@ public class GameFunction5x5 extends Fragment {
         if (returnString != null) {
             Toast.makeText(requireContext(), returnString, Toast.LENGTH_SHORT).show();
         }
-    }
-/*
-    private boolean checkForWin() {
-        String[][] fields = new String[row][col];
-
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
-                fields[i][j] = gameButtons[i][j].getText().toString();
-            }
-        }
-
-        for (int i = 0; i < row; i++) {
-            if (checkLine(new String[]{fields[i][0], fields[i][1], fields[i][2], fields[i][3], fields[i][4]})) {
-                return true;
-            }
-        }
-
-        for (int j = 0; j < col; j++) {
-            if (checkLine(new String[]{fields[0][j], fields[1][j], fields[2][j], fields[3][j], fields[4][j]})) {
-                return true;
-            }
-        }
-
-        if (checkLine(new String[]{fields[0][0], fields[1][1], fields[2][2], fields[3][3], fields[4][4]})) {
-            return true;
-        }
-
-        if (checkLine(new String[]{fields[0][4], fields[1][3], fields[2][2], fields[3][1], fields[4][0]})) {
-            return true;
-        }
-
-        return false;
+        updatePlayerText();
     }
 
-    private boolean checkLine(String[] symbols) {
-        String firstSymbol = symbols[0];
-        if (firstSymbol.isEmpty()) {
-            return false;
-        }
+    private void updatePlayerText()
+    {
+        GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
+        textViewPlayer1.setText("Player 1: " + gameDataViewModel.getPlayer1Points());
+        textViewPlayer2.setText("Player 2: " + gameDataViewModel.getPlayer2Points());
+        textMovesLeft.setText("Moves Left: " + (25 - gameDataViewModel.getRoundCount()));
+        textMovesMade.setText("Moves Made: " + gameDataViewModel.getRoundCount());
 
-        for (String symbol : symbols) {
-            if (!symbol.equals(firstSymbol)) {
-                return false;
-            }
-        }
-
-
-
-        return true;
-
- */
+    }
 }

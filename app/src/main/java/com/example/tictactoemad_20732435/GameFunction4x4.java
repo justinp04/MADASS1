@@ -102,6 +102,7 @@ public class GameFunction4x4 extends Fragment {
         Button resetButton = rootView.findViewById(R.id.reset_button);
         Button settingsButton = rootView.findViewById(R.id.settings_button);
         Button menuButton = rootView.findViewById(R.id.menu_button);
+        Button pauseButton = rootView.findViewById(R.id.pause_button);
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,6 +121,13 @@ public class GameFunction4x4 extends Fragment {
             public void onClick(View view)
             {
                 GameFunctions.resetGame(gameDataViewModel);
+                updatePlayerText();
+            }
+        });
+        pauseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivityDataViewModel.setClickedValue(5);
             }
         });
 
@@ -135,5 +143,15 @@ public class GameFunction4x4 extends Fragment {
         {
             Toast.makeText(requireContext(), returnString, Toast.LENGTH_SHORT).show();
         }
+        updatePlayerText();
+    }
+
+    private void updatePlayerText()
+    {
+        GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
+        textViewPlayer1.setText("Player 1: " + gameDataViewModel.getPlayer1Points());
+        textViewPlayer2.setText("Player 2: " + gameDataViewModel.getPlayer2Points());
+        textMovesLeft.setText("Moves Left: " + (16 - gameDataViewModel.getRoundCount()));
+        textMovesMade.setText("Moves Made: " + gameDataViewModel.getRoundCount());
     }
 }

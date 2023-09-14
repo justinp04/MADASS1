@@ -88,6 +88,17 @@
             android:text="Undo"
             android:textSize="24dp" />
 
+        <Button
+            android:id="@+id/pause_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/movesMade"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/square_button"
+            android:textSize="24dp"
+            android:text="Pause" />
+
         <TextView
             android:id="@+id/timer"
             android:layout_width="wrap_content"

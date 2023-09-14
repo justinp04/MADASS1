@@ -37,7 +37,7 @@ public class GameFunction3x3 extends Fragment {
     private boolean player1Turn = true;
 
     // Round count tracks how many moves have been made by both players
-    private int roundCount;
+    private int roundCountHere;
     private int player1Points;
     private int player2Points;
     private int winCondition = 3;
@@ -48,6 +48,7 @@ public class GameFunction3x3 extends Fragment {
     private TextView textMovesLeft;
 
     private Button undoButton;
+    private Button pauseButton;
 
     private LinkedList<Button> undoList = new LinkedList<>();
     public GameFunction3x3() {
@@ -93,8 +94,6 @@ public class GameFunction3x3 extends Fragment {
         textMovesMade = rootView.findViewById(R.id.movesMade);
         textMovesLeft = rootView.findViewById(R.id.movesLeft);
 
-        roundCount = 0;
-
         for (int i = 0; i < row; i++)
         {
             for (int j = 0; j < col; j++)
@@ -111,6 +110,7 @@ public class GameFunction3x3 extends Fragment {
         Button resetButton = rootView.findViewById(R.id.reset_button);
         Button settingsButton = rootView.findViewById(R.id.settings_button);
         Button menuButton = rootView.findViewById(R.id.menu_button);
+        Button pauseButton = rootView.findViewById(R.id.pause_button);
         undoButton = rootView.findViewById(R.id.undo_button);
         undoButton.setEnabled(false);
 
@@ -137,6 +137,14 @@ public class GameFunction3x3 extends Fragment {
             public void onClick(View view)
             {
                 GameFunctions.resetGame(gameDataViewModel);
+                updatePlayerText();
+            }
+        });
+
+        pauseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivityDataViewModel.setClickedValue(5);
             }
         });
 
@@ -147,7 +155,7 @@ public class GameFunction3x3 extends Fragment {
             {
                 int movesMade, movesLeft;
 
-                if(roundCount > 0)
+                if(gameDataViewModel.getRoundCount() > 0)
                 {
                     // Get the button to be updated.
                     // Remove the last index to make sure the next undo will get a different button
@@ -157,13 +165,13 @@ public class GameFunction3x3 extends Fragment {
                     buttonToUpdate.setText("");
 
                     // Update roundCount value
-                    roundCount--;
+                    gameDataViewModel.decreaseRound();
 
                     Toast.makeText(requireContext(), "Undo move", Toast.LENGTH_SHORT).show();
 
                     // Update the turn count textViews
-                    textMovesMade.setText("Moves made: " + roundCount);
-                    textMovesLeft.setText("Moves left: " + (9 - roundCount));
+                    textMovesMade.setText("Moves made: " + gameDataViewModel.getRoundCount());
+                    textMovesLeft.setText("Moves left: " + (9 - gameDataViewModel.getRoundCount()));
 
                     // Update whose turn it is
                     player1Turn = !player1Turn;
@@ -184,5 +192,16 @@ public class GameFunction3x3 extends Fragment {
         if (returnString != null) {
             Toast.makeText(requireContext(), returnString, Toast.LENGTH_SHORT).show();
         }
+        updatePlayerText();
+    }
+
+    private void updatePlayerText()
+    {
+        GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
+        textViewPlayer1.setText("Player 1: " + gameDataViewModel.getPlayer1Points());
+        textViewPlayer2.setText("Player 2: " + gameDataViewModel.getPlayer2Points());
+        textMovesLeft.setText("Moves Left: " + (9 - gameDataViewModel.getRoundCount()));
+        textMovesMade.setText("Moves Made: " + gameDataViewModel.getRoundCount());
+
     }
 }

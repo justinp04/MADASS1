@@ -4,14 +4,6 @@ import android.view.View;
 import android.widget.Button;
 
 public class GameFunctions {
-    //private static GameData gameDataViewModel;
-
-    /*
-    public GameFunctions(GameData gameDataViewModel) {
-        this.gameDataViewModel = gameDataViewModel;
-    }
-
-     */
 
     public static String player1Wins(GameData gameDataViewModel) {
         gameDataViewModel.incrementPlayer1();

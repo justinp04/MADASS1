@@ -68,7 +68,6 @@ public class PauseMenuFragment extends Fragment {
 
 
         Button resumeButton = rootView.findViewById(R.id.resumeButton);
-        Button settingsButton = rootView.findViewById(R.id.settingsButton);
         Button quitButton = rootView.findViewById(R.id.quitButton);
 
         resumeButton.setOnClickListener(new View.OnClickListener() {
@@ -77,13 +76,6 @@ public class PauseMenuFragment extends Fragment {
                 mainActivityDataViewModel.setClickedValue(1);
             }
         });
-
-        settingsButton.setOnClickListener((new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mainActivityDataViewModel.setClickedValue(4);
-            }
-        }));
 
         quitButton.setOnClickListener((new View.OnClickListener() {
             @Override

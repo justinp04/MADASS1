@@ -178,93 +178,11 @@ public class GameFunction3x3 extends Fragment {
         return rootView;
     }
 
-    public void onClick(View view)
-    {
+    public void onClick(View view) {
         GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
         String returnString = GameFunctions.onClick(view, gameDataViewModel);
-        if (returnString != null)
-        {
-            Button currentButton = (Button)view;
-        }
-
-        // If the there is the button already has a value
-        if(!undoButton.isEnabled())
-        {
-            undoButton.setEnabled(true);
-        }
-
-        if (!(currentButton).getText().toString().equals(""))
-        {
-            Toast.makeText(requireContext(), "Invalid Move!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (player1Turn)
-        {
-            currentButton.setText("X");
-        }
-        else
-        {
-            //change in here for AI view
-            currentButton.setText("O");
-        }
-
-        // Add the most recently added button to the undo list.
-        undoList.addLast(currentButton);
-
-        // Update the round count by one to keep track of the number of turns
-        roundCount++;
-        updateMovesText();
-
-        if (checkForWin()) {
-            if (player1Turn) {
-                player1Wins();
-                updateMovesText();
-            }
-            else
-            {
-                player2Wins();
-                updateMovesText();
-            }
-        }
-        else if (roundCount == 9)
-        {
+        if (returnString != null) {
             Toast.makeText(requireContext(), returnString, Toast.LENGTH_SHORT).show();
         }
-        updateText();
-    }
-
-    private void updateText()
-    {
-        GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
-        int player1Points = gameDataViewModel.getPlayer1Points();
-        int player2Points = gameDataViewModel.getPlayer2Points();
-        int roundCount = gameDataViewModel.getRoundCount();
-        int movesLeft = (gameDataViewModel.getBoardSize() * gameDataViewModel.getBoardSize()) - gameDataViewModel.getRoundCount();
-
-        textViewPlayer1.setText("Player 1: " + player1Points);
-        textViewPlayer2.setText("Player 2: " + player2Points);
-        textMovesMade.setText("Moves Made: " + roundCount);
-        textMovesLeft.setText("Moves Left: " + movesLeft);
-    }
-
-    private void resetBoard()
-    {
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
-                gameButtons[i][j].setText("");
-            }
-        }
-        roundCount = 0;
-        player1Turn = true;
-    }
-    private void resetGame()
-    {
-        player1Points = 0;
-        player2Points = 0;
-        roundCount = 0;
-        undoList.clear();
-        updatePointsText();
-        resetBoard();
     }
 }

@@ -5,8 +5,8 @@
     android:id="@+id/fragment_pause"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PauseMenuFragment"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".PauseMenuFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizguideline1"
@@ -26,6 +26,7 @@
         android:id="@+id/menuTitle"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_margin="5dp"
         android:autoSizeTextType="uniform"
         android:gravity="center"
         android:text="PAUSED"
@@ -49,47 +50,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent=".33" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/horizguideline4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent=".66" />
+            app:layout_constraintGuide_percent=".5" />
 
         <Button
             android:id="@+id/resumeButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:background="@drawable/square_button"
             android:text="Resume"
+            android:layout_margin="5dp"
             app:layout_constraintBottom_toTopOf="@id/horizguideline3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/settingsButton"
+            android:id="@+id/quitButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:text="Settings"
-            app:layout_constraintBottom_toTopOf="@id/horizguideline4"
+            android:background="@drawable/square_button"
+            android:text="Quit"
+            android:layout_margin="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/horizguideline3" />
 
-        <Button
-            android:id="@+id/quitButton"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:text="Quit"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/horizguideline4" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

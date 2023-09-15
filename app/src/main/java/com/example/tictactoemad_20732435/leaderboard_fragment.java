@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +20,7 @@ public class leaderboard_fragment extends Fragment {
     private List<Item> list;
     private RecyclerView recyclerView;
     private MyAdapter myAdapter;
+    private Button backButton;
     public leaderboard_fragment() {
         // Required empty public constructor
     }
@@ -27,7 +30,15 @@ public class leaderboard_fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_leaderboard_fragment, container, false);
+        MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
+        backButton = rootView.findViewById(R.id.back);
 
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivityDataViewModel.setClickedValue(0);
+            }
+        });
         list = createLeaderboard();
 
         recyclerView = rootView.findViewById(R.id.recyclerview);

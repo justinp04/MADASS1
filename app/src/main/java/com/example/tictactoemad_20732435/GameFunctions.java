@@ -83,6 +83,7 @@ public class GameFunctions {
                 draw = true;
             }
 
+            //Gather the string based on the winner.
             if (play2Wins) {
                 returnString = player2Wins(gameDataViewModel);
             } else if (play1Wins) {

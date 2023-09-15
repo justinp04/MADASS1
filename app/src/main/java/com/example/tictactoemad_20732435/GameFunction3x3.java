@@ -2,6 +2,7 @@ package com.example.tictactoemad_20732435;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -46,6 +47,9 @@ public class GameFunction3x3 extends Fragment {
     private TextView textViewPlayer2;
     private TextView textMovesMade;
     private TextView textMovesLeft;
+
+    private TextView textTimer;
+    private int timerCounter;
 
     private Button undoButton;
     private Button pauseButton;
@@ -93,6 +97,7 @@ public class GameFunction3x3 extends Fragment {
         textViewPlayer2 = rootView.findViewById(R.id.player2_score);
         textMovesMade = rootView.findViewById(R.id.movesMade);
         textMovesLeft = rootView.findViewById(R.id.movesLeft);
+        textTimer = rootView.findViewById(R.id.timer);
 
         for (int i = 0; i < row; i++)
         {
@@ -181,6 +186,8 @@ public class GameFunction3x3 extends Fragment {
                     undoButton.setEnabled(false);
                 }
             }
+
+
         });
 
         return rootView;
@@ -202,6 +209,17 @@ public class GameFunction3x3 extends Fragment {
         textViewPlayer2.setText("Player 2: " + gameDataViewModel.getPlayer2Points());
         textMovesLeft.setText("Moves Left: " + (9 - gameDataViewModel.getRoundCount()));
         textMovesMade.setText("Moves Made: " + gameDataViewModel.getRoundCount());
-
+        timerCounter = 30;
+        new CountDownTimer(30000, 1000){
+            @Override
+            public void onTick(long l) {
+                textTimer.setText(timerCounter);
+                timerCounter--;
+            }
+            @Override
+            public void onFinish() {
+                
+            }
+        }.start();
     }
 }

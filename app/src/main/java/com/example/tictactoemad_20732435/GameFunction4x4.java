@@ -43,6 +43,7 @@ public class GameFunction4x4 extends Fragment {
     private TextView textViewPlayer2;
     private TextView textMovesMade;
     private TextView textMovesLeft;
+    private TextView textTimer;
 
     public GameFunction4x4() {
         // Required empty public constructor
@@ -85,6 +86,7 @@ public class GameFunction4x4 extends Fragment {
         textViewPlayer2 = rootView.findViewById(R.id.player2_score);
         textMovesLeft = rootView.findViewById(R.id.movesLeft);
         textMovesMade = rootView.findViewById(R.id.movesMade);
+        textTimer = rootView.findViewById(R.id.timer);
 
         for (int i = 0; i < row; i++)
         {

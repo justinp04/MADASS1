@@ -140,6 +140,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void loadLeaderboard(){
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment frag = fm.findFragmentById(R.id.f_container);
+
+        if(frag == null){
+            fm.beginTransaction().add(R.id.f_container, leaderboard).commit();
+        }
+        else{
+            fm.beginTransaction().replace(R.id.f_container, leaderboard).commit();
+        }
+
+    }
+
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);

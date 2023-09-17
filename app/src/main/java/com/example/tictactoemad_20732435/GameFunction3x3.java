@@ -2,6 +2,7 @@ package com.example.tictactoemad_20732435;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -47,10 +48,15 @@ public class GameFunction3x3 extends Fragment {
     private TextView textMovesMade;
     private TextView textMovesLeft;
 
+    private TextView textTimer;
+    private Integer timerCounter;
+
     private Button undoButton;
     private Button pauseButton;
 
     private LinkedList<Button> undoList = new LinkedList<>();
+
+    private CountDownTimer turnTimer;
     public GameFunction3x3() {
         // Required empty public constructor
     }
@@ -93,6 +99,7 @@ public class GameFunction3x3 extends Fragment {
         textViewPlayer2 = rootView.findViewById(R.id.player2_score);
         textMovesMade = rootView.findViewById(R.id.movesMade);
         textMovesLeft = rootView.findViewById(R.id.movesLeft);
+        textTimer = rootView.findViewById(R.id.timer);
 
         for (int i = 0; i < row; i++)
         {
@@ -113,6 +120,29 @@ public class GameFunction3x3 extends Fragment {
         Button pauseButton = rootView.findViewById(R.id.pause_button);
         undoButton = rootView.findViewById(R.id.undo_button);
         undoButton.setEnabled(false);
+
+        //Initialise the CountDownTime Functions
+        timerCounter = 30;
+        turnTimer = new CountDownTimer(30000, 1000){
+            @Override
+            public void onTick(long l) {
+                textTimer.setText(timerCounter.toString());
+                timerCounter--;
+            }
+            @Override
+            public void onFinish() {
+                textTimer.setText(timerCounter.toString());
+                String toastText = "Out of time! ";
+                if (gameDataViewModel.getPlayerTurn() == 1)
+                {
+                    toastText = toastText + GameFunctions.player2Wins(gameDataViewModel);
+                } else if (gameDataViewModel.getPlayerTurn() == 2) {
+                    toastText = toastText + GameFunctions.player1Wins(gameDataViewModel);
+                }
+                Toast.makeText(requireContext(), toastText, Toast.LENGTH_SHORT).show();
+                updatePlayerText(gameDataViewModel);
+            }
+        };
 
         menuButton.setOnClickListener(new View.OnClickListener()
         {
@@ -137,7 +167,7 @@ public class GameFunction3x3 extends Fragment {
             public void onClick(View view)
             {
                 GameFunctions.resetGame(gameDataViewModel);
-                updatePlayerText();
+                updatePlayerText(gameDataViewModel);
             }
         });
 
@@ -181,6 +211,8 @@ public class GameFunction3x3 extends Fragment {
                     undoButton.setEnabled(false);
                 }
             }
+
+
         });
 
         return rootView;
@@ -192,16 +224,17 @@ public class GameFunction3x3 extends Fragment {
         if (returnString != null) {
             Toast.makeText(requireContext(), returnString, Toast.LENGTH_SHORT).show();
         }
-        updatePlayerText();
+        updatePlayerText(gameDataViewModel);
     }
 
-    private void updatePlayerText()
+    private void updatePlayerText(GameData gameDataViewModel)
     {
-        GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
+        turnTimer.cancel();
         textViewPlayer1.setText("Player 1: " + gameDataViewModel.getPlayer1Points());
         textViewPlayer2.setText("Player 2: " + gameDataViewModel.getPlayer2Points());
         textMovesLeft.setText("Moves Left: " + (9 - gameDataViewModel.getRoundCount()));
         textMovesMade.setText("Moves Made: " + gameDataViewModel.getRoundCount());
-
+        timerCounter = 30;
+        turnTimer.start();
     }
 }

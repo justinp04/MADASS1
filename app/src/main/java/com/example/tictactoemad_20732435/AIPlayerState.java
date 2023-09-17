@@ -1,6 +1,7 @@
 package com.example.tictactoemad_20732435;
 
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.widget.Button;
 
 import androidx.lifecycle.ViewModelProvider;
@@ -28,6 +29,7 @@ public class AIPlayerState implements PlayerState {
                     tile.setText("O");
                     gameDataViewModel.incrementRound();
                     gameDataViewModel.setAiFinished();
+                    Log.d("AiFinish", "AiFinish");
                 }
             }
         };
@@ -41,6 +43,7 @@ public class AIPlayerState implements PlayerState {
         else if ((gameDataViewModel.getRoundCount() < finalRound - 1) && (!play1WinStatus))
         {
             timer.start();
+            Log.d("AiStart", "AiStart");
         }
 
         return 1;

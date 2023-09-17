@@ -1,5 +1,6 @@
 package com.example.tictactoemad_20732435;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -46,17 +47,9 @@ public class GameFunctions {
     }
 
     public static String onClick(View view, GameData gameDataViewModel) {
+
         String returnString = null;
-        String playerSymbol = "";
-        int playerGo = gameDataViewModel.getPlayerTurn();
-        boolean play1Wins = false;
-        boolean play2Wins = false;
-        boolean draw = false;
-        if (playerGo == 1) {
-            playerSymbol = "X";
-        } else if (playerGo == 2) {
-            playerSymbol = "O";
-        }
+
         if (((Button) view).getText().toString().equals("")) {
 
             if (gameDataViewModel.playerTurn.getValue() == 1) {
@@ -64,7 +57,7 @@ public class GameFunctions {
                 gameDataViewModel.incrementRound();
 
                 //Check for player1Win, will determine if player 2 has a turn.
-                play1Wins = checkForWin(gameDataViewModel,
+                boolean play1Wins = checkForWin(gameDataViewModel,
                         gameDataViewModel.getWinCondition(), "X");
 
                 //Get player turn from playerState.
@@ -73,41 +66,22 @@ public class GameFunctions {
                 int playerTurn = gameDataViewModel.getPlayerState().playerTwoMove(gameDataViewModel,
                         play1Wins);
                 gameDataViewModel.playerTurn.setValue(playerTurn);
-                play2Wins = checkForWin(gameDataViewModel, gameDataViewModel.getWinCondition(), "O");
-
-            } else {
+            }
+            else {
                 //change in here for AI view
                 ((Button) view).setText("O");
                 gameDataViewModel.setPlayer1Turn();
                 gameDataViewModel.incrementRound();
             }
 
-            //Check for wins or draws.
-
-            play2Wins = checkForWin(gameDataViewModel, gameDataViewModel.getWinCondition(), "O");
-            if (gameDataViewModel.getRoundCount() == (gameDataViewModel.getBoardSize() *
-                    gameDataViewModel.getBoardSize()))
-            {
-                draw = true;
-            }
-
-            //Gather the string based on the winner.
-            if (play1Wins) {
-                returnString = player1Wins(gameDataViewModel);
-                gameDataViewModel.setAiFinished();
-            } else if (play2Wins) {
-                returnString = player2Wins(gameDataViewModel);
-                gameDataViewModel.setAiFinished();
-            } else if (draw) {
-                returnString = draw(gameDataViewModel);
-                gameDataViewModel.setAiFinished();
-            }
+            //Check for wins or draws and gather the string based on the winner.
+            returnString = checkGameEndings(gameDataViewModel);
         }
         return returnString;
     }
 
-
     private static boolean checkForWin(GameData gameDataViewModel, int winCondition, String playerSymbol) {
+        Log.d("Entercfw", ("Entering checkForWin: " + playerSymbol));
         int row = gameDataViewModel.getBoardSize();
         int col = gameDataViewModel.getBoardSize();
         Button gameButtons[][] = gameDataViewModel.getGameButtons();
@@ -205,6 +179,57 @@ public class GameFunctions {
             }
             diagBuffer.delete(0, rowBuffer.length());
         }
+        Log.d("CheckResult", ("Result:" + win));
         return win;
+    }
+
+    public static String checkPlayer1Wins(GameData gameData)
+    {
+        String returnString = null;
+        boolean win = checkForWin(gameData, gameData.getWinCondition(), "X");
+        if (win)
+        {
+            returnString = player1Wins(gameData);
+        }
+        return returnString;
+    }
+
+    public static String checkPlayer2Wins(GameData gameData)
+    {
+        String returnString = null;
+        boolean win = checkForWin(gameData, gameData.getWinCondition(), "O");
+        if (win)
+        {
+            returnString = player2Wins(gameData);
+        }
+        return returnString;
+    }
+
+    public static String checkGameEndings(GameData gameDataViewModel)
+    {
+        String returnString = null;
+        boolean draw = false;
+        boolean play1Wins = checkForWin(gameDataViewModel,
+                gameDataViewModel.getWinCondition(), "X");
+        boolean play2Wins = checkForWin(gameDataViewModel,
+                gameDataViewModel.getWinCondition(), "O");
+
+        if (gameDataViewModel.getRoundCount() == (gameDataViewModel.getBoardSize() *
+                gameDataViewModel.getBoardSize()))
+        {
+            draw = true;
+        }
+
+        if (play1Wins) {
+            returnString = player1Wins(gameDataViewModel);
+            gameDataViewModel.setAiFinished();
+        } else if (play2Wins) {
+            returnString = player2Wins(gameDataViewModel);
+            gameDataViewModel.setAiFinished();
+        } else if (draw) {
+            returnString = draw(gameDataViewModel);
+            gameDataViewModel.setAiFinished();
+        }
+        return returnString;
     }
 }

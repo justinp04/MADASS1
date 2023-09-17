@@ -190,6 +190,8 @@ public class GameFunction3x3 extends Fragment {
             public void onChanged(Boolean aBoolean) {
                 if (gameDataViewModel.getAiFinished())
                 {
+                    //Before enabling buttons check to see if ai has won.
+                    winMessage(GameFunctions.checkPlayer2Wins(gameDataViewModel));
                     for(int i = 0; i < gameButtons.length; i++)
                     {
                         for (int j = 0; j < gameButtons[i].length; j++) {
@@ -213,11 +215,10 @@ public class GameFunction3x3 extends Fragment {
 
     public void onClick(View view) {
         GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
+        //Run universal onClick function.
         String returnString = GameFunctions.onClick(view, gameDataViewModel);
-        if (returnString != null) {
-            Toast.makeText(requireContext(), returnString, Toast.LENGTH_SHORT).show();
-        }
-        updatePlayerText();
+        //Print win message if game has been won.
+        winMessage(returnString);
     }
 
     private void updatePlayerText()
@@ -227,6 +228,14 @@ public class GameFunction3x3 extends Fragment {
         textViewPlayer2.setText("Player 2: " + gameDataViewModel.getPlayer2Points());
         textMovesLeft.setText("Moves Left: " + (9 - gameDataViewModel.getRoundCount()));
         textMovesMade.setText("Moves Made: " + gameDataViewModel.getRoundCount());
+    }
 
+    private void winMessage(String inString)
+    {
+        //Update displayed stats
+        updatePlayerText();
+        if (inString != null) {
+            Toast.makeText(requireContext(), inString, Toast.LENGTH_SHORT).show();
+        }
     }
 }

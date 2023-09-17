@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
@@ -180,6 +181,30 @@ public class GameFunction3x3 extends Fragment {
                 {
                     undoButton.setEnabled(false);
                 }
+            }
+        });
+
+        //Observer to disable buttons while ai is making its move.
+        gameDataViewModel.aiFinished.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (gameDataViewModel.getAiFinished())
+                {
+                    for(int i = 0; i < gameButtons.length; i++)
+                    {
+                        for (int j = 0; j < gameButtons[i].length; j++) {
+                            gameButtons[i][j].setEnabled(true);
+                        }
+                    }
+                } else if (!gameDataViewModel.getAiFinished()) {
+                    for(int i = 0; i < gameButtons.length; i++)
+                    {
+                        for (int j = 0; j < gameButtons[i].length; j++) {
+                            gameButtons[i][j].setEnabled(false);
+                        }
+                    }
+                }
+
             }
         });
 

@@ -170,7 +170,7 @@ public class GameFunction4x4 extends Fragment {
                 if (gameDataViewModel.getAiFinished())
                 {
                     //Before enabling buttons check to see if ai has won.
-                    winMessage(GameFunctions.checkPlayer2Wins(gameDataViewModel));
+                    winMessage(GameFunctions.checkPlayer2Wins(gameDataViewModel), gameDataViewModel);
                     for(int i = 0; i < gameButtons.length; i++)
                     {
                         for (int j = 0; j < gameButtons[i].length; j++) {
@@ -195,12 +195,12 @@ public class GameFunction4x4 extends Fragment {
     public void onClick(View view)
     {
         GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
+        //Run universal onClick function.
         String returnString = GameFunctions.onClick(view, gameDataViewModel);
-        if (returnString != null)
-        {
-            Toast.makeText(requireContext(), returnString, Toast.LENGTH_SHORT).show();
-        }
+        //Update on screen game stats
         updatePlayerText(gameDataViewModel);
+        //Print win message if game has been won.
+        winMessage(returnString, gameDataViewModel);
     }
 
     private void updatePlayerText(GameData gameDataViewModel)
@@ -214,12 +214,13 @@ public class GameFunction4x4 extends Fragment {
         turnTimer.start();
     }
 
-    private void winMessage(String inString)
+    private void winMessage(String inString, GameData gameDataViewModel)
     {
-        //Update displayed stats
-        updatePlayerText();
+        //Display win message if it exists.
         if (inString != null) {
             Toast.makeText(requireContext(), inString, Toast.LENGTH_SHORT).show();
+            //Update displayed stats
+            updatePlayerText(gameDataViewModel);
         }
     }
 }

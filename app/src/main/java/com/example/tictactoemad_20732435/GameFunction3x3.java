@@ -77,7 +77,9 @@ public class GameFunction3x3 extends Fragment {
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+
+        if (getArguments() != null)
+        {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
@@ -182,10 +184,13 @@ public class GameFunction3x3 extends Fragment {
         return rootView;
     }
 
-    public void onClick(View view) {
+    public void onClick(View view)
+    {
         GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
         String returnString = GameFunctions.onClick(view, gameDataViewModel);
-        if (returnString != null) {
+
+        if (returnString != null)
+        {
             Toast.makeText(requireContext(), returnString, Toast.LENGTH_SHORT).show();
         }
     }

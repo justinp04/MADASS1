@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,7 +74,8 @@ public class GameFunction3x3 extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -82,8 +84,8 @@ public class GameFunction3x3 extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         View rootView = inflater.inflate(R.layout.fragment_game_function3x3, container, false);
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
         GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
@@ -95,11 +97,13 @@ public class GameFunction3x3 extends Fragment {
 
         roundCount = 0;
 
+        // Nested for loop to set onClickListeners for the gameButtons.
         for (int i = 0; i < row; i++)
         {
             for (int j = 0; j < col; j++)
             {
                 String buttonID = "button_" + i + j;
+                Log.d("BUTTON", "The button ID is: " + buttonID);
                 int resID = getResources().getIdentifier(buttonID, "id", requireContext().getPackageName());
                 gameButtons[i][j] = rootView.findViewById(resID);
                 gameButtons[i][j].setOnClickListener(this::onClick);

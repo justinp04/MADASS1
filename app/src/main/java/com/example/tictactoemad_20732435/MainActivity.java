@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private GameFunction5x5 gameFunction5x5 = new GameFunction5x5();
     private Settings settings = new Settings();
     private PauseMenuFragment pauseMenu = new PauseMenuFragment();
+    private LeaderboardFragment leaderboard = new LeaderboardFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,10 @@ public class MainActivity extends AppCompatActivity {
                 if (mainActivityDataViewModel.getClickedValue() == 5)
                 {
                     loadPauseFragment();
+                }
+                if (mainActivityDataViewModel.getClickedValue() == 6)
+                {
+                    loadLeaderboard();
                 }
             }
         });
@@ -140,15 +146,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void loadLeaderboard(){
+    private void loadLeaderboard()
+    {
         FragmentManager fm = getSupportFragmentManager();
-        Fragment frag = fm.findFragmentById(R.id.f_container);
+        Fragment frag = fm.findFragmentById(R.id.fragment_game);
 
         if(frag == null){
-            fm.beginTransaction().add(R.id.f_container, leaderboard).commit();
+            fm.beginTransaction().add(R.id.fragment_game, leaderboard).commit();
         }
         else{
-            fm.beginTransaction().replace(R.id.f_container, leaderboard).commit();
+            fm.beginTransaction().replace(R.id.fragment_game, leaderboard).commit();
         }
 
     }

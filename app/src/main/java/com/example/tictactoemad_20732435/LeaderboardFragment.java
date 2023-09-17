@@ -38,7 +38,7 @@ public class LeaderboardFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //mainActivityDataViewModel.setClickedValue(//Set this to the value of the main menu fragment);
+                mainActivityDataViewModel.setClickedValue(0);
             }
         });
         list = createLeaderboard();

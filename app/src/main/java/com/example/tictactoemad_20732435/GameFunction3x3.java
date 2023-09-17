@@ -6,6 +6,7 @@ import android.os.CountDownTimer;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
@@ -215,16 +216,43 @@ public class GameFunction3x3 extends Fragment {
 
         });
 
+        //Observer to disable buttons while ai is making its move.
+        gameDataViewModel.aiFinished.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (gameDataViewModel.getAiFinished())
+                {
+                    //Before enabling buttons check to see if ai has won.
+                    winMessage(GameFunctions.checkPlayer2Wins(gameDataViewModel), gameDataViewModel);
+                    for(int i = 0; i < gameButtons.length; i++)
+                    {
+                        for (int j = 0; j < gameButtons[i].length; j++) {
+                            gameButtons[i][j].setEnabled(true);
+                        }
+                    }
+                } else if (!gameDataViewModel.getAiFinished()) {
+                    for(int i = 0; i < gameButtons.length; i++)
+                    {
+                        for (int j = 0; j < gameButtons[i].length; j++) {
+                            gameButtons[i][j].setEnabled(false);
+                        }
+                    }
+                }
+
+            }
+        });
+
         return rootView;
     }
 
     public void onClick(View view) {
         GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
+        //Run universal onClick function.
         String returnString = GameFunctions.onClick(view, gameDataViewModel);
-        if (returnString != null) {
-            Toast.makeText(requireContext(), returnString, Toast.LENGTH_SHORT).show();
-        }
+        //Update on screen game stats
         updatePlayerText(gameDataViewModel);
+        //Print win message if game has been won.
+        winMessage(returnString, gameDataViewModel);
     }
 
     private void updatePlayerText(GameData gameDataViewModel)
@@ -236,5 +264,15 @@ public class GameFunction3x3 extends Fragment {
         textMovesMade.setText("Moves Made: " + gameDataViewModel.getRoundCount());
         timerCounter = 30;
         turnTimer.start();
+    }
+
+    private void winMessage(String inString, GameData gameDataViewModel)
+    {
+        //Display win message if it exists.
+        if (inString != null) {
+            Toast.makeText(requireContext(), inString, Toast.LENGTH_SHORT).show();
+            //Update displayed stats
+            updatePlayerText(gameDataViewModel);
+        }
     }
 }

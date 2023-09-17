@@ -15,7 +15,8 @@ public class GameData extends ViewModel {
     public MutableLiveData<Integer> player2Points;
     public MutableLiveData<Integer> drawCount;
     public MutableLiveData<PlayerState> playerState;
-    //winState
+
+    public MutableLiveData<Boolean> aiFinished;
 
     public GameData() {
         gameButtons = new MutableLiveData<Button[][]>();
@@ -27,6 +28,7 @@ public class GameData extends ViewModel {
         drawCount = new MutableLiveData<Integer>();
         playerState = new MutableLiveData<PlayerState>();
         winCondition = new MutableLiveData<Integer>();
+        aiFinished = new MutableLiveData<Boolean>();
         setDefaultValues();
     }
 
@@ -41,6 +43,7 @@ public class GameData extends ViewModel {
         boardSize.setValue(3);
         winCondition.setValue(3);
         playerState.setValue(new AIPlayerState());
+        aiFinished.setValue(true);
     }
 
     public void setGameButtons(Button[][] inButtons) {
@@ -95,7 +98,8 @@ public class GameData extends ViewModel {
         playerState.setValue(inState);
     }
 
-    //public void setPlayerState(playerState newState) {
+    public void setAiFinished() { aiFinished.setValue(true); }
+    public void setAiNotFinished() { aiFinished.setValue(false); }
 
     //Accessors
     public Button[][] getGameButtons() {
@@ -134,4 +138,5 @@ public class GameData extends ViewModel {
     public PlayerState getPlayerState() {
         return playerState.getValue();
     }
+    public Boolean getAiFinished() { return aiFinished.getValue(); }
 }

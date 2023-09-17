@@ -9,7 +9,7 @@ import java.util.Random;
 public class AIPlayerState implements PlayerState
 {
     @Override
-    public int playerTwoMove(Button[][] gameBoard)
+    public int playerTwoMove(GameData gameDataViewModel)
     {
         try
         {
@@ -21,8 +21,14 @@ public class AIPlayerState implements PlayerState
         }
         finally
         {
-            Button tile = generateRandomTile(gameBoard);
-            tile.setText("O");
+            int boardSize = gameDataViewModel.getBoardSize();
+            int round = gameDataViewModel.getRoundCount();
+            if (round < boardSize*boardSize)
+            {
+                Button tile = generateRandomTile(gameDataViewModel.getGameButtons());
+                tile.setText("O");
+                gameDataViewModel.incrementRound();
+            }
             return 1;
         }
     }

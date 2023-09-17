@@ -49,6 +49,9 @@ public class GameFunctions {
         String returnString = null;
         String playerSymbol = "";
         int playerGo = gameDataViewModel.getPlayerTurn();
+        boolean play1Wins = false;
+        boolean play2Wins = false;
+        boolean draw = false;
         if (playerGo == 1) {
             playerSymbol = "X";
         } else if (playerGo == 2) {
@@ -60,11 +63,17 @@ public class GameFunctions {
                 ((Button) view).setText("X");
                 gameDataViewModel.incrementRound();
 
+                //Check for player1Win, will determine if player 2 has a turn.
+                play1Wins = checkForWin(gameDataViewModel,
+                        gameDataViewModel.getWinCondition(), "X");
+
                 //Get player turn from playerState.
                 // If 2player mode will return 2,
                 // If ai mode will perform ai move then return 1.
-                int playerTurn = gameDataViewModel.getPlayerState().playerTwoMove(gameDataViewModel);
+                int playerTurn = gameDataViewModel.getPlayerState().playerTwoMove(gameDataViewModel,
+                        play1Wins);
                 gameDataViewModel.playerTurn.setValue(playerTurn);
+                play2Wins = checkForWin(gameDataViewModel, gameDataViewModel.getWinCondition(), "O");
 
             } else {
                 //change in here for AI view
@@ -74,9 +83,8 @@ public class GameFunctions {
             }
 
             //Check for wins or draws.
-            boolean play1Wins = checkForWin(gameDataViewModel, gameDataViewModel.getWinCondition(), "X");
-            boolean play2Wins = checkForWin(gameDataViewModel, gameDataViewModel.getWinCondition(), "O");
-            boolean draw = false;
+
+            play2Wins = checkForWin(gameDataViewModel, gameDataViewModel.getWinCondition(), "O");
             if (gameDataViewModel.getRoundCount() == (gameDataViewModel.getBoardSize() *
                     gameDataViewModel.getBoardSize()))
             {
@@ -84,16 +92,20 @@ public class GameFunctions {
             }
 
             //Gather the string based on the winner.
-            if (play2Wins) {
-                returnString = player2Wins(gameDataViewModel);
-            } else if (play1Wins) {
+            if (play1Wins) {
                 returnString = player1Wins(gameDataViewModel);
+                gameDataViewModel.setAiFinished();
+            } else if (play2Wins) {
+                returnString = player2Wins(gameDataViewModel);
+                gameDataViewModel.setAiFinished();
             } else if (draw) {
                 returnString = draw(gameDataViewModel);
+                gameDataViewModel.setAiFinished();
             }
         }
         return returnString;
     }
+
 
     private static boolean checkForWin(GameData gameDataViewModel, int winCondition, String playerSymbol) {
         int row = gameDataViewModel.getBoardSize();

@@ -20,6 +20,8 @@ public class GameData extends ViewModel {
     public MutableLiveData<String> player2Symbol;
     public MutableLiveData<String> player1Name;
     public MutableLiveData<String> player2Name;
+    public MutableLiveData<Integer> player1ImageID;
+    public MutableLiveData<Integer> player1ImageID;
     
     public Stack<Button> undoButtons;
 

@@ -202,7 +202,4 @@
             android:textSize="60sp"
             android:background="@drawable/square_button"/>
     </LinearLayout>
-
-
-
 </LinearLayout>

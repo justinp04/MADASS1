@@ -1,7 +1,7 @@
 package com.example.tictactoemad_20732435;
 
 import android.widget.Button;
-
+import java.util.*;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -20,6 +20,8 @@ public class GameData extends ViewModel {
     public MutableLiveData<String> player1Symbol;
     public MutableLiveData<String> player2Symbol;
 
+    public Stack<Button> undoButtons;
+
     public GameData() {
         gameButtons = new MutableLiveData<Button[][]>();
         boardSize = new MutableLiveData<Integer>();
@@ -33,6 +35,7 @@ public class GameData extends ViewModel {
         aiFinished = new MutableLiveData<Boolean>();
         player1Symbol = new MutableLiveData<String>();
         player2Symbol = new MutableLiveData<String>();
+        undoButtons = new Stack<Button>();
         setDefaultValues();
     }
 
@@ -79,6 +82,12 @@ public class GameData extends ViewModel {
     }
     public void setPlayer2Turn() {
         playerTurn.setValue(2);
+    }
+
+    // Adds buttons to the stack so that we can add later undo in the correct order.
+    public void addButton(Button button)
+    {
+        undoButtons.add(button);
     }
 
     public void incrementRound() {

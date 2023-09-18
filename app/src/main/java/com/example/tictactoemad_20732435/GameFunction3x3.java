@@ -51,8 +51,6 @@ public class GameFunction3x3 extends Fragment {
     private Integer timerCounter;
 
     private Button undoButton, pauseButton;
-
-    private LinkedList<Button> undoList = new LinkedList<>();
     private CountDownTimer turnTimer;
 
     // Required empty public constructor
@@ -133,10 +131,12 @@ public class GameFunction3x3 extends Fragment {
         timerCounter = 30;
         turnTimer = new CountDownTimer(30000, 1000){
             @Override
-            public void onTick(long l) {
+            public void onTick(long l)
+            {
                 textTimer.setText(timerCounter.toString());
                 timerCounter--;
             }
+
             @Override
             public void onFinish() {
                 textTimer.setText(timerCounter.toString());
@@ -195,9 +195,10 @@ public class GameFunction3x3 extends Fragment {
 
                 if(gameDataViewModel.getRoundCount() > 0)
                 {
+                    Button buttonToUpdate;
                     // Get the button to be updated.
                     // Remove the last index to make sure the next undo will get a different button
-                    Button buttonToUpdate = undoList.removeLast();
+                    buttonToUpdate = gameDataViewModel.undoButtons.pop();
 
                     // Set the text to null
                     buttonToUpdate.setText("");
@@ -219,8 +220,6 @@ public class GameFunction3x3 extends Fragment {
                     undoButton.setEnabled(false);
                 }
             }
-
-
         });
 
         //Observer to disable buttons while ai is making its move.
@@ -254,12 +253,24 @@ public class GameFunction3x3 extends Fragment {
 
     public void onClick(View view) {
         GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
+
         //Run universal onClick function.
         String returnString = GameFunctions.onClick(view, gameDataViewModel);
+
         //Update on screen game stats
         updatePlayerText(gameDataViewModel);
+
         //Print win message if game has been won.
         winMessage(returnString, gameDataViewModel);
+
+        //Add button to undo button list
+        gameDataViewModel.undoButtons.add((Button) view);
+
+        // Enable the undo button
+        if(!undoButton.isEnabled())
+        {
+            undoButton.setEnabled(true);
+        }
     }
 
     private void updatePlayerText(GameData gameDataViewModel)

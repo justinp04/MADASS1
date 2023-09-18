@@ -41,12 +41,12 @@ public class GameFunction5x5 extends Fragment {
 
     private Integer timerCounter;
 
-    private TextView textViewPlayer1;
-    private TextView textViewPlayer2;
-    private TextView textMovesMade;
-    private TextView textMovesLeft;
+    private TextView textViewPlayer1, textViewPlayer2;
+    private TextView textMovesMade, textMovesLeft;
     private TextView textTimer;
     private CountDownTimer turnTimer;
+
+    private Button undoButton;
 
     public GameFunction5x5() {
         // Required empty public constructor
@@ -109,6 +109,8 @@ public class GameFunction5x5 extends Fragment {
         Button settingsButton = rootView.findViewById(R.id.settings_button);
         Button menuButton = rootView.findViewById(R.id.menu_button);
         Button pauseButton = rootView.findViewById(R.id.pause_button);
+        undoButton = rootView.findViewById(R.id.undo_button);
+        undoButton.setEnabled(false);
 
         //Initialise the CountDownTime Functions
         timerCounter = 30;
@@ -185,6 +187,42 @@ public class GameFunction5x5 extends Fragment {
             }
         });
 
+        undoButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                int movesMade, movesLeft;
+
+                if(gameDataViewModel.getRoundCount() > 0)
+                {
+                    Button buttonToUpdate;
+                    // Get the button to be updated.
+                    // Remove the last index to make sure the next undo will get a different button
+                    buttonToUpdate = gameDataViewModel.undoButtons.pop();
+
+                    // Set the text to null
+                    buttonToUpdate.setText("");
+
+                    // Update roundCount value
+                    gameDataViewModel.decreaseRound();
+
+                    Toast.makeText(requireContext(), "Undo move", Toast.LENGTH_SHORT).show();
+
+                    // Update the turn count textViews
+                    textMovesMade.setText("Moves made: " + gameDataViewModel.getRoundCount());
+                    textMovesLeft.setText("Moves left: " + (25 - gameDataViewModel.getRoundCount()));
+
+                    // Update whose turn it is
+                    player1Turn = !player1Turn;
+                }
+                else
+                {
+                    undoButton.setEnabled(false);
+                }
+            }
+        });
+
         return rootView;
     }
 
@@ -196,6 +234,15 @@ public class GameFunction5x5 extends Fragment {
         updatePlayerText(gameDataViewModel);
         //Print win message if game has been won.
         winMessage(returnString, gameDataViewModel);
+
+        //Add button to undo button list
+        gameDataViewModel.undoButtons.add((Button) view);
+
+        // Enable the undo button
+        if(!undoButton.isEnabled())
+        {
+            undoButton.setEnabled(true);
+        }
     }
 
     private void updatePlayerText(GameData gameDataViewModel)
@@ -203,7 +250,7 @@ public class GameFunction5x5 extends Fragment {
         turnTimer.cancel();
         textViewPlayer1.setText("Player 1: " + gameDataViewModel.getPlayer1Points());
         textViewPlayer2.setText("Player 2: " + gameDataViewModel.getPlayer2Points());
-        textMovesLeft.setText("Moves Left: " + (9 - gameDataViewModel.getRoundCount()));
+        textMovesLeft.setText("Moves Left: " + (25 - gameDataViewModel.getRoundCount()));
         textMovesMade.setText("Moves Made: " + gameDataViewModel.getRoundCount());
         timerCounter = 30;
         turnTimer.start();

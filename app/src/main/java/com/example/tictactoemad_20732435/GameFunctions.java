@@ -6,29 +6,25 @@ import android.widget.Button;
 
 public class GameFunctions {
 
-    public static String player1Wins(GameData gameDataViewModel)
-    {
+    public static String player1Wins(GameData gameDataViewModel) {
         gameDataViewModel.incrementPlayer1();
         resetBoard(gameDataViewModel);
         return "Player 1 wins!";
     }
 
-    public static String player2Wins(GameData gameDataViewModel)
-    {
+    public static String player2Wins(GameData gameDataViewModel) {
         gameDataViewModel.incrementPlayer2();
         resetBoard(gameDataViewModel);
         return "Player 2 wins!";
     }
 
-    public static String draw(GameData gameDataViewModel)
-    {
+    public static String draw(GameData gameDataViewModel) {
         gameDataViewModel.incrementDraws();
         resetBoard(gameDataViewModel);
         return "It's a draw!";
     }
 
-    public static void resetBoard(GameData gameDataViewModel)
-    {
+    public static void resetBoard(GameData gameDataViewModel) {
         int row = gameDataViewModel.getBoardSize();
         int col = gameDataViewModel.getBoardSize();
         Button gameButtons[][] = gameDataViewModel.getGameButtons();

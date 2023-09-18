@@ -210,12 +210,18 @@ public class GameFunction4x4 extends Fragment {
 
                     Toast.makeText(requireContext(), "Undo move", Toast.LENGTH_SHORT).show();
 
-                    // Update the turn count textViews
-                    textMovesMade.setText("Moves made: " + gameDataViewModel.getRoundCount());
-                    textMovesLeft.setText("Moves left: " + (16 - gameDataViewModel.getRoundCount()));
+                    // Update the turn count textViews and Update whose turn it is
+                    // If it is playerOne's turn
+                    if (gameDataViewModel.playerTurn.getValue() == 1)
+                    {
+                        gameDataViewModel.setPlayer2Turn();
+                    }
+                    else
+                    {
+                        gameDataViewModel.setPlayer1Turn();
+                    }
 
-                    // Update whose turn it is
-                    player1Turn = !player1Turn;
+                    updatePlayerText(gameDataViewModel);
                 }
                 else
                 {

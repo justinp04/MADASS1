@@ -3,19 +3,16 @@ package com.example.tictactoemad_20732435;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.*;
 
 /**
@@ -200,12 +197,18 @@ public class GameFunction3x3 extends Fragment {
 
                     Toast.makeText(requireContext(), "Undo move", Toast.LENGTH_SHORT).show();
 
-                    // Update the turn count textViews
-                    textMovesMade.setText("Moves made: " + gameDataViewModel.getRoundCount());
-                    textMovesLeft.setText("Moves left: " + (9 - gameDataViewModel.getRoundCount()));
+                    // Update the turn count textViews and Update whose turn it is
+                    // If it is playerOne's turn
+                    if (gameDataViewModel.playerTurn.getValue() == 1)
+                    {
+                        gameDataViewModel.setPlayer2Turn();
+                    }
+                    else
+                    {
+                        gameDataViewModel.setPlayer1Turn();
+                    }
 
-                    // Update whose turn it is
-                    player1Turn = !player1Turn;
+                    updatePlayerText(gameDataViewModel);
                 }
                 else
                 {
@@ -272,7 +275,8 @@ public class GameFunction3x3 extends Fragment {
         textViewPlayer2.setText("Player 2: " + gameDataViewModel.getPlayer2Points());
         textMovesLeft.setText("Moves Left: " + (9 - gameDataViewModel.getRoundCount()));
         textMovesMade.setText("Moves Made: " + gameDataViewModel.getRoundCount());
-        if (gameDataViewModel.getPlayerTurn() == 1)
+
+        if(gameDataViewModel.getPlayerTurn() == 1)
         {
             playerIndicator.setText("" + player1Name + "'s turn!");
         }
@@ -280,6 +284,7 @@ public class GameFunction3x3 extends Fragment {
         {
             playerIndicator.setText("" + player2Name + "'s turn!");
         }
+
         timerCounter = 30;
         turnTimer.start();
     }

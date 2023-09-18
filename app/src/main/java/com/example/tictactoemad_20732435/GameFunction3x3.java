@@ -44,23 +44,19 @@ public class GameFunction3x3 extends Fragment {
     private int player2Points;
     private int winCondition = 3;
 
-    private TextView textViewPlayer1;
-    private TextView textViewPlayer2;
-    private TextView textMovesMade;
-    private TextView textMovesLeft;
+    private TextView textViewPlayer1, textViewPlayer2;
+    private TextView textMovesMade, textMovesLeft;
 
     private TextView textTimer;
     private Integer timerCounter;
 
-    private Button undoButton;
-    private Button pauseButton;
+    private Button undoButton, pauseButton;
 
     private LinkedList<Button> undoList = new LinkedList<>();
-
     private CountDownTimer turnTimer;
-    public GameFunction3x3() {
-        // Required empty public constructor
-    }
+
+    // Required empty public constructor
+    public GameFunction3x3() {}
 
     /**
      * Use this factory method to create a new instance of
@@ -110,6 +106,17 @@ public class GameFunction3x3 extends Fragment {
                 int resID = getResources().getIdentifier(buttonID, "id", requireContext().getPackageName());
                 gameButtons[i][j] = rootView.findViewById(resID);
                 gameButtons[i][j].setOnClickListener(this::onClick);
+
+                //if(savedInstanceState != null)
+//                {
+//                    Log.d("savedInstanceState", "Enter with saved instance state: " + savedInstanceState.get(buttonID).toString());
+//                    //The information is saved and it enters the program, but we need to give the buttons their text
+//                    gameButtons[i][j].setText(savedInstanceState.get(buttonID).toString());
+//
+//                    Log.d("ButtonText", "The button text after assignent is: " + gameButtons[i][j].getText());
+//                }
+
+                // To save the information before an orientation change.
             }
         }
         gameDataViewModel.setBoardSize(3);
@@ -275,4 +282,29 @@ public class GameFunction3x3 extends Fragment {
             updatePlayerText(gameDataViewModel);
         }
     }
+
+    //    @Override
+//    public void onSaveInstanceState(@NonNull Bundle outState)
+//    {
+//        super.onSaveInstanceState(outState);
+//
+//        String buttonId;
+//        Button butt;
+//
+//        // Iterate through all the buttons and save the information stored on them
+//        for(int i = 0; i < row; i++)
+//        {
+//            for(int j = 0; j < col; j++)
+//            {
+//                buttonId = "button_" + i + j;
+//                butt = gameButtons[i][j];
+//                outState.putString(buttonId, butt.getText().toString());
+//            }
+//        }
+//
+//        // Save the information from the textView elements.
+//        outState.putString("MOVESMADE", textMovesMade.getText().toString());
+//        outState.putString("MOVESLEFT", textMovesLeft.getText().toString());
+//        outState.putString("ROUNDCOUNT", Integer.toString(roundCount));
+//    }
 }

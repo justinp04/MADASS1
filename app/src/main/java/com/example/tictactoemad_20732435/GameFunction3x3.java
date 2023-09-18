@@ -2,9 +2,11 @@ package com.example.tictactoemad_20732435;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
@@ -37,23 +39,19 @@ public class GameFunction3x3 extends Fragment {
     private boolean player1Turn = true;
 
     // Round count tracks how many moves have been made by both players
-    private int roundCountHere;
-    private int player1Points;
-    private int player2Points;
-    private int winCondition = 3;
 
-    private TextView textViewPlayer1;
-    private TextView textViewPlayer2;
-    private TextView textMovesMade;
-    private TextView textMovesLeft;
+    private TextView textViewPlayer1, textViewPlayer2;
+    private TextView textMovesMade, textMovesLeft;
+    private TextView textTimer;
+    private TextView playerIndicator;
+    private String player1Name, player2Name;
+    private Integer timerCounter;
+    private Button undoButton, pauseButton;
 
-    private Button undoButton;
-    private Button pauseButton;
+    private CountDownTimer turnTimer;
 
-    private LinkedList<Button> undoList = new LinkedList<>();
-    public GameFunction3x3() {
-        // Required empty public constructor
-    }
+    // Required empty public constructor
+    public GameFunction3x3() {}
 
     /**
      * Use this factory method to create a new instance of
@@ -93,6 +91,12 @@ public class GameFunction3x3 extends Fragment {
         textViewPlayer2 = rootView.findViewById(R.id.player2_score);
         textMovesMade = rootView.findViewById(R.id.movesMade);
         textMovesLeft = rootView.findViewById(R.id.movesLeft);
+        textTimer = rootView.findViewById(R.id.timer);
+        playerIndicator = rootView.findViewById(R.id.playerTurn);
+        player1Name = gameDataViewModel.getPlayer1Name();
+        player2Name = gameDataViewModel.getPlayer2Name();
+        playerIndicator.setText(player1Name + "'s turn!");
+
 
         for (int i = 0; i < row; i++)
         {
@@ -102,17 +106,52 @@ public class GameFunction3x3 extends Fragment {
                 int resID = getResources().getIdentifier(buttonID, "id", requireContext().getPackageName());
                 gameButtons[i][j] = rootView.findViewById(resID);
                 gameButtons[i][j].setOnClickListener(this::onClick);
+
+                //if(savedInstanceState != null)
+//                {
+//                    Log.d("savedInstanceState", "Enter with saved instance state: " + savedInstanceState.get(buttonID).toString());
+//                    //The information is saved and it enters the program, but we need to give the buttons their text
+//                    gameButtons[i][j].setText(savedInstanceState.get(buttonID).toString());
+//
+//                    Log.d("ButtonText", "The button text after assignent is: " + gameButtons[i][j].getText());
+//                }
+
+                // To save the information before an orientation change.
             }
         }
         gameDataViewModel.setBoardSize(3);
         gameDataViewModel.setGameButtons(gameButtons);
 
         Button resetButton = rootView.findViewById(R.id.reset_button);
-        Button settingsButton = rootView.findViewById(R.id.settings_button);
         Button menuButton = rootView.findViewById(R.id.menu_button);
         Button pauseButton = rootView.findViewById(R.id.pause_button);
         undoButton = rootView.findViewById(R.id.undo_button);
         undoButton.setEnabled(false);
+
+        //Initialise the CountDownTime Functions
+        timerCounter = 30;
+        turnTimer = new CountDownTimer(30000, 1000){
+            @Override
+            public void onTick(long l)
+            {
+                textTimer.setText(timerCounter.toString());
+                timerCounter--;
+            }
+
+            @Override
+            public void onFinish() {
+                textTimer.setText(timerCounter.toString());
+                String toastText = "Out of time! ";
+                if (gameDataViewModel.getPlayerTurn() == 1)
+                {
+                    toastText = toastText + GameFunctions.player2Wins(gameDataViewModel);
+                } else if (gameDataViewModel.getPlayerTurn() == 2) {
+                    toastText = toastText + GameFunctions.player1Wins(gameDataViewModel);
+                }
+                Toast.makeText(requireContext(), toastText, Toast.LENGTH_SHORT).show();
+                updatePlayerText(gameDataViewModel);
+            }
+        };
 
         menuButton.setOnClickListener(new View.OnClickListener()
         {
@@ -122,22 +161,13 @@ public class GameFunction3x3 extends Fragment {
             }
         });
 
-        settingsButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                mainActivityDataViewModel.setClickedValue(4);
-            }
-        });
-
         resetButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
                 GameFunctions.resetGame(gameDataViewModel);
-                updatePlayerText();
+                updatePlayerText(gameDataViewModel);
             }
         });
 
@@ -157,9 +187,10 @@ public class GameFunction3x3 extends Fragment {
 
                 if(gameDataViewModel.getRoundCount() > 0)
                 {
+                    Button buttonToUpdate;
                     // Get the button to be updated.
                     // Remove the last index to make sure the next undo will get a different button
-                    Button buttonToUpdate = undoList.removeLast();
+                    buttonToUpdate = gameDataViewModel.undoButtons.pop();
 
                     // Set the text to null
                     buttonToUpdate.setText("");
@@ -183,25 +214,108 @@ public class GameFunction3x3 extends Fragment {
             }
         });
 
+        //Observer to disable buttons while ai is making its move.
+        gameDataViewModel.aiFinished.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (gameDataViewModel.getAiFinished())
+                {
+                    //Before enabling buttons check to see if ai has won.
+                    winMessage(GameFunctions.checkPlayer2Wins(gameDataViewModel), gameDataViewModel);
+                    for(int i = 0; i < gameButtons.length; i++)
+                    {
+                        for (int j = 0; j < gameButtons[i].length; j++) {
+                            gameButtons[i][j].setEnabled(true);
+                        }
+                    }
+                } else if (!gameDataViewModel.getAiFinished()) {
+                    for(int i = 0; i < gameButtons.length; i++)
+                    {
+                        for (int j = 0; j < gameButtons[i].length; j++) {
+                            gameButtons[i][j].setEnabled(false);
+                        }
+                    }
+                }
+
+            }
+        });
+
         return rootView;
     }
 
     public void onClick(View view) {
         GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
+
+        //Run universal onClick function.
         String returnString = GameFunctions.onClick(view, gameDataViewModel);
-        if (returnString != null) {
-            Toast.makeText(requireContext(), returnString, Toast.LENGTH_SHORT).show();
+
+        //Update on screen game stats
+        updatePlayerText(gameDataViewModel);
+
+        //Print win message if game has been won.
+        winMessage(returnString, gameDataViewModel);
+
+        //Add button to undo button list
+        gameDataViewModel.undoButtons.add((Button) view);
+
+        // Enable the undo button
+        if(!undoButton.isEnabled())
+        {
+            undoButton.setEnabled(true);
         }
-        updatePlayerText();
     }
 
-    private void updatePlayerText()
+    private void updatePlayerText(GameData gameDataViewModel)
     {
-        GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
+        turnTimer.cancel();
         textViewPlayer1.setText("Player 1: " + gameDataViewModel.getPlayer1Points());
         textViewPlayer2.setText("Player 2: " + gameDataViewModel.getPlayer2Points());
         textMovesLeft.setText("Moves Left: " + (9 - gameDataViewModel.getRoundCount()));
         textMovesMade.setText("Moves Made: " + gameDataViewModel.getRoundCount());
-
+        if (gameDataViewModel.getPlayerTurn() == 1)
+        {
+            playerIndicator.setText("" + player1Name + "'s turn!");
+        }
+        else
+        {
+            playerIndicator.setText("" + player2Name + "'s turn!");
+        }
+        timerCounter = 30;
+        turnTimer.start();
     }
+
+    private void winMessage(String inString, GameData gameDataViewModel)
+    {
+        //Display win message if it exists.
+        if (inString != null) {
+            Toast.makeText(requireContext(), inString, Toast.LENGTH_SHORT).show();
+            //Update displayed stats
+            updatePlayerText(gameDataViewModel);
+        }
+    }
+
+    //    @Override
+//    public void onSaveInstanceState(@NonNull Bundle outState)
+//    {
+//        super.onSaveInstanceState(outState);
+//
+//        String buttonId;
+//        Button butt;
+//
+//        // Iterate through all the buttons and save the information stored on them
+//        for(int i = 0; i < row; i++)
+//        {
+//            for(int j = 0; j < col; j++)
+//            {
+//                buttonId = "button_" + i + j;
+//                butt = gameButtons[i][j];
+//                outState.putString(buttonId, butt.getText().toString());
+//            }
+//        }
+//
+//        // Save the information from the textView elements.
+//        outState.putString("MOVESMADE", textMovesMade.getText().toString());
+//        outState.putString("MOVESLEFT", textMovesLeft.getText().toString());
+//        outState.putString("ROUNDCOUNT", Integer.toString(roundCount));
+//    }
 }

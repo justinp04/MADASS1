@@ -1,7 +1,7 @@
 package com.example.tictactoemad_20732435;
 
 import android.widget.Button;
-
+import java.util.*;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -15,7 +15,13 @@ public class GameData extends ViewModel {
     public MutableLiveData<Integer> player2Points;
     public MutableLiveData<Integer> drawCount;
     public MutableLiveData<PlayerState> playerState;
-    //winState
+    public MutableLiveData<Boolean> aiFinished;
+    public MutableLiveData<String> player1Symbol;
+    public MutableLiveData<String> player2Symbol;
+    public MutableLiveData<String> player1Name;
+    public MutableLiveData<String> player2Name;
+    
+    public Stack<Button> undoButtons;
 
     public GameData() {
         gameButtons = new MutableLiveData<Button[][]>();
@@ -27,6 +33,12 @@ public class GameData extends ViewModel {
         drawCount = new MutableLiveData<Integer>();
         playerState = new MutableLiveData<PlayerState>();
         winCondition = new MutableLiveData<Integer>();
+        aiFinished = new MutableLiveData<Boolean>();
+        player1Symbol = new MutableLiveData<String>();
+        player2Symbol = new MutableLiveData<String>();
+        undoButtons = new Stack<Button>();
+        player1Name = new MutableLiveData<String>();
+        player2Name = new MutableLiveData<String>();
         setDefaultValues();
     }
 
@@ -41,10 +53,25 @@ public class GameData extends ViewModel {
         boardSize.setValue(3);
         winCondition.setValue(3);
         playerState.setValue(new AIPlayerState());
+        player1Symbol.setValue("X");
+        player2Symbol.setValue("O");
+        aiFinished.setValue(true);
+        player1Name.setValue("Player 1");
+        player2Name.setValue("Player 2");
     }
 
     public void setGameButtons(Button[][] inButtons) {
         gameButtons.setValue(inButtons);
+    }
+
+    public void setPlayer1Symbol(String s)
+    {
+        player1Symbol.setValue(s);
+    }
+
+    public void setPlayer2Symbol(String s)
+    {
+        player2Symbol.setValue(s);
     }
 
     public void setBoardSize(int size) {
@@ -60,6 +87,12 @@ public class GameData extends ViewModel {
     }
     public void setPlayer2Turn() {
         playerTurn.setValue(2);
+    }
+
+    // Adds buttons to the stack so that we can add later undo in the correct order.
+    public void addButton(Button button)
+    {
+        undoButtons.add(button);
     }
 
     public void incrementRound() {
@@ -95,7 +128,23 @@ public class GameData extends ViewModel {
         playerState.setValue(inState);
     }
 
-    //public void setPlayerState(playerState newState) {
+    public void setAiFinished() { aiFinished.setValue(true); }
+    public void setAiNotFinished() { aiFinished.setValue(false); }
+
+    public void setPlayer1Name(String inString)
+    {
+        if (inString != null)
+        {
+            player1Name.setValue(inString);
+        }
+    }
+    public void setPlayer2Name(String inString)
+    {
+        if (inString != null)
+        {
+            player2Name.setValue(inString);
+        }
+    }
 
     //Accessors
     public Button[][] getGameButtons() {
@@ -122,6 +171,16 @@ public class GameData extends ViewModel {
         return roundCount.getValue();
     }
 
+    public String getPlayer1Symbol()
+    {
+        return player1Symbol.getValue();
+    }
+
+    public String getPlayer2Symbol()
+    {
+        return player2Symbol.getValue();
+    }
+
     public int getDrawCount() {
         return drawCount.getValue();
     }
@@ -134,4 +193,7 @@ public class GameData extends ViewModel {
     public PlayerState getPlayerState() {
         return playerState.getValue();
     }
+    public Boolean getAiFinished() { return aiFinished.getValue(); }
+    public String getPlayer1Name() { return player1Name.getValue(); }
+    public String getPlayer2Name() { return player2Name.getValue(); }
 }

@@ -11,7 +11,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
 
         <TextView
             android:id="@+id/title_game"
@@ -32,18 +34,18 @@
             android:textSize="24dp"
             android:text="Reset"/>
 
-        <Button
-            android:id="@+id/settings_button"
+        <TextView
+            android:id="@+id/playerTurn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/title_game"
             android:layout_toStartOf="@+id/reset_button"
             android:layout_toEndOf="@id/menu_button"
+            android:gravity="center"
             android:layout_marginEnd="5dp"
             android:layout_marginStart="5dp"
-            android:background="@drawable/square_button"
-            android:text="Settings"
-            android:textSize="24dp"/>
+            android:text="Player Turn"
+            android:textSize="24dp" />
 
         <TextView
             android:id="@+id/player1_score"
@@ -83,7 +85,7 @@
             android:id="@+id/undo_pause_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/settings_button"
+            android:layout_below="@id/playerTurn"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp">
 
@@ -114,7 +116,7 @@
             android:layout_below="@id/undo_pause_layout"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:text="00:00"
+            android:text="30"
             android:textSize="24sp"/>
 
         <Button

@@ -5,7 +5,7 @@ import android.widget.Button;
 public class HumanPlayerState implements PlayerState
 {
     @Override
-    public int playerTwoMove(Button[][] gameBoard)
+    public int playerTwoMove(GameData gameDataViewModel, boolean play1WinStatus)
     {
         return 2;
     }

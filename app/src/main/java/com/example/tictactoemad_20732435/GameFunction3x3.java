@@ -39,19 +39,14 @@ public class GameFunction3x3 extends Fragment {
     private boolean player1Turn = true;
 
     // Round count tracks how many moves have been made by both players
-    private int roundCountHere;
-    private int player1Points;
-    private int player2Points;
-    private int winCondition = 3;
 
     private TextView textViewPlayer1, textViewPlayer2;
     private TextView textMovesMade, textMovesLeft;
-
     private TextView textTimer;
+    private TextView playerIndicator;
+    private String player1Name, player2Name;
     private Integer timerCounter;
-
     private Button undoButton, pauseButton;
-
     private LinkedList<Button> undoList = new LinkedList<>();
     private CountDownTimer turnTimer;
 
@@ -97,6 +92,11 @@ public class GameFunction3x3 extends Fragment {
         textMovesMade = rootView.findViewById(R.id.movesMade);
         textMovesLeft = rootView.findViewById(R.id.movesLeft);
         textTimer = rootView.findViewById(R.id.timer);
+        playerIndicator = rootView.findViewById(R.id.playerTurn);
+        player1Name = gameDataViewModel.getPlayer1Name();
+        player2Name = gameDataViewModel.getPlayer2Name();
+        playerIndicator.setText(player1Name + "'s turn!");
+
 
         for (int i = 0; i < row; i++)
         {
@@ -123,7 +123,6 @@ public class GameFunction3x3 extends Fragment {
         gameDataViewModel.setGameButtons(gameButtons);
 
         Button resetButton = rootView.findViewById(R.id.reset_button);
-        Button settingsButton = rootView.findViewById(R.id.settings_button);
         Button menuButton = rootView.findViewById(R.id.menu_button);
         Button pauseButton = rootView.findViewById(R.id.pause_button);
         undoButton = rootView.findViewById(R.id.undo_button);
@@ -157,15 +156,6 @@ public class GameFunction3x3 extends Fragment {
             @Override
             public void onClick(View view) {
                 mainActivityDataViewModel.setClickedValue(0);
-            }
-        });
-
-        settingsButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                mainActivityDataViewModel.setClickedValue(4);
             }
         });
 
@@ -269,6 +259,14 @@ public class GameFunction3x3 extends Fragment {
         textViewPlayer2.setText("Player 2: " + gameDataViewModel.getPlayer2Points());
         textMovesLeft.setText("Moves Left: " + (9 - gameDataViewModel.getRoundCount()));
         textMovesMade.setText("Moves Made: " + gameDataViewModel.getRoundCount());
+        if (gameDataViewModel.getPlayerTurn() == 1)
+        {
+            playerIndicator.setText("" + player1Name + "'s turn!");
+        }
+        else
+        {
+            playerIndicator.setText("" + player2Name + "'s turn!");
+        }
         timerCounter = 30;
         turnTimer.start();
     }

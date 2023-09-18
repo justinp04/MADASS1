@@ -49,6 +49,8 @@ public class GameFunction4x4 extends Fragment {
     private TextView textMovesLeft;
     private TextView textTimer;
 
+    private TextView playerIndicator;
+    private String player1Name, player2Name;
     private CountDownTimer turnTimer;
 
     public GameFunction4x4() {
@@ -93,6 +95,10 @@ public class GameFunction4x4 extends Fragment {
         textMovesLeft = rootView.findViewById(R.id.movesLeft);
         textMovesMade = rootView.findViewById(R.id.movesMade);
         textTimer = rootView.findViewById(R.id.timer);
+        playerIndicator = rootView.findViewById(R.id.playerTurn);
+        player1Name = gameDataViewModel.getPlayer1Name();
+        player2Name = gameDataViewModel.getPlayer2Name();
+        playerIndicator.setText(player1Name + "'s turn!");
 
         for (int i = 0; i < row; i++)
         {
@@ -108,7 +114,6 @@ public class GameFunction4x4 extends Fragment {
         gameDataViewModel.setGameButtons(gameButtons);
 
         Button resetButton = rootView.findViewById(R.id.reset_button);
-        Button settingsButton = rootView.findViewById(R.id.settings_button);
         Button menuButton = rootView.findViewById(R.id.menu_button);
         Button pauseButton = rootView.findViewById(R.id.pause_button);
 
@@ -140,12 +145,6 @@ public class GameFunction4x4 extends Fragment {
             @Override
             public void onClick(View view) {
                 mainActivityDataViewModel.setClickedValue(0);
-            }
-        });
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mainActivityDataViewModel.setClickedValue(4);
             }
         });
 
@@ -210,6 +209,14 @@ public class GameFunction4x4 extends Fragment {
         textViewPlayer2.setText("Player 2: " + gameDataViewModel.getPlayer2Points());
         textMovesLeft.setText("Moves Left: " + (9 - gameDataViewModel.getRoundCount()));
         textMovesMade.setText("Moves Made: " + gameDataViewModel.getRoundCount());
+        if (gameDataViewModel.getPlayerTurn() == 1)
+        {
+            playerIndicator.setText("" + player1Name + "'s turn!");
+        }
+        else
+        {
+            playerIndicator.setText("" + player2Name + "'s turn!");
+        }
         timerCounter = 30;
         turnTimer.start();
     }

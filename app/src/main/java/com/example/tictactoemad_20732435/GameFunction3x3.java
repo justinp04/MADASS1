@@ -47,10 +47,7 @@ public class GameFunction3x3 extends Fragment {
     private String player1Name, player2Name;
     private Integer timerCounter;
     private Button undoButton, pauseButton;
-<<<<<<< HEAD
-=======
-    private LinkedList<Button> undoList = new LinkedList<>();
->>>>>>> f11aecf0fac3f49682dd7684650d492c209dd06f
+
     private CountDownTimer turnTimer;
 
     // Required empty public constructor

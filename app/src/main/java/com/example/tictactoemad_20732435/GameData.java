@@ -20,7 +20,7 @@ public class GameData extends ViewModel {
     public MutableLiveData<String> player2Symbol;
     public MutableLiveData<String> player1Name;
     public MutableLiveData<String> player2Name;
-
+    
     public Stack<Button> undoButtons;
 
     public GameData() {
@@ -36,12 +36,9 @@ public class GameData extends ViewModel {
         aiFinished = new MutableLiveData<Boolean>();
         player1Symbol = new MutableLiveData<String>();
         player2Symbol = new MutableLiveData<String>();
-<<<<<<< HEAD
         undoButtons = new Stack<Button>();
-=======
         player1Name = new MutableLiveData<String>();
         player2Name = new MutableLiveData<String>();
->>>>>>> f11aecf0fac3f49682dd7684650d492c209dd06f
         setDefaultValues();
     }
 

@@ -45,6 +45,8 @@ public class GameFunction5x5 extends Fragment {
     private TextView textMovesMade, textMovesLeft;
     private TextView textTimer;
     private CountDownTimer turnTimer;
+    private TextView playerIndicator;
+    private String player1Name, player2Name;
 
     private Button undoButton;
 
@@ -91,6 +93,10 @@ public class GameFunction5x5 extends Fragment {
         textMovesMade = rootView.findViewById(R.id.movesMade);
         textMovesLeft = rootView.findViewById(R.id.movesLeft);
         textTimer = rootView.findViewById(R.id.timer);
+        playerIndicator = rootView.findViewById(R.id.playerTurn);
+        player1Name = gameDataViewModel.getPlayer1Name();
+        player2Name = gameDataViewModel.getPlayer2Name();
+        playerIndicator.setText(player1Name + "'s turn!");
 
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
@@ -106,7 +112,6 @@ public class GameFunction5x5 extends Fragment {
         gameDataViewModel.setGameButtons(gameButtons);
 
         Button resetButton = rootView.findViewById(R.id.reset_button);
-        Button settingsButton = rootView.findViewById(R.id.settings_button);
         Button menuButton = rootView.findViewById(R.id.menu_button);
         Button pauseButton = rootView.findViewById(R.id.pause_button);
         undoButton = rootView.findViewById(R.id.undo_button);
@@ -139,12 +144,6 @@ public class GameFunction5x5 extends Fragment {
             @Override
             public void onClick(View view) {
                 mainActivityDataViewModel.setClickedValue(0);
-            }
-        });
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mainActivityDataViewModel.setClickedValue(4);
             }
         });
         resetButton.setOnClickListener(new View.OnClickListener() {
@@ -252,6 +251,14 @@ public class GameFunction5x5 extends Fragment {
         textViewPlayer2.setText("Player 2: " + gameDataViewModel.getPlayer2Points());
         textMovesLeft.setText("Moves Left: " + (25 - gameDataViewModel.getRoundCount()));
         textMovesMade.setText("Moves Made: " + gameDataViewModel.getRoundCount());
+        if (gameDataViewModel.getPlayerTurn() == 1)
+        {
+            playerIndicator.setText("" + player1Name + "'s turn!");
+        }
+        else
+        {
+            playerIndicator.setText("" + player2Name + "'s turn!");
+        }
         timerCounter = 30;
         turnTimer.start();
     }

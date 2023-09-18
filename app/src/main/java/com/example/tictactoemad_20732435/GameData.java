@@ -15,10 +15,11 @@ public class GameData extends ViewModel {
     public MutableLiveData<Integer> player2Points;
     public MutableLiveData<Integer> drawCount;
     public MutableLiveData<PlayerState> playerState;
-
     public MutableLiveData<Boolean> aiFinished;
     public MutableLiveData<String> player1Symbol;
     public MutableLiveData<String> player2Symbol;
+    public MutableLiveData<String> player1Name;
+    public MutableLiveData<String> player2Name;
 
     public Stack<Button> undoButtons;
 
@@ -35,7 +36,12 @@ public class GameData extends ViewModel {
         aiFinished = new MutableLiveData<Boolean>();
         player1Symbol = new MutableLiveData<String>();
         player2Symbol = new MutableLiveData<String>();
+<<<<<<< HEAD
         undoButtons = new Stack<Button>();
+=======
+        player1Name = new MutableLiveData<String>();
+        player2Name = new MutableLiveData<String>();
+>>>>>>> f11aecf0fac3f49682dd7684650d492c209dd06f
         setDefaultValues();
     }
 
@@ -53,6 +59,8 @@ public class GameData extends ViewModel {
         player1Symbol.setValue("X");
         player2Symbol.setValue("O");
         aiFinished.setValue(true);
+        player1Name.setValue("Player 1");
+        player2Name.setValue("Player 2");
     }
 
     public void setGameButtons(Button[][] inButtons) {
@@ -126,6 +134,21 @@ public class GameData extends ViewModel {
     public void setAiFinished() { aiFinished.setValue(true); }
     public void setAiNotFinished() { aiFinished.setValue(false); }
 
+    public void setPlayer1Name(String inString)
+    {
+        if (inString != null)
+        {
+            player1Name.setValue(inString);
+        }
+    }
+    public void setPlayer2Name(String inString)
+    {
+        if (inString != null)
+        {
+            player2Name.setValue(inString);
+        }
+    }
+
     //Accessors
     public Button[][] getGameButtons() {
         return gameButtons.getValue();
@@ -174,4 +197,6 @@ public class GameData extends ViewModel {
         return playerState.getValue();
     }
     public Boolean getAiFinished() { return aiFinished.getValue(); }
+    public String getPlayer1Name() { return player1Name.getValue(); }
+    public String getPlayer2Name() { return player2Name.getValue(); }
 }

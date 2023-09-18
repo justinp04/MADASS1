@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,12 +26,9 @@ import java.util.*;
  */
 public class GameFunction3x3 extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -39,6 +37,15 @@ public class GameFunction3x3 extends Fragment {
     private boolean player1Turn = true;
 
     // Round count tracks how many moves have been made by both players
+<<<<<<< HEAD
+    private int roundCount, player1Points, player2Points;
+    private int winCondition = 3;
+
+    private TextView textViewPlayer1, textViewPlayer2;
+    private TextView textMovesMade, textMovesLeft;
+    private Button undoButton;
+    private LinkedList<Button> undoList = new LinkedList<>();
+=======
     private int roundCountHere;
     private int player1Points;
     private int player2Points;
@@ -61,7 +68,10 @@ public class GameFunction3x3 extends Fragment {
     public GameFunction3x3() {
         // Required empty public constructor
     }
+>>>>>>> main
 
+    // Required empty public constructor
+    public GameFunction3x3() {}
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -71,7 +81,8 @@ public class GameFunction3x3 extends Fragment {
      * @return A new instance of fragment GameFunction3x3.
      */
     // TODO: Rename and change types and number of parameters
-    public static GameFunction3x3 newInstance(String param1, String param2) {
+    public static GameFunction3x3 newInstance(String param1, String param2)
+    {
         GameFunction3x3 fragment = new GameFunction3x3();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
@@ -81,17 +92,20 @@ public class GameFunction3x3 extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+
+        if (getArguments() != null)
+        {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         View rootView = inflater.inflate(R.layout.fragment_game_function3x3, container, false);
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
         GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
@@ -102,16 +116,30 @@ public class GameFunction3x3 extends Fragment {
         textMovesLeft = rootView.findViewById(R.id.movesLeft);
         textTimer = rootView.findViewById(R.id.timer);
 
+        // Nested for loop to set onClickListeners for the gameButtons.
         for (int i = 0; i < row; i++)
         {
             for (int j = 0; j < col; j++)
             {
                 String buttonID = "button_" + i + j;
                 int resID = getResources().getIdentifier(buttonID, "id", requireContext().getPackageName());
+
                 gameButtons[i][j] = rootView.findViewById(resID);
+                //gameButtons[i][j].setText("X");
+
                 gameButtons[i][j].setOnClickListener(this::onClick);
+
+//                if(savedInstanceState != null)
+//                {
+//                    Log.d("savedInstanceState", "Enter with saved instance state: " + savedInstanceState.get(buttonID).toString());
+//                    //The information is saved and it enters the program, but we need to give the buttons their text
+//                    gameButtons[i][j].setText(savedInstanceState.get(buttonID).toString());
+//
+//                    Log.d("ButtonText", "The button text after assignent is: " + gameButtons[i][j].getText());
+//                }
             }
         }
+
         gameDataViewModel.setBoardSize(3);
         gameDataViewModel.setGameButtons(gameButtons);
 
@@ -245,10 +273,17 @@ public class GameFunction3x3 extends Fragment {
         return rootView;
     }
 
-    public void onClick(View view) {
+    public void onClick(View view)
+    {
         GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
         //Run universal onClick function.
         String returnString = GameFunctions.onClick(view, gameDataViewModel);
+<<<<<<< HEAD
+
+        if (returnString != null)
+        {
+            Toast.makeText(requireContext(), returnString, Toast.LENGTH_SHORT).show();
+=======
         //Update on screen game stats
         updatePlayerText(gameDataViewModel);
         //Print win message if game has been won.
@@ -273,6 +308,33 @@ public class GameFunction3x3 extends Fragment {
             Toast.makeText(requireContext(), inString, Toast.LENGTH_SHORT).show();
             //Update displayed stats
             updatePlayerText(gameDataViewModel);
+>>>>>>> main
         }
     }
+
+    // To save the information before an orientation change.
+//    @Override
+//    public void onSaveInstanceState(@NonNull Bundle outState)
+//    {
+//        super.onSaveInstanceState(outState);
+//
+//        String buttonId;
+//        Button butt;
+//
+//        // Iterate through all the buttons and save the information stored on them
+//        for(int i = 0; i < row; i++)
+//        {
+//            for(int j = 0; j < col; j++)
+//            {
+//                buttonId = "button_" + i + j;
+//                butt = gameButtons[i][j];
+//                outState.putString(buttonId, butt.getText().toString());
+//            }
+//        }
+//
+//        // Save the information from the textView elements.
+//        outState.putString("MOVESMADE", textMovesMade.getText().toString());
+//        outState.putString("MOVESLEFT", textMovesLeft.getText().toString());
+//        outState.putString("ROUNDCOUNT", Integer.toString(roundCount));
+//    }
 }

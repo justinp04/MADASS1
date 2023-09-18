@@ -15,8 +15,9 @@ public class GameData extends ViewModel {
     public MutableLiveData<Integer> player2Points;
     public MutableLiveData<Integer> drawCount;
     public MutableLiveData<PlayerState> playerState;
-
     public MutableLiveData<Boolean> aiFinished;
+    public MutableLiveData<String> player1Name;
+    public MutableLiveData<String> player2Name;
 
     public GameData() {
         gameButtons = new MutableLiveData<Button[][]>();
@@ -29,6 +30,8 @@ public class GameData extends ViewModel {
         playerState = new MutableLiveData<PlayerState>();
         winCondition = new MutableLiveData<Integer>();
         aiFinished = new MutableLiveData<Boolean>();
+        player1Name = new MutableLiveData<String>();
+        player2Name = new MutableLiveData<String>();
         setDefaultValues();
     }
 
@@ -44,6 +47,8 @@ public class GameData extends ViewModel {
         winCondition.setValue(3);
         playerState.setValue(new AIPlayerState());
         aiFinished.setValue(true);
+        player1Name.setValue("Player 1");
+        player2Name.setValue("Player 2");
     }
 
     public void setGameButtons(Button[][] inButtons) {
@@ -101,6 +106,21 @@ public class GameData extends ViewModel {
     public void setAiFinished() { aiFinished.setValue(true); }
     public void setAiNotFinished() { aiFinished.setValue(false); }
 
+    public void setPlayer1Name(String inString)
+    {
+        if (inString != null)
+        {
+            player1Name.setValue(inString);
+        }
+    }
+    public void setPlayer2Name(String inString)
+    {
+        if (inString != null)
+        {
+            player2Name.setValue(inString);
+        }
+    }
+
     //Accessors
     public Button[][] getGameButtons() {
         return gameButtons.getValue();
@@ -139,4 +159,6 @@ public class GameData extends ViewModel {
         return playerState.getValue();
     }
     public Boolean getAiFinished() { return aiFinished.getValue(); }
+    public String getPlayer1Name() { return player1Name.getValue(); }
+    public String getPlayer2Name() { return player2Name.getValue(); }
 }

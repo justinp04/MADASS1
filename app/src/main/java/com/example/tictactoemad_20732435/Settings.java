@@ -144,12 +144,16 @@ public class Settings extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(requireContext(), "You are now Crosses", Toast.LENGTH_SHORT).show();
+                gameDataViewModel.setPlayer1Symbol("X");
+                gameDataViewModel.setPlayer2Symbol("O");
             }
         });
         iconCircles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(requireContext(), "You are now Circles", Toast.LENGTH_SHORT).show();
+                gameDataViewModel.setPlayer2Symbol("X");
+                gameDataViewModel.setPlayer1Symbol("O");
             }
         });
         backButton.setOnClickListener(new View.OnClickListener() {

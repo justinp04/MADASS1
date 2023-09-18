@@ -53,12 +53,12 @@ public class GameFunctions {
         if (((Button) view).getText().toString().equals("")) {
 
             if (gameDataViewModel.playerTurn.getValue() == 1) {
-                ((Button) view).setText("X");
+                ((Button) view).setText(gameDataViewModel.getPlayer1Symbol());
                 gameDataViewModel.incrementRound();
 
                 //Check for player1Win, will determine if player 2 has a turn.
                 boolean play1Wins = checkForWin(gameDataViewModel,
-                        gameDataViewModel.getWinCondition(), "X");
+                        gameDataViewModel.getWinCondition(), gameDataViewModel.getPlayer1Symbol());
 
                 //Get player turn from playerState.
                 // If 2player mode will return 2,
@@ -69,7 +69,7 @@ public class GameFunctions {
             }
             else {
                 //change in here for AI view
-                ((Button) view).setText("O");
+                ((Button) view).setText(gameDataViewModel.getPlayer2Symbol());
                 gameDataViewModel.setPlayer1Turn();
                 gameDataViewModel.incrementRound();
             }
@@ -186,7 +186,7 @@ public class GameFunctions {
     public static String checkPlayer1Wins(GameData gameData)
     {
         String returnString = null;
-        boolean win = checkForWin(gameData, gameData.getWinCondition(), "X");
+        boolean win = checkForWin(gameData, gameData.getWinCondition(), gameData.getPlayer1Symbol());
         if (win)
         {
             returnString = player1Wins(gameData);
@@ -197,7 +197,7 @@ public class GameFunctions {
     public static String checkPlayer2Wins(GameData gameData)
     {
         String returnString = null;
-        boolean win = checkForWin(gameData, gameData.getWinCondition(), "O");
+        boolean win = checkForWin(gameData, gameData.getWinCondition(), gameData.getPlayer2Symbol());
         if (win)
         {
             returnString = player2Wins(gameData);
@@ -210,9 +210,9 @@ public class GameFunctions {
         String returnString = null;
         boolean draw = false;
         boolean play1Wins = checkForWin(gameDataViewModel,
-                gameDataViewModel.getWinCondition(), "X");
+                gameDataViewModel.getWinCondition(), gameDataViewModel.getPlayer1Symbol());
         boolean play2Wins = checkForWin(gameDataViewModel,
-                gameDataViewModel.getWinCondition(), "O");
+                gameDataViewModel.getWinCondition(), gameDataViewModel.getPlayer2Symbol());
 
         if (gameDataViewModel.getRoundCount() == (gameDataViewModel.getBoardSize() *
                 gameDataViewModel.getBoardSize()))

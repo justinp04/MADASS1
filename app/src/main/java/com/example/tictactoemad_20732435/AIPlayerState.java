@@ -26,7 +26,7 @@ public class AIPlayerState implements PlayerState {
                 int round = gameDataViewModel.getRoundCount();
                 if (round < boardSize * boardSize) {
                     Button tile = generateRandomTile(gameDataViewModel.getGameButtons());
-                    tile.setText("O");
+                    tile.setText(gameDataViewModel.getPlayer2Symbol());
                     gameDataViewModel.incrementRound();
                     gameDataViewModel.setAiFinished();
                     Log.d("AiFinish", "AiFinish");

@@ -50,9 +50,10 @@ public class GameFunctions {
 
         String returnString = null;
 
-        if (((Button) view).getText().toString().equals("")) {
-
-            if (gameDataViewModel.playerTurn.getValue() == 1) {
+        if (((Button) view).getText().toString().equals(""))
+        {
+            if (gameDataViewModel.playerTurn.getValue() == 1)
+            {
                 ((Button) view).setText(gameDataViewModel.getPlayer1Symbol());
                 gameDataViewModel.incrementRound();
 
@@ -61,13 +62,14 @@ public class GameFunctions {
                         gameDataViewModel.getWinCondition(), gameDataViewModel.getPlayer1Symbol());
 
                 //Get player turn from playerState.
-                // If 2player mode will return 2,
-                // If ai mode will perform ai move then return 1.
+                // If 2 player mode will return 2,
+                // If AI mode will perform AI move then return 1.
                 int playerTurn = gameDataViewModel.getPlayerState().playerTwoMove(gameDataViewModel,
                         play1Wins);
                 gameDataViewModel.playerTurn.setValue(playerTurn);
             }
-            else {
+            else
+            {
                 //change in here for AI view
                 ((Button) view).setText(gameDataViewModel.getPlayer2Symbol());
                 gameDataViewModel.setPlayer1Turn();
@@ -80,7 +82,8 @@ public class GameFunctions {
         return returnString;
     }
 
-    private static boolean checkForWin(GameData gameDataViewModel, int winCondition, String playerSymbol) {
+    private static boolean checkForWin(GameData gameDataViewModel, int winCondition, String playerSymbol)
+    {
         Log.d("Entercfw", ("Entering checkForWin: " + playerSymbol));
         int row = gameDataViewModel.getBoardSize();
         int col = gameDataViewModel.getBoardSize();

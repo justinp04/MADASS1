@@ -60,7 +60,7 @@ public class PauseMenuFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView =inflater.inflate(R.layout.fragment_pause_menu, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_pause_menu, container, false);
         // Inflate the layout for this fragment
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity())
                 .get(MainActivityData.class);
@@ -85,6 +85,6 @@ public class PauseMenuFragment extends Fragment {
         }));
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pause_menu, container, false);
+        return rootView;
     }
 }

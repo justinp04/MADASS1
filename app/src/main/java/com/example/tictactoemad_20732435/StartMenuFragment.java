@@ -73,13 +73,15 @@ public class StartMenuFragment extends Fragment {
         Button settings = rootView.findViewById(R.id.settingButton);
         Button leaderboard = rootView.findViewById(R.id.leaderboardButton);
 
+        int boardSizeFragment = gameDataViewModel.getBoardSize() - 2;
+
         twoPlayerGame.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
                 gameDataViewModel.setPlayerState(new HumanPlayerState());
-                mainActivityDataViewModel.setClickedValue(1);
+                mainActivityDataViewModel.setClickedValue(boardSizeFragment);
             }
         });
 
@@ -88,9 +90,8 @@ public class StartMenuFragment extends Fragment {
             @Override
             public void onClick(View view)
             {
-                gameDataViewModel.setDefaultValues();
                 gameDataViewModel.setPlayerState(new AIPlayerState());
-                mainActivityDataViewModel.setClickedValue(1);
+                mainActivityDataViewModel.setClickedValue(boardSizeFragment);
                 //set clicked value for ai game mode
             }
         });

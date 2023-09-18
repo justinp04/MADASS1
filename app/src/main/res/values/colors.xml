@@ -4,4 +4,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#0004FF</color>
     <color name="red">#FF0000</color>
+    <color name="tileColor">#f48c06</color>
+    <color name="tileColorDark">#52796f</color>
+    <color name="textColorDark">#cad2c5</color>
+    <color name="backgroundColor">#fefae0</color>
+    <color name="backgroundColorDark">#2f3e46</color>
 </resources>

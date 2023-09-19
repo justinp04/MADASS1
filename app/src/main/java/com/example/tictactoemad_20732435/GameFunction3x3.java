@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -182,6 +184,8 @@ public class GameFunction3x3 extends Fragment {
             {
                 int movesMade, movesLeft;
 
+                Log.d("UNDOBUTTON", "Click undo");
+
                 if(gameDataViewModel.getRoundCount() > 0)
                 {
                     Button buttonToUpdate;
@@ -206,6 +210,13 @@ public class GameFunction3x3 extends Fragment {
                     else
                     {
                         gameDataViewModel.setPlayer1Turn();
+                    }
+
+                    // Call the AI again if it is an AI player state
+                    boolean play1Wins = false;
+                    if(gameDataViewModel.getPlayerState() instanceof AIPlayerState)
+                    {
+                        gameDataViewModel.getPlayerState().playerTwoMove(gameDataViewModel, play1Wins);
                     }
 
                     updatePlayerText(gameDataViewModel);

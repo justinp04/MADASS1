@@ -219,6 +219,10 @@ public class GameFunction5x5 extends Fragment {
                         gameDataViewModel.setPlayer1Turn();
                     }
 
+                    // Call the AI again if it is an AI player state
+                    boolean play1Wins = false;
+                    gameDataViewModel.getPlayerState().playerTwoMove(gameDataViewModel, play1Wins);
+
                     updatePlayerText(gameDataViewModel);
                 }
                 else

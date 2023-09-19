@@ -26,6 +26,10 @@ public class AIPlayerState implements PlayerState {
                 int round = gameDataViewModel.getRoundCount();
                 if (round < boardSize * boardSize) {
                     Button tile = generateRandomTile(gameDataViewModel.getGameButtons());
+
+                    // Add the button that the AI added to the undo list.
+                    gameDataViewModel.addButton(tile);
+
                     tile.setText(gameDataViewModel.getPlayer2Symbol());
                     gameDataViewModel.incrementRound();
                     gameDataViewModel.setAiFinished();

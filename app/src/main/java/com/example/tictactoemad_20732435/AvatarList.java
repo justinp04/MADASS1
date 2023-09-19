@@ -3,6 +3,7 @@ package com.example.tictactoemad_20732435;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,7 +21,6 @@ public class AvatarList extends Fragment {
 
     private List<Integer> avatarOptions = new ArrayList<>();
     private RecyclerView recyclerView;
-    private myAdapter myAdapter;
 
     private ImageButton imageButton;
     int spanCount = 3;
@@ -42,9 +42,6 @@ public class AvatarList extends Fragment {
 
         //myAdapter adapter = new myAdapter(avatarOptions);
 
-
-
-
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), spanCount);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(new myAdapter(getContext(),list));
@@ -57,23 +54,21 @@ public class AvatarList extends Fragment {
     private List<item> createAvatarList(){
         List<item> items = new ArrayList<item>();
 
-        items.add(new item(R.drawable.avatar1));
-        items.add(new item(R.drawable.avatar2));
-        items.add(new item(R.drawable.avatar3));
-        items.add(new item(R.drawable.avatar4));
-        items.add(new item(R.drawable.avatar5));
-        items.add(new item(R.drawable.avatar6));
-        items.add(new item(R.drawable.avatar7));
-        items.add(new item(R.drawable.avatar8));
-        items.add(new item(R.drawable.avatar9));
-        items.add(new item(R.drawable.avatar10));
-        items.add(new item(R.drawable.avatar11));
-        items.add(new item(R.drawable.avatar12));
-        items.add(new item(R.drawable.avatar13));
-        items.add(new item(R.drawable.avatar14));
-        items.add(new item(R.drawable.avatar15));
-
-
+        items.add(new item(1,R.drawable.avatar1));
+        items.add(new item(2,R.drawable.avatar2));
+        items.add(new item(3,R.drawable.avatar3));
+        items.add(new item(4,R.drawable.avatar4));
+        items.add(new item(5,R.drawable.avatar5));
+        items.add(new item(6,R.drawable.avatar6));
+        items.add(new item(7, R.drawable.avatar7));
+        items.add(new item(8,R.drawable.avatar8));
+        items.add(new item(9,R.drawable.avatar9));
+        items.add(new item(10,R.drawable.avatar10));
+        items.add(new item(11,R.drawable.avatar11));
+        items.add(new item(12,R.drawable.avatar12));
+        items.add(new item(13,R.drawable.avatar13));
+        items.add(new item(14,R.drawable.avatar14));
+        items.add(new item(15,R.drawable.avatar15));
 
         return items;
     }

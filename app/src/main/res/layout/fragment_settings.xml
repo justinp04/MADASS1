@@ -149,6 +149,23 @@
             android:layout_marginBottom="10dp"
             android:textSize="24dp" />
 
+        <Button
+            android:id="@+id/player1_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/square_button"
+            android:text="Player One"
+            android:textSize="24dp"/>
+
+        <Button
+            android:id="@+id/player2_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/square_button"
+            android:layout_marginTop="10dp"
+            android:text="Player Two"
+            android:textSize="24dp"/>
+
 
     </LinearLayout>
 

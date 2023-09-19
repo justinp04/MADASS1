@@ -1,5 +1,8 @@
 package com.example.tictactoemad_20732435;
 
+import static androidx.appcompat.graphics.drawable.DrawableContainerCompat.Api21Impl.getResources;
+
+import android.graphics.drawable.Drawable;
 import android.widget.Button;
 import java.util.*;
 import androidx.lifecycle.MutableLiveData;
@@ -20,10 +23,13 @@ public class GameData extends ViewModel {
     public MutableLiveData<String> player2Symbol;
     public MutableLiveData<String> player1Name;
     public MutableLiveData<String> player2Name;
-    public MutableLiveData<Integer> player1ImageID;
-    public MutableLiveData<Integer> player1ImageID;
+    public MutableLiveData<Drawable> player1Image;
+    public MutableLiveData<Drawable> player2Image;
     
     public Stack<Button> undoButtons;
+
+    public Drawable avatar1;
+
 
     public GameData() {
         gameButtons = new MutableLiveData<Button[][]>();
@@ -41,6 +47,8 @@ public class GameData extends ViewModel {
         undoButtons = new Stack<Button>();
         player1Name = new MutableLiveData<String>();
         player2Name = new MutableLiveData<String>();
+        player1Image = new MutableLiveData<Drawable>();
+        player2Image = new MutableLiveData<Drawable>();
         setDefaultValues();
     }
 
@@ -60,6 +68,9 @@ public class GameData extends ViewModel {
         aiFinished.setValue(true);
         player1Name.setValue("Player 1");
         player2Name.setValue("Player 2");
+        //player1Image.setValue();
+        //player2Image.setValue();
+
     }
 
     public void setGameButtons(Button[][] inButtons) {
@@ -148,6 +159,19 @@ public class GameData extends ViewModel {
         }
     }
 
+    public void setPlayer1Image(Drawable drawable){
+        if(drawable != null) {
+            player1Image.setValue(drawable);
+        }
+    }
+
+    public void setPlayer2Image(Drawable drawable){
+        if(drawable != null){
+            player2Image.setValue(drawable);
+        }
+
+    }
+
     //Accessors
     public Button[][] getGameButtons() {
         return gameButtons.getValue();
@@ -190,6 +214,14 @@ public class GameData extends ViewModel {
     public int getWinCondition()
     {
         return winCondition.getValue();
+    }
+
+    public Drawable getPlayer1ImageID(){
+        return player1Image.getValue();
+    }
+
+    public Drawable getPlayer2ImageID(){
+        return player2Image.getValue();
     }
 
     public PlayerState getPlayerState() {

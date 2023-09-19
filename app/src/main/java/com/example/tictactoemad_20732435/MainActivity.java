@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private PauseMenuFragment pauseMenu = new PauseMenuFragment();
     private UserProfile editProfile = new UserProfile();
 
+    private AvatarList avatarList = new AvatarList();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +66,11 @@ public class MainActivity extends AppCompatActivity {
                 if (mainActivityDataViewModel.getClickedValue() == 7)
                 {
                     loadEditProfileFragment();
+                }
+
+                if(mainActivityDataViewModel.getClickedValue() == 8)
+                {
+                    loadAvatarListFragment();
                 }
             }
         });
@@ -155,6 +162,19 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             fm.beginTransaction().replace(R.id.fragment_game, editProfile).commit();
+        }
+    }
+
+    private void loadAvatarListFragment()
+    {
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment frag = fm.findFragmentById(R.id.fragment_game);
+        if (frag==null)
+        {
+            fm.beginTransaction().add(R.id.fragment_game, avatarList).commit();
+        }
+        else {
+            fm.beginTransaction().replace(R.id.fragment_game, avatarList).commit();
         }
     }
 

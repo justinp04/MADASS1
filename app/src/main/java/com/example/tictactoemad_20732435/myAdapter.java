@@ -1,17 +1,13 @@
 package com.example.tictactoemad_20732435;
 
 
-import static com.google.android.material.internal.ContextUtils.getActivity;
-
 import android.content.ClipData;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,6 +23,8 @@ public class myAdapter extends RecyclerView.Adapter<myViewHolder> {
 
     Context context;
     List<item> items;
+
+    private List<Integer> avatarOptions;
     
     public myAdapter(Context context, List<item> items) {
         this.context = context;
@@ -49,15 +47,9 @@ public class myAdapter extends RecyclerView.Adapter<myViewHolder> {
         holder.imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int selectedAvatarResource = items.get(position).getImage();
-
-                Bundle bundle = new Bundle();
-
-                bundle.putInt("userPicture", selectedAvatarResource);
-                Intent intent = new Intent();
+                //int selectedAvatarResource = items.get(position).getImage();
 
                 UserProfile userProfile = new UserProfile();
-                userProfile.setArguments(bundle);
 
                 FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
 

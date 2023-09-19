@@ -22,6 +22,7 @@
             android:layout_centerHorizontal="true"
             android:text="Welcome to Tic Tac Toe - MAD"
             android:textSize="30dp"
+            android:autoSizeTextType="uniform"
             android:gravity="center"/>
 
         <Button

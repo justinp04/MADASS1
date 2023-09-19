@@ -10,10 +10,11 @@
     tools:context=".GameFunction4x4">
 
     <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:paddingLeft="5dp"
-        android:paddingRight="5dp">
+        android:paddingRight="5dp"
+        android:paddingTop="5dp">
 
         <TextView
             android:id="@+id/title_game"
@@ -21,7 +22,8 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:text="Welcome to Tic Tac Toe - MAD"
-            android:textSize="30dp" />
+            android:textSize="30dp"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/reset_button"
@@ -80,39 +82,33 @@
             android:text="Moves Left: 0"
             android:textSize="30sp" />
 
-        <LinearLayout
-            android:id="@+id/undo_pause_layout"
+        <Button
+            android:id="@+id/undo_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/playerTurn"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp">
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:layout_toLeftOf="@id/reset_button"
+            android:background="@drawable/square_button"
+            android:text="Undo"
+            android:textSize="24dp" />
 
-            <Button
-                android:id="@+id/undo_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:layout_weight="1"
-                android:background="@drawable/square_button"
-                android:text="Undo"
-                android:textSize="24dp" />
-
-            <Button
-                android:id="@+id/pause_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/square_button"
-                android:text="Pause"
-                android:textSize="24dp" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/pause_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_toRightOf="@id/menu_button"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/square_button"
+            android:text="Pause"
+            android:textSize="24dp" />
 
         <TextView
             android:id="@+id/timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/undo_pause_layout"
+            android:layout_below="@id/playerTurn"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:text="30"
@@ -126,7 +122,8 @@
             android:layout_alignParentStart="true"
             android:background="@drawable/square_button"
             android:text="Menu"
-            android:textSize="24dp" />
+            android:textSize="24dp"
+            />
     </RelativeLayout>
 
     <LinearLayout
@@ -142,8 +139,12 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
+            android:autoSizeMaxTextSize="60dp"
+            android:autoSizeMinTextSize="25sp"
+            android:autoSizeStepGranularity="2sp"
+            android:autoSizeTextType="uniform"
             android:background="@drawable/square_button"
-            android:textSize="60sp" />
+            android:textAlignment="center" />
 
         <Button
             android:id="@+id/button_01"
@@ -151,8 +152,12 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
+            android:autoSizeMaxTextSize="60dp"
+            android:autoSizeMinTextSize="25sp"
+            android:autoSizeStepGranularity="2sp"
+            android:autoSizeTextType="uniform"
             android:background="@drawable/square_button"
-            android:textSize="60sp" />
+            android:textAlignment="center" />
 
         <Button
             android:id="@+id/button_02"
@@ -160,16 +165,24 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
+            android:autoSizeMaxTextSize="60dp"
+            android:autoSizeMinTextSize="25sp"
+            android:autoSizeStepGranularity="2sp"
+            android:autoSizeTextType="uniform"
             android:background="@drawable/square_button"
-            android:textSize="60sp" />
+            android:textAlignment="center" />
 
         <Button
             android:id="@+id/button_03"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:autoSizeMaxTextSize="60dp"
+            android:autoSizeMinTextSize="25sp"
+            android:autoSizeStepGranularity="2sp"
+            android:autoSizeTextType="uniform"
             android:background="@drawable/square_button"
-            android:textSize="60sp" />
+            android:textAlignment="center" />
     </LinearLayout>
 
     <LinearLayout
@@ -184,8 +197,12 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
+            android:autoSizeMaxTextSize="60dp"
+            android:autoSizeMinTextSize="25sp"
+            android:autoSizeStepGranularity="2sp"
+            android:autoSizeTextType="uniform"
             android:background="@drawable/square_button"
-            android:textSize="60sp" />
+            android:textAlignment="center" />
 
         <Button
             android:id="@+id/button_11"
@@ -193,8 +210,12 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
+            android:autoSizeMaxTextSize="60dp"
+            android:autoSizeMinTextSize="25sp"
+            android:autoSizeStepGranularity="2sp"
+            android:autoSizeTextType="uniform"
             android:background="@drawable/square_button"
-            android:textSize="60sp" />
+            android:textAlignment="center" />
 
         <Button
             android:id="@+id/button_12"
@@ -202,16 +223,24 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
+            android:autoSizeMaxTextSize="60dp"
+            android:autoSizeMinTextSize="25sp"
+            android:autoSizeStepGranularity="2sp"
+            android:autoSizeTextType="uniform"
             android:background="@drawable/square_button"
-            android:textSize="60sp" />
+            android:textAlignment="center" />
 
         <Button
             android:id="@+id/button_13"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:autoSizeMaxTextSize="60dp"
+            android:autoSizeMinTextSize="25sp"
+            android:autoSizeStepGranularity="2sp"
+            android:autoSizeTextType="uniform"
             android:background="@drawable/square_button"
-            android:textSize="60sp" />
+            android:textAlignment="center" />
     </LinearLayout>
 
     <LinearLayout
@@ -226,8 +255,12 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
+            android:autoSizeMaxTextSize="60dp"
+            android:autoSizeMinTextSize="25sp"
+            android:autoSizeStepGranularity="2sp"
+            android:autoSizeTextType="uniform"
             android:background="@drawable/square_button"
-            android:textSize="60sp" />
+            android:textAlignment="center" />
 
         <Button
             android:id="@+id/button_21"
@@ -235,8 +268,12 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
+            android:autoSizeMaxTextSize="60dp"
+            android:autoSizeMinTextSize="25sp"
+            android:autoSizeStepGranularity="2sp"
+            android:autoSizeTextType="uniform"
             android:background="@drawable/square_button"
-            android:textSize="60sp" />
+            android:textAlignment="center" />
 
         <Button
             android:id="@+id/button_22"
@@ -244,16 +281,24 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
+            android:autoSizeMaxTextSize="60dp"
+            android:autoSizeMinTextSize="25sp"
+            android:autoSizeStepGranularity="2sp"
+            android:autoSizeTextType="uniform"
             android:background="@drawable/square_button"
-            android:textSize="60sp" />
+            android:textAlignment="center" />
 
         <Button
             android:id="@+id/button_23"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:autoSizeMaxTextSize="60dp"
+            android:autoSizeMinTextSize="25sp"
+            android:autoSizeStepGranularity="2sp"
+            android:autoSizeTextType="uniform"
             android:background="@drawable/square_button"
-            android:textSize="60sp" />
+            android:textAlignment="center" />
     </LinearLayout>
 
     <LinearLayout
@@ -269,8 +314,12 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
+            android:autoSizeMaxTextSize="60dp"
+            android:autoSizeMinTextSize="25sp"
+            android:autoSizeStepGranularity="2sp"
+            android:autoSizeTextType="uniform"
             android:background="@drawable/square_button"
-            android:textSize="60sp" />
+            android:textAlignment="center" />
 
         <Button
             android:id="@+id/button_31"
@@ -278,8 +327,12 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
+            android:autoSizeMaxTextSize="60dp"
+            android:autoSizeMinTextSize="25sp"
+            android:autoSizeStepGranularity="2sp"
+            android:autoSizeTextType="uniform"
             android:background="@drawable/square_button"
-            android:textSize="60sp" />
+            android:textAlignment="center" />
 
         <Button
             android:id="@+id/button_32"
@@ -287,17 +340,23 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
+            android:autoSizeMaxTextSize="60dp"
+            android:autoSizeMinTextSize="25sp"
+            android:autoSizeStepGranularity="2sp"
+            android:autoSizeTextType="uniform"
             android:background="@drawable/square_button"
-            android:textSize="60sp" />
+            android:textAlignment="center" />
 
         <Button
             android:id="@+id/button_33"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:autoSizeMaxTextSize="60dp"
+            android:autoSizeMinTextSize="25sp"
+            android:autoSizeStepGranularity="2sp"
+            android:autoSizeTextType="uniform"
             android:background="@drawable/square_button"
-            android:textSize="60sp" />
+            android:textAlignment="center" />
     </LinearLayout>
-
-
 </LinearLayout>

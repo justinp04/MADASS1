@@ -1,24 +1,25 @@
 package com.example.tictactoemad_20732435;
 
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class myViewHolder extends RecyclerView.ViewHolder {
+public class MyViewHolder extends RecyclerView.ViewHolder {
 
-    ImageButton imageButton;
+    ImageView imageView;
+    TextView nameView, Wins, Draws, Losses, Totalgames, WinPercent;
+    public MyViewHolder(@NonNull View itemView) {
+        super(itemView);
 
-    public myViewHolder(@NonNull View itemView, ViewGroup parent){
-    super(itemView);
-
-    int hSize = parent.getMeasuredHeight() /3;
-    ViewGroup.LayoutParams lp = itemView.getLayoutParams();
-    lp.height = hSize;
-    imageButton = itemView.findViewById(R.id.avatarSelect);
-
+        imageView = itemView.findViewById(R.id.imageview);
+        nameView = itemView.findViewById(R.id.name);
+        Wins = itemView.findViewById(R.id.wins);
+        Draws = itemView.findViewById(R.id.draws);
+        Losses = itemView.findViewById(R.id.losses);
+        Totalgames = itemView.findViewById(R.id.totalgames);
+        WinPercent = itemView.findViewById(R.id.winpercent);
     }
-
 }

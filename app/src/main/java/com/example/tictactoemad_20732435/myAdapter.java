@@ -1,69 +1,41 @@
 package com.example.tictactoemad_20732435;
 
-
-import android.content.ClipData;
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class myAdapter extends RecyclerView.Adapter<myViewHolder> {
+public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     Context context;
-    List<item> items;
 
-    private List<Integer> avatarOptions;
-    
-    public myAdapter(Context context, List<item> items) {
+    List<Item> items;
+
+    public MyAdapter(Context context, List<Item> items) {
         this.context = context;
         this.items = items;
     }
 
+
     @NonNull
     @Override
-    public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.item_view, parent, false);
-        myViewHolder myViewHolder = new myViewHolder(view, parent);
-        return myViewHolder;
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.leaderboard_item_view, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
-        int imageID = items.get(position).getImage();
-        holder.imageButton.setImageResource(imageID);
-        holder.imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //int selectedAvatarResource = items.get(position).getImage();
-
-                UserProfile userProfile = new UserProfile();
-
-                FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
-
-                // Start a new transaction
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-                // Replace the existing fragment with the new one (replace R.id.frameLayoutId with your FrameLayout ID)
-                transaction.replace(R.id.fragment_game, userProfile);
-
-                // Commit the transaction
-                transaction.commit();
-                // Navigate to the UserProfileFragment
-            }
-        });
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        holder.nameView.setText(items.get(position).getName());
+        holder.imageView.setImageResource(items.get(position).getImage());
+        holder.Totalgames.setText(String.valueOf(items.get(position).getTotalgames()));
+        holder.Wins.setText(String.valueOf(items.get(position).getWins()));
+        holder.Draws.setText(String.valueOf(items.get(position).getDraws()));
+        holder.Losses.setText(String.valueOf(items.get(position).getLosses()));
+        holder.WinPercent.setText(String.valueOf(items.get(position).getWinpercent()));
 
     }
 

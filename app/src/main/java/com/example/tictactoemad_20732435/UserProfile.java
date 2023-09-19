@@ -15,7 +15,6 @@ import android.widget.ImageButton;
 
 public class UserProfile extends Fragment {
 
-    ImageButton imageButton;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

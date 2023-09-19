@@ -110,7 +110,7 @@ public class StartMenuFragment extends Fragment {
             @Override
             public void onClick(View view)
             {
-                //set clicked value for leaderboard
+                mainActivityDataViewModel.setClickedValue(9);
             }
         });
 

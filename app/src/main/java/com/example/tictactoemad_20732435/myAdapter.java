@@ -54,7 +54,6 @@ public class myAdapter extends RecyclerView.Adapter<myViewHolder> {
                 Bundle bundle = new Bundle();
 
                 bundle.putInt("userPicture", selectedAvatarResource);
-                Intent intent = new Intent();
 
                 UserProfile userProfile = new UserProfile();
                 userProfile.setArguments(bundle);

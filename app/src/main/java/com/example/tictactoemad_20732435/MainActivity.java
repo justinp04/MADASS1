@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
 
     private AvatarList avatarList = new AvatarList();
 
+    private LeaderboardFragment leaderboardFragment = new LeaderboardFragment();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +73,9 @@ public class MainActivity extends AppCompatActivity {
                 if(mainActivityDataViewModel.getClickedValue() == 8)
                 {
                     loadAvatarListFragment();
+                }
+                if(mainActivityDataViewModel.getClickedValue() == 9) {
+                    loadLeaderboard();
                 }
             }
         });
@@ -175,6 +180,18 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             fm.beginTransaction().replace(R.id.fragment_game, avatarList).commit();
+        }
+    }
+
+    private void loadLeaderboard(){
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment frag = fm.findFragmentById(R.id.fragment_game);
+        if (frag==null)
+        {
+            fm.beginTransaction().add(R.id.fragment_game, leaderboardFragment).commit();
+        }
+        else {
+            fm.beginTransaction().replace(R.id.fragment_game, leaderboardFragment).commit();
         }
     }
 

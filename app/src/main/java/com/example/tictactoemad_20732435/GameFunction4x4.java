@@ -244,6 +244,14 @@ public class GameFunction4x4 extends Fragment {
     public void onClick(View view)
     {
         GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
+
+        //Add button to undo button list
+        Button clickedButton = (Button)view;
+        if(clickedButton.getText().toString() == "")
+        {
+            gameDataViewModel.undoButtons.add((Button) view);
+        }
+
         //Run universal onClick function.
         String returnString = GameFunctions.onClick(view, gameDataViewModel);
         //Update on screen game stats

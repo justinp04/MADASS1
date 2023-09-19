@@ -263,6 +263,13 @@ public class GameFunction3x3 extends Fragment {
     public void onClick(View view) {
         GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
 
+        //Add button to undo button list
+        Button clickedButton = (Button)view;
+        if(clickedButton.getText().toString() == "")
+        {
+            gameDataViewModel.undoButtons.add((Button) view);
+        }
+
         //Run universal onClick function.
         String returnString = GameFunctions.onClick(view, gameDataViewModel);
 
@@ -271,9 +278,6 @@ public class GameFunction3x3 extends Fragment {
 
         //Print win message if game has been won.
         winMessage(returnString, gameDataViewModel);
-
-        //Add button to undo button list
-        gameDataViewModel.undoButtons.add((Button) view);
 
         // Enable the undo button
         if(!undoButton.isEnabled())

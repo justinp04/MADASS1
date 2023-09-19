@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -214,16 +215,19 @@ public class GameFunction4x4 extends Fragment {
                     // If it is playerOne's turn
                     if (gameDataViewModel.playerTurn.getValue() == 1)
                     {
+                        // Call the AI again if it is an AI player state
+                        boolean play1Wins = false;
+                        if(gameDataViewModel.getPlayerState() instanceof AIPlayerState)
+                        {
+                            Log.d("ENTER_INSTANCE_OF", "Has entered instance of " + player1Turn);
+                            gameDataViewModel.getPlayerState().playerTwoMove(gameDataViewModel, play1Wins);
+                        }
                         gameDataViewModel.setPlayer2Turn();
                     }
                     else
                     {
                         gameDataViewModel.setPlayer1Turn();
                     }
-
-                    // Call the AI again if it is an AI player state
-                    boolean play1Wins = false;
-                    gameDataViewModel.getPlayerState().playerTwoMove(gameDataViewModel, play1Wins);
 
                     updatePlayerText(gameDataViewModel);
                 }

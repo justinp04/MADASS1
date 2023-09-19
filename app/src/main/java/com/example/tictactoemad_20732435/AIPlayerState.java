@@ -50,7 +50,6 @@ public class AIPlayerState implements PlayerState {
         else if ((gameDataViewModel.getRoundCount() < finalRound - 1) && (!play1WinStatus))
         {
             timer.start();
-            Log.d("AiStart", "AiStart");
         }
 
         return 1;

@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -182,6 +184,8 @@ public class GameFunction3x3 extends Fragment {
             {
                 int movesMade, movesLeft;
 
+                Log.d("UNDOBUTTON", "Click undo");
+
                 if(gameDataViewModel.getRoundCount() > 0)
                 {
                     Button buttonToUpdate;
@@ -201,6 +205,13 @@ public class GameFunction3x3 extends Fragment {
                     // If it is playerOne's turn
                     if (gameDataViewModel.playerTurn.getValue() == 1)
                     {
+                        // Call the AI again if it is an AI player state
+                        boolean play1Wins = false;
+                        if(gameDataViewModel.getPlayerState() instanceof AIPlayerState)
+                        {
+                            Log.d("ENTER_INSTANCE_OF", "Has entered instance of " + player1Turn);
+                            gameDataViewModel.getPlayerState().playerTwoMove(gameDataViewModel, play1Wins);
+                        }
                         gameDataViewModel.setPlayer2Turn();
                     }
                     else
@@ -227,11 +238,14 @@ public class GameFunction3x3 extends Fragment {
                     winMessage(GameFunctions.checkPlayer2Wins(gameDataViewModel), gameDataViewModel);
                     for(int i = 0; i < gameButtons.length; i++)
                     {
-                        for (int j = 0; j < gameButtons[i].length; j++) {
+                        for (int j = 0; j < gameButtons[i].length; j++)
+                        {
                             gameButtons[i][j].setEnabled(true);
                         }
                     }
-                } else if (!gameDataViewModel.getAiFinished()) {
+                }
+                else if (!gameDataViewModel.getAiFinished())
+                {
                     for(int i = 0; i < gameButtons.length; i++)
                     {
                         for (int j = 0; j < gameButtons[i].length; j++) {

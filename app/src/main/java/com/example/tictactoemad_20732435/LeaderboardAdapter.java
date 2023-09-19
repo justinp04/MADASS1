@@ -9,13 +9,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
+public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardViewHolder> {
 
     Context context;
 
-    List<Item> items;
+    List<LeaderboardItem> items;
 
-    public MyAdapter(Context context, List<Item> items) {
+    public LeaderboardAdapter(Context context, List<LeaderboardItem> items) {
         this.context = context;
         this.items = items;
     }
@@ -23,12 +23,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.leaderboard_item_view, parent, false));
+    public LeaderboardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new LeaderboardViewHolder(LayoutInflater.from(context).inflate(R.layout.leaderboard_item_view, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull LeaderboardViewHolder holder, int position) {
         holder.nameView.setText(items.get(position).getName());
         holder.imageView.setImageResource(items.get(position).getImage());
         holder.Totalgames.setText(String.valueOf(items.get(position).getTotalgames()));

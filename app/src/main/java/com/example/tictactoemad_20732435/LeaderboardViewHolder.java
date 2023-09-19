@@ -7,11 +7,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MyViewHolder extends RecyclerView.ViewHolder {
+public class LeaderboardViewHolder extends RecyclerView.ViewHolder {
 
     ImageView imageView;
     TextView nameView, Wins, Draws, Losses, Totalgames, WinPercent;
-    public MyViewHolder(@NonNull View itemView) {
+    public LeaderboardViewHolder(@NonNull View itemView) {
         super(itemView);
 
         imageView = itemView.findViewById(R.id.imageview);

@@ -3,7 +3,7 @@ package com.example.tictactoemad_20732435;
 import android.util.Log;
 import java.util.*;
 
-public class Item implements Comparable<Item>{
+public class LeaderboardItem implements Comparable<LeaderboardItem>{
 
     String name;
     Integer wins;
@@ -13,7 +13,7 @@ public class Item implements Comparable<Item>{
     int image;
     float winpercent;
 
-    public Item(String name, int image, Integer wins, int losses, int draws, int totalgames, int winpercent)
+    public LeaderboardItem(String name, int image, Integer wins, int losses, int draws, int totalgames, int winpercent)
     {
         this.totalgames = totalgames;
         this.name = name;
@@ -97,7 +97,7 @@ public class Item implements Comparable<Item>{
     }
 
     @Override
-    public int compareTo(Item other) {
+    public int compareTo(LeaderboardItem other) {
         return this.wins.compareTo(other.wins);
     }
 }

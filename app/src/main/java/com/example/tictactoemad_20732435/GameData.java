@@ -69,8 +69,10 @@ public class GameData extends ViewModel {
         aiFinished.setValue(true);
         player1Name.setValue("Player 1");
         player2Name.setValue("Player 2");
-        player1Image.setValue(Drawable.createFromPath(String.valueOf(R.drawable.avatar1)));
-        player2Image.setValue(Drawable.createFromPath(String.valueOf(R.drawable.avatar1)));
+        player1Image.setValue(Drawable.createFromPath(String.valueOf(R.drawable.default_avatar)));
+        player2Image.setValue(Drawable.createFromPath(String.valueOf(R.drawable.default_avatar)));
+        player1ImageID.setValue(R.drawable.default_avatar);
+        player2ImageID.setValue(R.drawable.default_avatar);
 
     }
 

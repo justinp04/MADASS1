@@ -169,6 +169,7 @@ public class Settings extends Fragment {
         P2Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mainActivityDataViewModel.setPlayerEdit(1);
                 mainActivityDataViewModel.setClickedValue(7);
             }
         });
@@ -176,6 +177,7 @@ public class Settings extends Fragment {
         P1Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mainActivityDataViewModel.setPlayerEdit(2);
                 mainActivityDataViewModel.setClickedValue(7);
             }
         });

@@ -1,7 +1,5 @@
 package com.example.tictactoemad_20732435;
 
-import static androidx.appcompat.graphics.drawable.DrawableContainerCompat.Api21Impl.getResources;
-
 import android.graphics.drawable.Drawable;
 import android.widget.Button;
 import java.util.*;
@@ -25,7 +23,8 @@ public class GameData extends ViewModel {
     public MutableLiveData<String> player2Name;
     public MutableLiveData<Drawable> player1Image;
     public MutableLiveData<Drawable> player2Image;
-    
+    public MutableLiveData<Integer> player1ImageID;
+    public MutableLiveData<Integer> player2ImageID;
     public Stack<Button> undoButtons;
 
     public Drawable avatar1;
@@ -49,6 +48,8 @@ public class GameData extends ViewModel {
         player2Name = new MutableLiveData<String>();
         player1Image = new MutableLiveData<Drawable>();
         player2Image = new MutableLiveData<Drawable>();
+        player1ImageID = new MutableLiveData<Integer>();
+        player2ImageID = new MutableLiveData<Integer>();
         setDefaultValues();
     }
 
@@ -68,8 +69,8 @@ public class GameData extends ViewModel {
         aiFinished.setValue(true);
         player1Name.setValue("Player 1");
         player2Name.setValue("Player 2");
-        //player1Image.setValue();
-        //player2Image.setValue();
+        player1Image.setValue(Drawable.createFromPath(String.valueOf(R.drawable.avatar1)));
+        player2Image.setValue(Drawable.createFromPath(String.valueOf(R.drawable.avatar1)));
 
     }
 
@@ -172,6 +173,13 @@ public class GameData extends ViewModel {
 
     }
 
+    public void setPlayer1ImageID(Integer inPlayer1ImageID) {
+        player1ImageID.setValue(inPlayer1ImageID);
+    }
+    public void setPlayer2ImageID(Integer inPlayer1ImageID) {
+        player1ImageID.setValue(inPlayer1ImageID);
+    }
+
     //Accessors
     public Button[][] getGameButtons() {
         return gameButtons.getValue();
@@ -216,12 +224,19 @@ public class GameData extends ViewModel {
         return winCondition.getValue();
     }
 
-    public Drawable getPlayer1ImageID(){
+    public Drawable getPlayer1Image(){
         return player1Image.getValue();
     }
 
-    public Drawable getPlayer2ImageID(){
+    public Drawable getPlayer2Image(){
         return player2Image.getValue();
+    }
+    public Integer getPlayer1ImageID(){
+        return player1ImageID.getValue();
+    }
+
+    public Integer getPlayer2ImageID(){
+        return player2ImageID.getValue();
     }
 
     public PlayerState getPlayerState() {

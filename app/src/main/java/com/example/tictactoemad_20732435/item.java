@@ -6,7 +6,7 @@ public class item {
 
     int id;
 
-    public item(int image, int id) {
+    public item(int id, int image) {
 
         this.image = image;
         this.id = id;

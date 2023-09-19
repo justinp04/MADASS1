@@ -42,11 +42,12 @@ public class myAdapter extends RecyclerView.Adapter<myViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
-        holder.imageButton.setImageResource(items.get(position).getImage());
+        int imageID = items.get(position).getImage();
+        holder.imageButton.setImageResource(imageID);
         holder.imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int selectedAvatarResource = items.get(position).getImage();
+                //int selectedAvatarResource = items.get(position).getImage();
 
                 UserProfile userProfile = new UserProfile();
 

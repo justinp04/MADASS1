@@ -54,36 +54,23 @@ public class LeaderboardFragment extends Fragment {
     private List<LeaderboardItem> createLeaderboard(){
         List<LeaderboardItem> items = new ArrayList<LeaderboardItem>();
 
-        items.add(new LeaderboardItem("John Wick",R.drawable.pngitem_2076277, 4, 3, 6, 0,0));
-        items.add(new LeaderboardItem("John Wick",R.drawable.pngitem_2076277, 4, 3, 6, 0,0));
-        items.add(new LeaderboardItem("John Taylor",R.drawable.pngitem_2076277, 5, 8, 5, 0,0));
-        items.add(new LeaderboardItem("Loser hat",R.drawable.pngitem_2076277, 3, 2, 4, 0,0));
-        items.add(new LeaderboardItem("John Wick",R.drawable.pngitem_2076277, 8, 1, 3, 0,0));
-        items.add(new LeaderboardItem("John Wick",R.drawable.pngitem_2076277, 6, 3, 6, 0,0));
-        items.add(new LeaderboardItem("John Taylor",R.drawable.pngitem_2076277, 9, 8, 5, 0,0));
-        items.add(new LeaderboardItem("Loser hat",R.drawable.pngitem_2076277, 11, 2, 4, 0,0));
-        items.add(new LeaderboardItem("Loser hat",R.drawable.pngitem_2076277, 11, 2, 4, 0,0));
-        items.add(new LeaderboardItem("John Wick",R.drawable.pngitem_2076277, 20, 1, 3, 0,0));
-        items.add(new LeaderboardItem("John Wick",R.drawable.pngitem_2076277, 4, 3, 6, 0,0));
-        items.add(new LeaderboardItem("John Taylor",R.drawable.pngitem_2076277, 5, 8, 5, 0,0));
-        items.add(new LeaderboardItem("Loser hat",R.drawable.pngitem_2076277, 3, 2, 4, 0,0));
-        items.add(new LeaderboardItem("John Wick",R.drawable.pngitem_2076277, 8, 1, 3, 0,0));
-        items.add(new LeaderboardItem("John Wick",R.drawable.pngitem_2076277, 6, 3, 6, 0,0));
-        items.add(new LeaderboardItem("John Taylor",R.drawable.pngitem_2076277, 9, 8, 5, 0,0));
-        items.add(new LeaderboardItem("Loser hat",R.drawable.pngitem_2076277, 11, 2, 4, 0,0));
-        items.add(new LeaderboardItem("John Wick",R.drawable.pngitem_2076277, 20, 1, 3, 0,0));
-        items.add(new LeaderboardItem("Loser hat",R.drawable.pngitem_2076277, 11, 2, 4, 0,0));
-        items.add(new LeaderboardItem("John Wick",R.drawable.pngitem_2076277, 20, 1, 3, 0,0));
-        items.add(new LeaderboardItem("John Wick",R.drawable.pngitem_2076277, 4, 3, 6, 0,0));
-        items.add(new LeaderboardItem("John Taylor",R.drawable.pngitem_2076277, 5, 8, 5, 0,0));
-        items.add(new LeaderboardItem("Loser hat",R.drawable.pngitem_2076277, 3, 2, 4, 0,0));
-        items.add(new LeaderboardItem("John Wick",R.drawable.pngitem_2076277, 8, 1, 3, 0,0));
-        items.add(new LeaderboardItem("John Wick",R.drawable.pngitem_2076277, 6, 3, 6, 0,0));
-        items.add(new LeaderboardItem("John Taylor",R.drawable.pngitem_2076277, 9, 8, 5, 0,0));
-        items.add(new LeaderboardItem("Loser hat",R.drawable.pngitem_2076277, 11, 2, 4, 0,0));
-        items.add(new LeaderboardItem("John Wick",R.drawable.pngitem_2076277, 20, 1, 3, 0,0));
+        Bundle bundle = new Bundle();
+        GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
+        bundle = gameDataViewModel.getGameStatsBundle();
 
+        int player1Wins = bundle.getInt("P1Wins");
+        int player2Wins = bundle.getInt("P2Wins");
+        int totalDraws = bundle.getInt("Draws");
+        int totalGames = bundle.getInt("TotalGames");
+        int player1Avatar = bundle.getInt("P1Avatar");
+        int player2Avatar = bundle.getInt("P2Avatar");
+        String player1Name = bundle.getString("P1Name");
+        String player2Name = bundle.getString("P2Name");
 
+        int player1loses = (totalDraws + player1Wins) - totalGames;
+        int player2loses = (totalDraws + player2Wins) - totalGames;
+        items.add(new LeaderboardItem(player1Name,player1Avatar, player1Wins, player1loses, totalDraws, totalGames,0));
+        items.add(new LeaderboardItem(player2Name,player2Avatar, player2Wins, player2loses, totalDraws, totalGames,0));
 
         Collections.sort(items, Collections.reverseOrder());
         return items;

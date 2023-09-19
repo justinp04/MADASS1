@@ -97,6 +97,12 @@ public class GameFunction3x3 extends Fragment {
         player2Name = gameDataViewModel.getPlayer2Name();
         playerIndicator.setText(player1Name + "'s turn!");
 
+        Bundle bundle = new Bundle();
+        bundle = gameDataViewModel.getGameStatsBundle();
+        String player1Name = bundle.getString("P1Name");
+        String player2Name = bundle.getString("P2Name");
+
+
 
         for (int i = 0; i < row; i++)
         {
@@ -240,6 +246,9 @@ public class GameFunction3x3 extends Fragment {
             }
         });
 
+
+
+
         return rootView;
     }
 
@@ -269,7 +278,9 @@ public class GameFunction3x3 extends Fragment {
     {
         turnTimer.cancel();
         textViewPlayer1.setText("Player 1: " + gameDataViewModel.getPlayer1Points());
+        //textViewPlayer1.setText(player1Name + " : " + gameDataViewModel.getPlayer1Points());
         textViewPlayer2.setText("Player 2: " + gameDataViewModel.getPlayer2Points());
+        //textViewPlayer2.setText(player2Name + " : " + gameDataViewModel.getPlayer2Points());
         textMovesLeft.setText("Moves Left: " + (9 - gameDataViewModel.getRoundCount()));
         textMovesMade.setText("Moves Made: " + gameDataViewModel.getRoundCount());
         if (gameDataViewModel.getPlayerTurn() == 1)

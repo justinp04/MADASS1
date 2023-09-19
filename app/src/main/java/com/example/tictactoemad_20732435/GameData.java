@@ -1,6 +1,7 @@
 package com.example.tictactoemad_20732435;
 
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.widget.Button;
 import java.util.*;
 import androidx.lifecycle.MutableLiveData;
@@ -73,6 +74,28 @@ public class GameData extends ViewModel {
         player2Image.setValue(Drawable.createFromPath(String.valueOf(R.drawable.default_avatar)));
         player1ImageID.setValue(R.drawable.default_avatar);
         player2ImageID.setValue(R.drawable.default_avatar);
+    }
+
+    public Bundle getGameStatsBundle(){
+        Bundle gameStats = new Bundle();
+        int P1wins = player1Points.getValue();
+        int P2wins = player2Points.getValue();
+        int totalGames = roundCount.getValue();
+        int draws = drawCount.getValue();
+        int player1Image = player1ImageID.getValue();
+        int player2Image = player2ImageID.getValue();
+        String P1Name = player1Name.getValue();
+        String P2Name = player2Name.getValue();
+        gameStats.putInt("P1Wins", P1wins);
+        gameStats.putInt("P2Wins", P2wins);
+        gameStats.putInt("TotalGames", totalGames);
+        gameStats.putInt("Draws", draws);
+        gameStats.putInt("P1Avatar", player1Image);
+        gameStats.putInt("P2Avatar", player2Image);
+        gameStats.putString("P1Name", P1Name);
+        gameStats.putString("P2Name", P2Name);
+
+        return gameStats;
     }
 
     public void setGameButtons(Button[][] inButtons) {

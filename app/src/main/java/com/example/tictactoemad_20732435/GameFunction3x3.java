@@ -205,18 +205,18 @@ public class GameFunction3x3 extends Fragment {
                     // If it is playerOne's turn
                     if (gameDataViewModel.playerTurn.getValue() == 1)
                     {
+                        // Call the AI again if it is an AI player state
+                        boolean play1Wins = false;
+                        if(gameDataViewModel.getPlayerState() instanceof AIPlayerState)
+                        {
+                            Log.d("ENTER_INSTANCE_OF", "Has entered instance of " + player1Turn);
+                            gameDataViewModel.getPlayerState().playerTwoMove(gameDataViewModel, play1Wins);
+                        }
                         gameDataViewModel.setPlayer2Turn();
                     }
                     else
                     {
                         gameDataViewModel.setPlayer1Turn();
-                    }
-
-                    // Call the AI again if it is an AI player state
-                    boolean play1Wins = false;
-                    if(gameDataViewModel.getPlayerState() instanceof AIPlayerState)
-                    {
-                        gameDataViewModel.getPlayerState().playerTwoMove(gameDataViewModel, play1Wins);
                     }
 
                     updatePlayerText(gameDataViewModel);
@@ -238,11 +238,14 @@ public class GameFunction3x3 extends Fragment {
                     winMessage(GameFunctions.checkPlayer2Wins(gameDataViewModel), gameDataViewModel);
                     for(int i = 0; i < gameButtons.length; i++)
                     {
-                        for (int j = 0; j < gameButtons[i].length; j++) {
+                        for (int j = 0; j < gameButtons[i].length; j++)
+                        {
                             gameButtons[i][j].setEnabled(true);
                         }
                     }
-                } else if (!gameDataViewModel.getAiFinished()) {
+                }
+                else if (!gameDataViewModel.getAiFinished())
+                {
                     for(int i = 0; i < gameButtons.length; i++)
                     {
                         for (int j = 0; j < gameButtons[i].length; j++) {

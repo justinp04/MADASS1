@@ -32,6 +32,9 @@ public class AIPlayerState implements PlayerState {
 
                     tile.setText(gameDataViewModel.getPlayer2Symbol());
                     gameDataViewModel.incrementRound();
+
+                    // Change the player turn to player one's turn
+                    gameDataViewModel.setPlayer1Turn();
                     gameDataViewModel.setAiFinished();
                     Log.d("AiFinish", "AiFinish");
                 }

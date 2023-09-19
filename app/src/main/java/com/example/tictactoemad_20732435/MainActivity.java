@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -23,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private Settings settings = new Settings();
     private PauseMenuFragment pauseMenu = new PauseMenuFragment();
     private UserProfile editProfile = new UserProfile();
-
     private AvatarList avatarList = new AvatarList();
+    private LeaderboardFragment leaderboard = new LeaderboardFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +63,10 @@ public class MainActivity extends AppCompatActivity {
                 {
                     loadPauseFragment();
                 }
-
+                if (mainActivityDataViewModel.getClickedValue() == 6)
+                {
+                    loadLeaderboard();
+                }
                 if (mainActivityDataViewModel.getClickedValue() == 7)
                 {
                     loadEditProfileFragment();
@@ -176,6 +180,20 @@ public class MainActivity extends AppCompatActivity {
         else {
             fm.beginTransaction().replace(R.id.fragment_game, avatarList).commit();
         }
+    }
+
+    private void loadLeaderboard()
+    {
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment frag = fm.findFragmentById(R.id.fragment_game);
+
+        if(frag == null){
+            fm.beginTransaction().add(R.id.fragment_game, leaderboard).commit();
+        }
+        else{
+            fm.beginTransaction().replace(R.id.fragment_game, leaderboard).commit();
+        }
+
     }
 
     @Override

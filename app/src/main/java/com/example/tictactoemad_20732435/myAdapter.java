@@ -29,7 +29,6 @@ public class myAdapter extends RecyclerView.Adapter<myViewHolder> {
 
     Context context;
     List<item> items;
-    Activity activity;
     MainActivityData mainActivityData;
 
 
@@ -70,7 +69,7 @@ public class myAdapter extends RecyclerView.Adapter<myViewHolder> {
 
                 // Start a new transaction
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
-                // Replace the existing fragment with the new one (replace R.id.frameLayoutId with your FrameLayout ID)
+                // Replace the existing fragment with the user profile fragment
                 if (mainActivityData.getPlayerEdit() == 1)
                 {
                     transaction.replace(R.id.fragment_game, userProfile);

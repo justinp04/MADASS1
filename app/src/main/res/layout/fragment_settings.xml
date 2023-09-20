@@ -194,6 +194,7 @@
             android:text="Back"
             android:layout_marginTop="16dp"
             android:layout_gravity="bottom"
+            app:layout_constraintTop_toBottomOf="@id/playerIconsLayout"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHeight_percent=".1"
             app:layout_constraintStart_toStartOf="parent"

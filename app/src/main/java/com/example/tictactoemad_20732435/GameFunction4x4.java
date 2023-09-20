@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -210,12 +211,25 @@ public class GameFunction4x4 extends Fragment {
 
                     Toast.makeText(requireContext(), "Undo move", Toast.LENGTH_SHORT).show();
 
-                    // Update the turn count textViews
-                    textMovesMade.setText("Moves made: " + gameDataViewModel.getRoundCount());
-                    textMovesLeft.setText("Moves left: " + (16 - gameDataViewModel.getRoundCount()));
+                    // Update the turn count textViews and Update whose turn it is
+                    // If it is playerOne's turn
+                    if (gameDataViewModel.playerTurn.getValue() == 1)
+                    {
+                        // Call the AI again if it is an AI player state
+                        boolean play1Wins = false;
+                        if(gameDataViewModel.getPlayerState() instanceof AIPlayerState)
+                        {
+                            Log.d("ENTER_INSTANCE_OF", "Has entered instance of " + player1Turn);
+                            gameDataViewModel.getPlayerState().playerTwoMove(gameDataViewModel, play1Wins);
+                        }
+                        gameDataViewModel.setPlayer2Turn();
+                    }
+                    else
+                    {
+                        gameDataViewModel.setPlayer1Turn();
+                    }
 
-                    // Update whose turn it is
-                    player1Turn = !player1Turn;
+                    updatePlayerText(gameDataViewModel);
                 }
                 else
                 {
@@ -230,6 +244,14 @@ public class GameFunction4x4 extends Fragment {
     public void onClick(View view)
     {
         GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
+
+        //Add button to undo button list
+        Button clickedButton = (Button)view;
+        if(clickedButton.getText().toString() == "")
+        {
+            gameDataViewModel.undoButtons.add((Button) view);
+        }
+
         //Run universal onClick function.
         String returnString = GameFunctions.onClick(view, gameDataViewModel);
         //Update on screen game stats

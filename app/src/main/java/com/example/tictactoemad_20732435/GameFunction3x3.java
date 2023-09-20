@@ -3,19 +3,18 @@ package com.example.tictactoemad_20732435;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.*;
 
 /**
@@ -191,6 +190,8 @@ public class GameFunction3x3 extends Fragment {
             {
                 int movesMade, movesLeft;
 
+                Log.d("UNDOBUTTON", "Click undo");
+
                 if(gameDataViewModel.getRoundCount() > 0)
                 {
                     Button buttonToUpdate;
@@ -206,12 +207,25 @@ public class GameFunction3x3 extends Fragment {
 
                     Toast.makeText(requireContext(), "Undo move", Toast.LENGTH_SHORT).show();
 
-                    // Update the turn count textViews
-                    textMovesMade.setText("Moves made: " + gameDataViewModel.getRoundCount());
-                    textMovesLeft.setText("Moves left: " + (9 - gameDataViewModel.getRoundCount()));
+                    // Update the turn count textViews and Update whose turn it is
+                    // If it is playerOne's turn
+                    if (gameDataViewModel.playerTurn.getValue() == 1)
+                    {
+                        // Call the AI again if it is an AI player state
+                        boolean play1Wins = false;
+                        if(gameDataViewModel.getPlayerState() instanceof AIPlayerState)
+                        {
+                            Log.d("ENTER_INSTANCE_OF", "Has entered instance of " + player1Turn);
+                            gameDataViewModel.getPlayerState().playerTwoMove(gameDataViewModel, play1Wins);
+                        }
+                        gameDataViewModel.setPlayer2Turn();
+                    }
+                    else
+                    {
+                        gameDataViewModel.setPlayer1Turn();
+                    }
 
-                    // Update whose turn it is
-                    player1Turn = !player1Turn;
+                    updatePlayerText(gameDataViewModel);
                 }
                 else
                 {
@@ -230,11 +244,14 @@ public class GameFunction3x3 extends Fragment {
                     winMessage(GameFunctions.checkPlayer2Wins(gameDataViewModel), gameDataViewModel);
                     for(int i = 0; i < gameButtons.length; i++)
                     {
-                        for (int j = 0; j < gameButtons[i].length; j++) {
+                        for (int j = 0; j < gameButtons[i].length; j++)
+                        {
                             gameButtons[i][j].setEnabled(true);
                         }
                     }
-                } else if (!gameDataViewModel.getAiFinished()) {
+                }
+                else if (!gameDataViewModel.getAiFinished())
+                {
                     for(int i = 0; i < gameButtons.length; i++)
                     {
                         for (int j = 0; j < gameButtons[i].length; j++) {
@@ -255,6 +272,13 @@ public class GameFunction3x3 extends Fragment {
     public void onClick(View view) {
         GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
 
+        //Add button to undo button list
+        Button clickedButton = (Button)view;
+        if(clickedButton.getText().toString() == "")
+        {
+            gameDataViewModel.undoButtons.add((Button) view);
+        }
+
         //Run universal onClick function.
         String returnString = GameFunctions.onClick(view, gameDataViewModel);
 
@@ -263,9 +287,6 @@ public class GameFunction3x3 extends Fragment {
 
         //Print win message if game has been won.
         winMessage(returnString, gameDataViewModel);
-
-        //Add button to undo button list
-        gameDataViewModel.undoButtons.add((Button) view);
 
         // Enable the undo button
         if(!undoButton.isEnabled())
@@ -283,7 +304,8 @@ public class GameFunction3x3 extends Fragment {
         //textViewPlayer2.setText(player2Name + " : " + gameDataViewModel.getPlayer2Points());
         textMovesLeft.setText("Moves Left: " + (9 - gameDataViewModel.getRoundCount()));
         textMovesMade.setText("Moves Made: " + gameDataViewModel.getRoundCount());
-        if (gameDataViewModel.getPlayerTurn() == 1)
+
+        if(gameDataViewModel.getPlayerTurn() == 1)
         {
             playerIndicator.setText("" + player1Name + "'s turn!");
         }
@@ -291,6 +313,7 @@ public class GameFunction3x3 extends Fragment {
         {
             playerIndicator.setText("" + player2Name + "'s turn!");
         }
+
         timerCounter = 30;
         turnTimer.start();
     }

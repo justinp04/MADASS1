@@ -47,9 +47,12 @@ public class myAdapter extends RecyclerView.Adapter<myViewHolder> {
         holder.imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //int selectedAvatarResource = items.get(position).getImage();
+                int selectedAvatarResource = items.get(position).getImage();
+                Bundle bundle = new Bundle();
+                bundle.putInt("userPicture", selectedAvatarResource);
 
                 UserProfile userProfile = new UserProfile();
+                userProfile.setArguments(bundle);
 
                 FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
 

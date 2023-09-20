@@ -32,34 +32,61 @@ public class UserProfile extends Fragment {
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
         GameData gameDataViewModel = new ViewModelProvider(requireActivity()).get(GameData.class);
 
+        //Determine which player is being edited
         int playerEdit = mainActivityDataViewModel.getPlayerEdit();
+        Log.d("PlayerEdit", "The player is number " + playerEdit);
 
-        Bundle bundle = getArguments();
-        if(bundle != null){
-            userImage = bundle.getInt("userPicture");
-            if (playerEdit == 1)
-            {
-                gameDataViewModel.setPlayer1ImageID(userImage);
-            }
-            else if (playerEdit == 2)
-            {
-                gameDataViewModel.setPlayer2ImageID(userImage);
-            }
-        }
-
+        //initialise UI components
         imageButton = rootView.findViewById(R.id.selectAvatar);
         saveButton = rootView.findViewById(R.id.SaveUser);
         enterName = rootView.findViewById(R.id.Name);
-        if (playerEdit == 1)
+
+        int p1Avatar = gameDataViewModel.getPlayer1ImageID();
+        int p2Avatar = gameDataViewModel.getPlayer2ImageID();
+        String p1Name = gameDataViewModel.getPlayer1Name();
+        String p2Name = gameDataViewModel.getPlayer2Name();
+        int avatar;
+
+        Bundle userProfile = getArguments();
+
+
+        if(userProfile != null && playerEdit == 1){
+            Log.d("Bundle not Null", "Should enter this bundle");
+            avatar = userProfile.getInt("userPicture");
+            imageButton.setImageResource(avatar);
+        }
+        if(userProfile != null && playerEdit == 2){
+
+            avatar = userProfile.getInt("userPicture");
+            imageButton.setImageResource(avatar);
+        }
+
+
+
+        /*if (playerEdit == 1)
         {
-            imageButton.setImageResource(gameDataViewModel.getPlayer1ImageID());
-            enterName.setText(gameDataViewModel.getPlayer1Name());
+            Log.d("This is the first If", "PlayerEdit should be 1 = " + playerEdit);
+            gameDataViewModel.setPlayer1ImageID(p1Avatar);
+            gameDataViewModel.setPlayer1Name(p1Name);
         }
         else if (playerEdit == 2)
         {
-            imageButton.setImageResource(gameDataViewModel.getPlayer2ImageID());
-            enterName.setText(gameDataViewModel.getPlayer2Name());
+            Log.d("This is the second If", "PlayerEdit should be 2 = " + playerEdit);
+            gameDataViewModel.setPlayer2ImageID(p2Avatar);
+            gameDataViewModel.setPlayer2Name(p2Name);
         }
+
+
+        if (playerEdit == 1)
+        {
+            imageButton.setImageResource(p1Avatar);
+            enterName.setText(p1Name);
+        }
+        else if (playerEdit == 2)
+        {
+            imageButton.setImageResource(p2Avatar);
+            enterName.setText(p2Name);
+        }*/
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,27 +107,6 @@ public class UserProfile extends Fragment {
 
             }
         });
-
-        /*gameDataViewModel.player2Image.observe(this, new Observer<Drawable>() {
-            @Override
-            public void onChanged(Integer integer) {
-                int player2Image = gameDataViewModel.getPlayer2ImageID();
-
-                Log.d("Image ID avatar 2", "This is the ID of avatar 2" + player2Image);
-
-                if(gameDataViewModel.getPlayer2ImageID() == player2Image) {
-                    imageButton.setImageResource(R.drawable.avatar2);
-
-                }
-                if(gameDataViewModel.getPlayer2ImageID() == player2Image) {
-                    imageButton.setImageResource(R.drawable.avatar2);
-
-                }
-            }
-        });*/
-
-
-
 
         return rootView;
     }

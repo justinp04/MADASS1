@@ -33,4 +33,5 @@ public class MainActivityData extends ViewModel {
     {
         playerEdit.setValue(value);
     }
+
 }

@@ -73,8 +73,6 @@ public class Settings extends Fragment {
         Button winCondition3 = rootView.findViewById(R.id.inARow3);
         Button winCondition4 = rootView.findViewById(R.id.inARow4);
         Button winCondition5 = rootView.findViewById(R.id.inARow5);
-        Button iconCrosses = rootView.findViewById(R.id.icon_crosses);
-        Button iconCircles = rootView.findViewById(R.id.icon_circles);
         Button backButton = rootView.findViewById(R.id.backButton);
         Button P1Button = rootView.findViewById(R.id.player1_profile);
         Button P2Button = rootView.findViewById(R.id.player2_profile);
@@ -140,22 +138,6 @@ public class Settings extends Fragment {
             public void onClick(View view) {
                 gameDataViewModel.setWinCondition(5);
                 Toast.makeText(requireContext(), "5 In A Row", Toast.LENGTH_SHORT).show();
-            }
-        });
-        iconCrosses.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(requireContext(), "You are now Crosses", Toast.LENGTH_SHORT).show();
-                gameDataViewModel.setPlayer1Symbol("X");
-                gameDataViewModel.setPlayer2Symbol("O");
-            }
-        });
-        iconCircles.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(requireContext(), "You are now Circles", Toast.LENGTH_SHORT).show();
-                gameDataViewModel.setPlayer2Symbol("X");
-                gameDataViewModel.setPlayer1Symbol("O");
             }
         });
         backButton.setOnClickListener(new View.OnClickListener() {

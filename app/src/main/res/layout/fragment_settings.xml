@@ -184,32 +184,6 @@
                 app:layout_constraintStart_toEndOf="@id/player1_profile"
                 app:layout_constraintTop_toBottomOf="@id/playerIcons" />
 
-            <Button
-                android:id="@+id/icon_crosses"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/square_button"
-                android:text="X"
-                android:textSize="24dp"
-                app:layout_constraintEnd_toStartOf="@id/icon_circles"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/player1_profile" />
-
-            <Button
-                android:id="@+id/icon_circles"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/square_button"
-                android:text="O"
-                android:textSize="24dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/icon_crosses"
-                app:layout_constraintTop_toBottomOf="@id/player2_profile"
-                />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button

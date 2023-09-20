@@ -30,8 +30,8 @@ public class UserProfile extends Fragment {
     AvatarList avatarList;
     int userImage;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_user_profile, container, false);
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
@@ -46,12 +46,9 @@ public class UserProfile extends Fragment {
         saveButton = rootView.findViewById(R.id.SaveUser);
         enterName = rootView.findViewById(R.id.Name);
 
-
         inputData = enterName.getText().toString();
 
-
         Bundle userProfile = getArguments();
-
 
         if(userProfile != null && playerEdit == 1){
             Log.d("Bundle not Null", "Should enter this bundle");
@@ -115,7 +112,6 @@ public class UserProfile extends Fragment {
 
                 setPlayerName(gameDataViewModel, playerEdit, enterName.getText().toString());
                 mainActivityDataViewModel.setClickedValue(4);
-
             }
         });
 
@@ -127,7 +123,9 @@ public class UserProfile extends Fragment {
         if (playerEdit == 1)
         {
             gameData.setPlayer1Name(playerName);
-        } else if (playerEdit == 2) {
+        }
+        else if (playerEdit == 2)
+        {
             gameData.setPlayer2Name(playerName);
 
         }

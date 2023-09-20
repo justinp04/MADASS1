@@ -12,23 +12,20 @@ import android.widget.ImageButton;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-public class UserProfile2 extends Fragment {
+public class UserProfile2 extends Fragment
+{
     ImageButton imageButton;
-
     Button saveButton;
-
     EditText enterName;
 
     int avatar, p1Avatar, p2Avatar;
-
     String p1Name, p2Name, inputData;
-
 
     AvatarList avatarList;
     int userImage;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_user_profile2, container, false);
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
@@ -50,9 +47,7 @@ public class UserProfile2 extends Fragment {
 
         inputData = enterName.getText().toString();
 
-
         Bundle userProfile = getArguments();
-
 
         /*if(userProfile != null && playerEdit == 1){
             Log.d("Bundle not Null", "Should enter this bundle");
@@ -109,13 +104,13 @@ public class UserProfile2 extends Fragment {
             }
         });
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
+        saveButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
-
+            public void onClick(View view)
+            {
                 setPlayerName(gameDataViewModel, playerEdit, enterName.getText().toString());
                 mainActivityDataViewModel.setClickedValue(4);
-
             }
         });
 
@@ -127,7 +122,9 @@ public class UserProfile2 extends Fragment {
         if (playerEdit == 1)
         {
             gameData.setPlayer1Name(playerName);
-        } else if (playerEdit == 2) {
+        }
+        else if (playerEdit == 2)
+        {
             gameData.setPlayer2Name(playerName);
 
         }

@@ -73,14 +73,13 @@ public class MainActivity extends AppCompatActivity {
                 {
                     loadEditProfile1Fragment();
                 }
-                if (mainActivityDataViewModel.getClickedValue() == 9)
-                {
-                    loadEditProfile2Fragment();
-                }
-
                 if(mainActivityDataViewModel.getClickedValue() == 8)
                 {
                     loadAvatarListFragment();
+                }
+                if (mainActivityDataViewModel.getClickedValue() == 9)
+                {
+                    loadEditProfile2Fragment();
                 }
             }
         });
@@ -179,11 +178,13 @@ public class MainActivity extends AppCompatActivity {
     {
         FragmentManager fm = getSupportFragmentManager();
         Fragment frag = fm.findFragmentById(R.id.fragment_game);
+
         if (frag==null)
         {
             fm.beginTransaction().add(R.id.fragment_game, editProfile2).commit();
         }
-        else {
+        else
+        {
             fm.beginTransaction().replace(R.id.fragment_game, editProfile2).commit();
         }
     }

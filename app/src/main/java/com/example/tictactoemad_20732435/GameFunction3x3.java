@@ -47,12 +47,8 @@ public class GameFunction3x3 extends Fragment {
     private String player1Name, player2Name;
     private Integer timerCounter;
     private Button undoButton, pauseButton;
-
-    private ImageView player1Image;
-    private ImageView player2Image;
-
+    private ImageView player1Image, player2Image;
     private int p1Avatar, p2Avatar;
-
     private CountDownTimer turnTimer;
 
     // Required empty public constructor
@@ -86,8 +82,8 @@ public class GameFunction3x3 extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         View rootView = inflater.inflate(R.layout.fragment_game_function3x3, container, false);
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
         GameData gameDataViewModel = new ViewModelProvider(getActivity()).get(GameData.class);
@@ -105,6 +101,9 @@ public class GameFunction3x3 extends Fragment {
         playerIndicator.setText(player1Name + "'s turn!");
         p1Avatar = gameDataViewModel.getPlayer1ImageID();
         p2Avatar = gameDataViewModel.getPlayer2ImageID();
+
+        Log.d("PLAYERONE_IMAGE", "Image is: " + p1Avatar);
+        Log.d("PLAYERTWO_IMAGE", "Image is: " + p2Avatar);
 
         player1Image.setImageResource(p1Avatar);
         player2Image.setImageResource(p2Avatar);
@@ -157,7 +156,9 @@ public class GameFunction3x3 extends Fragment {
                 if (gameDataViewModel.getPlayerTurn() == 1)
                 {
                     toastText = toastText + GameFunctions.player2Wins(gameDataViewModel);
-                } else if (gameDataViewModel.getPlayerTurn() == 2) {
+                }
+                else if (gameDataViewModel.getPlayerTurn() == 2)
+                {
                     toastText = toastText + GameFunctions.player1Wins(gameDataViewModel);
                 }
                 Toast.makeText(requireContext(), toastText, Toast.LENGTH_SHORT).show();
@@ -270,9 +271,7 @@ public class GameFunction3x3 extends Fragment {
             }
         });
 
-
-
-
+        updatePlayerText(gameDataViewModel);
         return rootView;
     }
 

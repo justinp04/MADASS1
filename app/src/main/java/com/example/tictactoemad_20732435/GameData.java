@@ -184,14 +184,17 @@ public class GameData extends ViewModel {
         }
     }
 
-    public void setPlayer1Image(Drawable drawable){
+    public void setPlayer1Image(Drawable drawable)
+    {
         if(drawable != null) {
             player1Image.setValue(drawable);
         }
     }
 
-    public void setPlayer2Image(Drawable drawable){
-        if(drawable != null){
+    public void setPlayer2Image(Drawable drawable)
+    {
+        if(drawable != null)
+        {
             player2Image.setValue(drawable);
         }
 
@@ -255,11 +258,13 @@ public class GameData extends ViewModel {
     public Drawable getPlayer2Image(){
         return player2Image.getValue();
     }
-    public Integer getPlayer1ImageID(){
+    public Integer getPlayer1ImageID()
+    {
         return player1ImageID.getValue();
     }
 
-    public Integer getPlayer2ImageID(){
+    public Integer getPlayer2ImageID()
+    {
         return player2ImageID.getValue();
     }
 

@@ -17,7 +17,7 @@ public class UserProfile2 extends Fragment {
 
     Button saveButton;
 
-    EditText enterName;
+    EditText enterName, enterSymbol;
 
     int avatar, p1Avatar, p2Avatar;
 
@@ -42,68 +42,30 @@ public class UserProfile2 extends Fragment {
         imageButton = rootView.findViewById(R.id.selectAvatar);
         saveButton = rootView.findViewById(R.id.SaveUser);
         enterName = rootView.findViewById(R.id.Name);
+        enterSymbol = rootView.findViewById(R.id.Symbol);
 
-        /*
-
-        p1Name = gameDataViewModel.getPlayer1Name();
-        p2Name = gameDataViewModel.getPlayer2Name();*/
-
-        inputData = enterName.getText().toString();
-
+        imageButton.setImageResource(gameDataViewModel.getPlayer2ImageID());
+        enterName.setText(gameDataViewModel.getPlayer2Name());
+        enterSymbol.setText(gameDataViewModel.getPlayer2Symbol());
 
         Bundle userProfile = getArguments();
 
-
-        /*if(userProfile != null && playerEdit == 1){
-            Log.d("Bundle not Null", "Should enter this bundle");
-            avatar = userProfile.getInt("userPicture");
-            gameDataViewModel.setPlayer1ImageID(avatar);
-            gameDataViewModel.setPlayer1Name(inputData);
-            p1Avatar = gameDataViewModel.getPlayer1ImageID();
-            imageButton.setImageResource(p1Avatar);
-            Log.d("P1", "Image ID " + p1Avatar + " name" + p1Name);
-        }*/
-        if(userProfile != null && playerEdit == 2){
+        if(userProfile != null){
 
             avatar = userProfile.getInt("userPicture");
             gameDataViewModel.setPlayer2ImageID(avatar);
-            gameDataViewModel.setPlayer2Name(inputData);
             p2Avatar = gameDataViewModel.getPlayer2ImageID();
             imageButton.setImageResource(p2Avatar);
             Log.d("P2", "Image ID " + p2Avatar + " name" + p2Name);
+            userProfile.remove("userPicture");
         }
-
-
-        /*if (playerEdit == 1)
-        {
-            Log.d("This is the first If", "PlayerEdit should be 1 = " + playerEdit);
-            gameDataViewModel.setPlayer1ImageID(p1Avatar);
-            gameDataViewModel.setPlayer1Name(p1Name);
-        }
-        else if (playerEdit == 2)
-        {
-            Log.d("This is the second If", "PlayerEdit should be 2 = " + playerEdit);
-            gameDataViewModel.setPlayer2ImageID(p2Avatar);
-            gameDataViewModel.setPlayer2Name(p2Name);
-        }
-
-
-        if (playerEdit == 1)
-        {
-            imageButton.setImageResource(p1Avatar);
-            enterName.setText(p1Name);
-        }
-        else if (playerEdit == 2)
-        {
-            imageButton.setImageResource(p2Avatar);
-            enterName.setText(p2Name);
-        }*/
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                setPlayerName(gameDataViewModel, playerEdit, enterName.getText().toString());
+                gameDataViewModel.setPlayer2Name(enterName.getText().toString());
+                gameDataViewModel.setPlayer2Symbol(enterSymbol.getText().toString());
                 mainActivityDataViewModel.setClickedValue(8);
 
             }
@@ -113,7 +75,8 @@ public class UserProfile2 extends Fragment {
             @Override
             public void onClick(View view) {
 
-                setPlayerName(gameDataViewModel, playerEdit, enterName.getText().toString());
+                gameDataViewModel.setPlayer2Name(enterName.getText().toString());
+                gameDataViewModel.setPlayer2Symbol(enterSymbol.getText().toString());
                 mainActivityDataViewModel.setClickedValue(4);
 
             }
@@ -121,16 +84,4 @@ public class UserProfile2 extends Fragment {
 
         return rootView;
     }
-
-    private void setPlayerName(GameData gameData, int playerEdit, String playerName)
-    {
-        if (playerEdit == 1)
-        {
-            gameData.setPlayer1Name(playerName);
-        } else if (playerEdit == 2) {
-            gameData.setPlayer2Name(playerName);
-
-        }
-    }
-
 }

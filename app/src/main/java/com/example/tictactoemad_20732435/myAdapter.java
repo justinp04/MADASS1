@@ -1,6 +1,11 @@
 package com.example.tictactoemad_20732435;
 
 
+import static android.app.PendingIntent.getActivity;
+
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.Context;
 import android.os.Bundle;
@@ -13,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,12 +29,15 @@ public class myAdapter extends RecyclerView.Adapter<myViewHolder> {
 
     Context context;
     List<item> items;
+    MainActivityData mainActivityData;
+
 
     private List<Integer> avatarOptions;
     
-    public myAdapter(Context context, List<item> items) {
+    public myAdapter(Context context, List<item> items, MainActivityData mainActivityData) {
         this.context = context;
         this.items = items;
+        this.mainActivityData = mainActivityData;
     }
 
     @NonNull
@@ -52,15 +61,23 @@ public class myAdapter extends RecyclerView.Adapter<myViewHolder> {
                 bundle.putInt("userPicture", selectedAvatarResource);
 
                 UserProfile userProfile = new UserProfile();
+                UserProfile2 userProfile2 = new UserProfile2();
                 userProfile.setArguments(bundle);
+                userProfile2.setArguments(bundle);
 
                 FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
 
                 // Start a new transaction
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-                // Replace the existing fragment with the new one (replace R.id.frameLayoutId with your FrameLayout ID)
-                transaction.replace(R.id.fragment_game, userProfile);
+                // Replace the existing fragment with the user profile fragment
+                if (mainActivityData.getPlayerEdit() == 1)
+                {
+                    transaction.replace(R.id.fragment_game, userProfile);
+                }
+                else
+                {
+                    transaction.replace(R.id.fragment_game, userProfile2);
+                }
 
                 // Commit the transaction
                 transaction.commit();

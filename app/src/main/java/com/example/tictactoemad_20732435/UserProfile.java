@@ -20,7 +20,7 @@ public class UserProfile extends Fragment {
 
     Button saveButton;
 
-    EditText enterName;
+    EditText enterName, enterSymbol;
 
     int avatar, p1Avatar, p2Avatar;
 
@@ -45,22 +45,23 @@ public class UserProfile extends Fragment {
         imageButton = rootView.findViewById(R.id.selectAvatar);
         saveButton = rootView.findViewById(R.id.SaveUser);
         enterName = rootView.findViewById(R.id.Name);
+        enterSymbol = rootView.findViewById(R.id.Symbol);
 
-
-        inputData = enterName.getText().toString();
-
+        imageButton.setImageResource(gameDataViewModel.getPlayer1ImageID());
+        enterName.setText(gameDataViewModel.getPlayer1Name());
+        enterSymbol.setText(gameDataViewModel.getPlayer1Symbol());
 
         Bundle userProfile = getArguments();
 
 
-        if(userProfile != null && playerEdit == 1){
+        if(userProfile != null){
             Log.d("Bundle not Null", "Should enter this bundle");
             avatar = userProfile.getInt("userPicture");
             gameDataViewModel.setPlayer1ImageID(avatar);
-            gameDataViewModel.setPlayer1Name(inputData);
             p1Avatar = gameDataViewModel.getPlayer1ImageID();
             imageButton.setImageResource(p1Avatar);
             Log.d("P1", "Image ID " + p1Avatar + " name" + p1Name);
+            userProfile.remove("userPicture");
         }
 
         /*if(userProfile != null && playerEdit == 2){
@@ -103,7 +104,8 @@ public class UserProfile extends Fragment {
             @Override
             public void onClick(View view) {
 
-                setPlayerName(gameDataViewModel, playerEdit, enterName.getText().toString());
+                gameDataViewModel.setPlayer1Name(enterName.getText().toString());
+                gameDataViewModel.setPlayer1Symbol(enterSymbol.getText().toString());
                 mainActivityDataViewModel.setClickedValue(8);
 
             }
@@ -113,7 +115,8 @@ public class UserProfile extends Fragment {
             @Override
             public void onClick(View view) {
 
-                setPlayerName(gameDataViewModel, playerEdit, enterName.getText().toString());
+                gameDataViewModel.setPlayer1Name(enterName.getText().toString());
+                gameDataViewModel.setPlayer1Symbol(enterSymbol.getText().toString());
                 mainActivityDataViewModel.setClickedValue(4);
 
             }
@@ -121,16 +124,4 @@ public class UserProfile extends Fragment {
 
         return rootView;
     }
-
-    private void setPlayerName(GameData gameData, int playerEdit, String playerName)
-    {
-        if (playerEdit == 1)
-        {
-            gameData.setPlayer1Name(playerName);
-        } else if (playerEdit == 2) {
-            gameData.setPlayer2Name(playerName);
-
-        }
-    }
-
 }

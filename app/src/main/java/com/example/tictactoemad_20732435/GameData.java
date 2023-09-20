@@ -200,8 +200,8 @@ public class GameData extends ViewModel {
     public void setPlayer1ImageID(Integer inPlayer1ImageID) {
         player1ImageID.setValue(inPlayer1ImageID);
     }
-    public void setPlayer2ImageID(Integer inPlayer1ImageID) {
-        player1ImageID.setValue(inPlayer1ImageID);
+    public void setPlayer2ImageID(Integer inPlayer2ImageID) {
+        player2ImageID.setValue(inPlayer2ImageID);
     }
 
     //Accessors

@@ -44,7 +44,7 @@ public class AvatarList extends Fragment {
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), spanCount);
         recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.setAdapter(new myAdapter(getContext(),list));
+        recyclerView.setAdapter(new myAdapter(getContext(),list, new ViewModelProvider(getActivity()).get(MainActivityData.class)));
 
 
         return rootView;

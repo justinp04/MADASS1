@@ -35,6 +35,7 @@ public class AIPlayerState implements PlayerState {
 
                     // Change the player turn to player one's turn
                     gameDataViewModel.setPlayer1Turn();
+
                     gameDataViewModel.setAiFinished();
                     Log.d("AiFinish", "AiFinish");
                 }

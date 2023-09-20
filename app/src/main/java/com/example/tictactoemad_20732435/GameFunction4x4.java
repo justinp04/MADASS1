@@ -250,7 +250,7 @@ public class GameFunction4x4 extends Fragment {
                 }
             }
         });
-
+        updatePlayerText(gameDataViewModel);
         return rootView;
     }
 

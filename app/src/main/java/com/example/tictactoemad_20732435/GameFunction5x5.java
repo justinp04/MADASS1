@@ -248,7 +248,7 @@ public class GameFunction5x5 extends Fragment {
                 }
             }
         });
-
+        updatePlayerText(gameDataViewModel);
         return rootView;
     }
 

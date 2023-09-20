@@ -269,10 +269,7 @@ public class GameFunction3x3 extends Fragment {
 
             }
         });
-
-
-
-
+        updatePlayerText(gameDataViewModel);
         return rootView;
     }
 

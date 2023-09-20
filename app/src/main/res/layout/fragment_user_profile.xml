@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Enter Name"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/SaveUser"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/selectAvatar" />
@@ -42,8 +42,8 @@
             android:text="Enter Symbol"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/Name"
-            app:layout_constraintTop_toBottomOf="@id/SaveUser"/>
+            app:layout_constraintBottom_toTopOf="@+id/SaveUser"
+            app:layout_constraintTop_toBottomOf="@id/Name"/>
 
         <Button
             android:id="@+id/SaveUser"

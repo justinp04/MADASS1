@@ -76,6 +76,8 @@ public class Settings extends Fragment {
         Button iconCrosses = rootView.findViewById(R.id.icon_crosses);
         Button iconCircles = rootView.findViewById(R.id.icon_circles);
         Button backButton = rootView.findViewById(R.id.backButton);
+        Button P1Button = rootView.findViewById(R.id.player1_profile);
+        Button P2Button = rootView.findViewById(R.id.player2_profile);
         ViewGroup constraintLayout = rootView.findViewById(R.id.fragment_settings);
 
         int boardSize = gameDataViewModel.getBoardSize();
@@ -160,6 +162,23 @@ public class Settings extends Fragment {
             @Override
             public void onClick(View view) {
                 mainActivityDataViewModel.setClickedValue(0);
+            }
+        });
+
+        //Two buttons below will allow the user to edit their profile, only assumed two users
+        P2Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivityDataViewModel.setPlayerEdit(1);
+                mainActivityDataViewModel.setClickedValue(7);
+            }
+        });
+
+        P1Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivityDataViewModel.setPlayerEdit(2);
+                mainActivityDataViewModel.setClickedValue(7);
             }
         });
 

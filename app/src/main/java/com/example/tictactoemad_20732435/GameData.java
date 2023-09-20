@@ -1,5 +1,7 @@
 package com.example.tictactoemad_20732435;
 
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.widget.Button;
 import java.util.*;
 import androidx.lifecycle.MutableLiveData;
@@ -20,8 +22,14 @@ public class GameData extends ViewModel {
     public MutableLiveData<String> player2Symbol;
     public MutableLiveData<String> player1Name;
     public MutableLiveData<String> player2Name;
-    
+    public MutableLiveData<Drawable> player1Image;
+    public MutableLiveData<Drawable> player2Image;
+    public MutableLiveData<Integer> player1ImageID;
+    public MutableLiveData<Integer> player2ImageID;
     public Stack<Button> undoButtons;
+
+    public Drawable avatar1;
+
 
     public GameData() {
         gameButtons = new MutableLiveData<Button[][]>();
@@ -39,6 +47,10 @@ public class GameData extends ViewModel {
         undoButtons = new Stack<Button>();
         player1Name = new MutableLiveData<String>();
         player2Name = new MutableLiveData<String>();
+        player1Image = new MutableLiveData<Drawable>();
+        player2Image = new MutableLiveData<Drawable>();
+        player1ImageID = new MutableLiveData<Integer>();
+        player2ImageID = new MutableLiveData<Integer>();
         setDefaultValues();
     }
 
@@ -58,6 +70,32 @@ public class GameData extends ViewModel {
         aiFinished.setValue(true);
         player1Name.setValue("Player 1");
         player2Name.setValue("Player 2");
+        player1Image.setValue(Drawable.createFromPath(String.valueOf(R.drawable.default_avatar)));
+        player2Image.setValue(Drawable.createFromPath(String.valueOf(R.drawable.default_avatar)));
+        player1ImageID.setValue(R.drawable.default_avatar);
+        player2ImageID.setValue(R.drawable.default_avatar);
+    }
+
+    public Bundle getGameStatsBundle(){
+        Bundle gameStats = new Bundle();
+        int P1wins = player1Points.getValue();
+        int P2wins = player2Points.getValue();
+        int totalGames = roundCount.getValue();
+        int draws = drawCount.getValue();
+        int player1Image = player1ImageID.getValue();
+        int player2Image = player2ImageID.getValue();
+        String P1Name = player1Name.getValue();
+        String P2Name = player2Name.getValue();
+        gameStats.putInt("P1Wins", P1wins);
+        gameStats.putInt("P2Wins", P2wins);
+        gameStats.putInt("TotalGames", totalGames);
+        gameStats.putInt("Draws", draws);
+        gameStats.putInt("P1Avatar", player1Image);
+        gameStats.putInt("P2Avatar", player2Image);
+        gameStats.putString("P1Name", P1Name);
+        gameStats.putString("P2Name", P2Name);
+
+        return gameStats;
     }
 
     public void setGameButtons(Button[][] inButtons) {
@@ -146,6 +184,26 @@ public class GameData extends ViewModel {
         }
     }
 
+    public void setPlayer1Image(Drawable drawable){
+        if(drawable != null) {
+            player1Image.setValue(drawable);
+        }
+    }
+
+    public void setPlayer2Image(Drawable drawable){
+        if(drawable != null){
+            player2Image.setValue(drawable);
+        }
+
+    }
+
+    public void setPlayer1ImageID(Integer inPlayer1ImageID) {
+        player1ImageID.setValue(inPlayer1ImageID);
+    }
+    public void setPlayer2ImageID(Integer inPlayer1ImageID) {
+        player1ImageID.setValue(inPlayer1ImageID);
+    }
+
     //Accessors
     public Button[][] getGameButtons() {
         return gameButtons.getValue();
@@ -188,6 +246,21 @@ public class GameData extends ViewModel {
     public int getWinCondition()
     {
         return winCondition.getValue();
+    }
+
+    public Drawable getPlayer1Image(){
+        return player1Image.getValue();
+    }
+
+    public Drawable getPlayer2Image(){
+        return player2Image.getValue();
+    }
+    public Integer getPlayer1ImageID(){
+        return player1ImageID.getValue();
+    }
+
+    public Integer getPlayer2ImageID(){
+        return player2ImageID.getValue();
     }
 
     public PlayerState getPlayerState() {

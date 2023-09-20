@@ -6,6 +6,63 @@
     android:layout_height="match_parent"
     tools:context=".LeaderboardFragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent=".1"
+        app:layout_constraintTop_toBottomOf="@id/guideline2"
+        app:layout_constraintBottom_toTopOf="@id/recyclerview">
+
+        <TextView
+            android:id="@+id/wins"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="Wins:"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/losses"
+            />
+        <TextView
+            android:id="@+id/losses"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="Losses:"
+            android:gravity="center"
+            app:layout_constraintStart_toEndOf="@id/wins"
+            app:layout_constraintEnd_toStartOf="@id/draws"
+            />
+        <TextView
+            android:id="@+id/draws"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="Draws:"
+            android:gravity="center"
+            app:layout_constraintStart_toEndOf="@id/losses"
+            app:layout_constraintEnd_toStartOf="@id/totalGames"
+            />
+        <TextView
+            android:id="@+id/totalGames"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Total games:"
+            app:layout_constraintStart_toEndOf="@id/draws"
+            app:layout_constraintEnd_toStartOf="@id/percent"
+            />
+        <TextView
+            android:id="@+id/percent"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="Win Percent:"
+            android:gravity="center"
+            app:layout_constraintStart_toEndOf="@id/totalGames"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
@@ -14,7 +71,7 @@
         app:layout_constraintBottom_toTopOf="@id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline2" />
+        app:layout_constraintTop_toBottomOf="@id/header" />
 
     <Button
         android:id="@+id/back"
@@ -48,6 +105,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="1" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,6 +22,11 @@ public class UserProfile extends Fragment {
 
     EditText enterName;
 
+    int avatar, p1Avatar, p2Avatar;
+
+    String p1Name, p2Name, inputData;
+
+
     AvatarList avatarList;
     int userImage;
     @Override
@@ -41,11 +46,9 @@ public class UserProfile extends Fragment {
         saveButton = rootView.findViewById(R.id.SaveUser);
         enterName = rootView.findViewById(R.id.Name);
 
-        int p1Avatar = gameDataViewModel.getPlayer1ImageID();
-        int p2Avatar = gameDataViewModel.getPlayer2ImageID();
-        String p1Name = gameDataViewModel.getPlayer1Name();
-        String p2Name = gameDataViewModel.getPlayer2Name();
-        int avatar;
+
+        inputData = enterName.getText().toString();
+
 
         Bundle userProfile = getArguments();
 
@@ -53,14 +56,22 @@ public class UserProfile extends Fragment {
         if(userProfile != null && playerEdit == 1){
             Log.d("Bundle not Null", "Should enter this bundle");
             avatar = userProfile.getInt("userPicture");
-            imageButton.setImageResource(avatar);
+            gameDataViewModel.setPlayer1ImageID(avatar);
+            gameDataViewModel.setPlayer1Name(inputData);
+            p1Avatar = gameDataViewModel.getPlayer1ImageID();
+            imageButton.setImageResource(p1Avatar);
+            Log.d("P1", "Image ID " + p1Avatar + " name" + p1Name);
         }
-        if(userProfile != null && playerEdit == 2){
+
+        /*if(userProfile != null && playerEdit == 2){
 
             avatar = userProfile.getInt("userPicture");
-            imageButton.setImageResource(avatar);
-        }
-
+            gameDataViewModel.setPlayer2ImageID(avatar);
+            gameDataViewModel.setPlayer2Name(inputData);
+            p2Avatar = gameDataViewModel.getPlayer2ImageID();
+            imageButton.setImageResource(p2Avatar);
+            Log.d("P2", "Image ID " + p2Avatar + " name" + p2Name);
+        }*/
 
 
         /*if (playerEdit == 1)
@@ -121,4 +132,5 @@ public class UserProfile extends Fragment {
 
         }
     }
+
 }

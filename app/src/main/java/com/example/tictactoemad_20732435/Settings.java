@@ -170,7 +170,7 @@ public class Settings extends Fragment {
             @Override
             public void onClick(View view) {
                 mainActivityDataViewModel.setPlayerEdit(2);
-                mainActivityDataViewModel.setClickedValue(7);
+                mainActivityDataViewModel.setClickedValue(9);
             }
         });
 

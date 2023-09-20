@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private Settings settings = new Settings();
     private PauseMenuFragment pauseMenu = new PauseMenuFragment();
     private UserProfile editProfile = new UserProfile();
+
+    private UserProfile2 editProfile2 = new UserProfile2();
     private AvatarList avatarList = new AvatarList();
     private LeaderboardFragment leaderboard = new LeaderboardFragment();
 
@@ -69,7 +71,11 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if (mainActivityDataViewModel.getClickedValue() == 7)
                 {
-                    loadEditProfileFragment();
+                    loadEditProfile1Fragment();
+                }
+                if (mainActivityDataViewModel.getClickedValue() == 9)
+                {
+                    loadEditProfile2Fragment();
                 }
 
                 if(mainActivityDataViewModel.getClickedValue() == 8)
@@ -156,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
             fm.beginTransaction().replace(R.id.fragment_game, pauseMenu).commit();
         }
     }
-    private void loadEditProfileFragment()
+    private void loadEditProfile1Fragment()
     {
         FragmentManager fm = getSupportFragmentManager();
         Fragment frag = fm.findFragmentById(R.id.fragment_game);
@@ -166,6 +172,19 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             fm.beginTransaction().replace(R.id.fragment_game, editProfile).commit();
+        }
+    }
+
+    private void loadEditProfile2Fragment()
+    {
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment frag = fm.findFragmentById(R.id.fragment_game);
+        if (frag==null)
+        {
+            fm.beginTransaction().add(R.id.fragment_game, editProfile2).commit();
+        }
+        else {
+            fm.beginTransaction().replace(R.id.fragment_game, editProfile2).commit();
         }
     }
 

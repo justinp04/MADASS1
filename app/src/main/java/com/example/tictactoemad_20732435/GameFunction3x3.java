@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.*;
@@ -46,6 +47,11 @@ public class GameFunction3x3 extends Fragment {
     private String player1Name, player2Name;
     private Integer timerCounter;
     private Button undoButton, pauseButton;
+
+    private ImageView player1Image;
+    private ImageView player2Image;
+
+    private int p1Avatar, p2Avatar;
 
     private CountDownTimer turnTimer;
 
@@ -92,15 +98,16 @@ public class GameFunction3x3 extends Fragment {
         textMovesLeft = rootView.findViewById(R.id.movesLeft);
         textTimer = rootView.findViewById(R.id.timer);
         playerIndicator = rootView.findViewById(R.id.playerTurn);
+        player1Image = rootView.findViewById(R.id.player1_image);
+        player2Image = rootView.findViewById(R.id.player2_image);
         player1Name = gameDataViewModel.getPlayer1Name();
         player2Name = gameDataViewModel.getPlayer2Name();
         playerIndicator.setText(player1Name + "'s turn!");
+        p1Avatar = gameDataViewModel.getPlayer1ImageID();
+        p2Avatar = gameDataViewModel.getPlayer2ImageID();
 
-        Bundle bundle = new Bundle();
-        bundle = gameDataViewModel.getGameStatsBundle();
-        String player1Name = bundle.getString("P1Name");
-        String player2Name = bundle.getString("P2Name");
-
+        player1Image.setImageResource(p1Avatar);
+        player2Image.setImageResource(p2Avatar);
 
 
         for (int i = 0; i < row; i++)
@@ -298,10 +305,8 @@ public class GameFunction3x3 extends Fragment {
     private void updatePlayerText(GameData gameDataViewModel)
     {
         turnTimer.cancel();
-        textViewPlayer1.setText("Player 1: " + gameDataViewModel.getPlayer1Points());
-        //textViewPlayer1.setText(player1Name + " : " + gameDataViewModel.getPlayer1Points());
-        textViewPlayer2.setText("Player 2: " + gameDataViewModel.getPlayer2Points());
-        //textViewPlayer2.setText(player2Name + " : " + gameDataViewModel.getPlayer2Points());
+        textViewPlayer1.setText(player1Name + " : " + gameDataViewModel.getPlayer1Points());
+        textViewPlayer2.setText(player2Name + " : " + gameDataViewModel.getPlayer2Points());
         textMovesLeft.setText("Moves Left: " + (9 - gameDataViewModel.getRoundCount()));
         textMovesMade.setText("Moves Made: " + gameDataViewModel.getRoundCount());
 

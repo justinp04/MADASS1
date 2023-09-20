@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +49,11 @@ public class GameFunction5x5 extends Fragment {
     private CountDownTimer turnTimer;
     private TextView playerIndicator;
     private String player1Name, player2Name;
+
+    private ImageView player1Image;
+    private ImageView player2Image;
+
+    private int p1Avatar, p2Avatar;
 
     private Button undoButton;
 
@@ -95,9 +101,16 @@ public class GameFunction5x5 extends Fragment {
         textMovesLeft = rootView.findViewById(R.id.movesLeft);
         textTimer = rootView.findViewById(R.id.timer);
         playerIndicator = rootView.findViewById(R.id.playerTurn);
+        player1Image = rootView.findViewById(R.id.player1_image);
+        player2Image = rootView.findViewById(R.id.player2_image);
         player1Name = gameDataViewModel.getPlayer1Name();
         player2Name = gameDataViewModel.getPlayer2Name();
         playerIndicator.setText(player1Name + "'s turn!");
+        p1Avatar = gameDataViewModel.getPlayer1ImageID();
+        p2Avatar = gameDataViewModel.getPlayer2ImageID();
+
+        player1Image.setImageResource(p1Avatar);
+        player2Image.setImageResource(p2Avatar);
 
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
@@ -269,8 +282,8 @@ public class GameFunction5x5 extends Fragment {
     private void updatePlayerText(GameData gameDataViewModel)
     {
         turnTimer.cancel();
-        textViewPlayer1.setText("Player 1: " + gameDataViewModel.getPlayer1Points());
-        textViewPlayer2.setText("Player 2: " + gameDataViewModel.getPlayer2Points());
+        textViewPlayer1.setText(player1Name + " : " + gameDataViewModel.getPlayer1Points());
+        textViewPlayer2.setText(player2Name + " : " + gameDataViewModel.getPlayer2Points());
         textMovesLeft.setText("Moves Left: " + (25 - gameDataViewModel.getRoundCount()));
         textMovesMade.setText("Moves Made: " + gameDataViewModel.getRoundCount());
         if (gameDataViewModel.getPlayerTurn() == 1)
